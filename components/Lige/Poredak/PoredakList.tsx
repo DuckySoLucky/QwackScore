@@ -4,27 +4,8 @@ import { Text, View } from "@/components/Themed";
 
 import PoredakListElement from "@/components/Lige/Poredak/PoredakListElement";
 
-export default function GamesList({ season, handlePress }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<Response | null>(null);
+export default function GamesList({ standingsData, season, handlePress }) {
   const [selectedForm, setSelectedForm] = useState("default");
-
-  useEffect(() => {
-    fetch(`http://192.168.0.111:3000/standings/${season.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading || data === null) {
-    return <ActivityIndicator size="large" color="#00ff00" />;
-  }
 
   return (
     <View style={styles.outerContainer}>
@@ -56,12 +37,12 @@ export default function GamesList({ season, handlePress }) {
             <Text style={styles.PTSRow}>PTS</Text>
           </View>
 
-          {data.map((team) => {
+          {standingsData.map((team) => {
             return (
               <PoredakListElement
                 data={team}
                 type="default"
-                last={data.indexOf(team) === data.length - 1}
+                last={standingsData.indexOf(team) === standingsData.length - 1}
                 key={team.id}
               />
             );
@@ -75,9 +56,14 @@ export default function GamesList({ season, handlePress }) {
             <Text style={styles.formaRow}>Forma</Text>
           </View>
 
-          {data.map((team) => {
+          {standingsData.map((team) => {
             return (
-              <PoredakListElement data={team} type="form" last={data.indexOf(team) === data.length - 1} key={team.id} />
+              <PoredakListElement
+                data={team}
+                type="form"
+                last={standingsData.indexOf(team) === standingsData.length - 1}
+                key={team.id}
+              />
             );
           })}
         </View>

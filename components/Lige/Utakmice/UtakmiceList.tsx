@@ -4,30 +4,10 @@ import { View } from "@/components/Themed";
 
 import FootballGameList from "@/components/Utakmice/FootballGameList";
 
-export default function DetaljiList({ season, handlePress }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<Response | null>(null);
-
-  useEffect(() => {
-    fetch(`http://192.168.0.111:3000/schedules/${season.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading || data === null) {
-    return <ActivityIndicator size="large" color="#00ff00" />;
-  }
-
+export default function DetaljiList({ utakmiceData, season, handlePress }) {
   return (
     <View style={styles.container}>
-      <FootballGameList data={data} key={Math.random().toString(36).substring(7)} />
+      <FootballGameList data={utakmiceData} key={Math.random().toString(36).substring(7)} />
     </View>
   );
 }

@@ -7,41 +7,9 @@ import FootballGameAlertColumn from "@/components/Utakmice/FootballGameAlertColu
 import BestPlayerElementColumn from "@/components/Lige/Detalji/BestPlayerElementColumn";
 import BestClubElementColumn from "@/components/Lige/Detalji/BestClubElementColumn";
 import FootballGameListColumn from "@/components/Utakmice/FootballGameListColumn";
-import LigaDetaljiScreen from "@/app/lige/detalji";
 
-export default function DetaljiList({ season, handlePress }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [utakmiceData, setData] = useState<Response | null>(null);
-  const [statsData, setStatsData] = useState<Response | null>(null);
+export default function DetaljiList({ utakmiceData, statsData, season, handlePress }) {
   const navigation = useNavigation();
-
-  useEffect(() => {
-    fetch(`http://192.168.0.111:3000/schedules/${season.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setIsLoading(false);
-      });
-
-    fetch(`http://192.168.0.111:3000/stats/${season.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setStatsData(data.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading || utakmiceData === null || statsData === null) {
-    return <ActivityIndicator size="large" color="#00ff00" />;
-  }
 
   return (
     <ScrollView>

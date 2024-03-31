@@ -5,44 +5,25 @@ import { useNavigation } from "expo-router";
 
 import BestClubElementColumn from "@/components/Lige/Detalji/BestClubElementColumn";
 
-export default function DetaljiList({ season, handlePress }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<Response | null>(null);
+export default function DetaljiList({ statsData, season, handlePress }) {
   const navigation = useNavigation();
-
-  useEffect(() => {
-    fetch(`http://192.168.0.111:3000/stats/${season.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading || data === null) {
-    return <ActivityIndicator size="large" color="#00ff00" />;
-  }
 
   return (
     <ScrollView>
       <View style={styles.outerContainer}>
-        {Object.keys(data.teams).map((key) => {
-          if (!data.teams[key]?.length) {
+        {Object.keys(statsData.teams).map((key) => {
+          if (!statsData.teams[key]?.length) {
             return <View></View>;
           }
 
           return (
             <View style={styles.container}>
               <Text style={styles.roundText}>{titleCase(key)}</Text>
-              {data.teams[key].slice(0, 3).map((team) => {
+              {statsData.teams[key].slice(0, 3).map((team) => {
                 return <BestClubElementColumn data={team} key={team.id} />;
               })}
 
-              <Pressable onPress={() => navigation.navigate("lige/customModal", { season: season, data: data })}>
+              <Pressable onPress={() => navigation.navigate("lige/customModal", { season: season, data: statsData })}>
                 <View style={styles.containerExpand}>
                   <Text style={styles.expandText}>Proširite</Text>
                 </View>
