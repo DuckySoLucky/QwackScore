@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, ActivityIndicator, Pressable } from "react-native";
+import { StyleSheet, ScrollView, ActivityIndicator, Pressable, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "@/components/Themed";
 import { useNavigation } from "expo-router";
@@ -9,15 +9,15 @@ export default function DetaljiList({ statsData, season, handlePress }) {
   const navigation = useNavigation();
 
   return (
-    <ScrollView>
+    <FlatList>
       <View style={styles.outerContainer}>
         {Object.keys(statsData.teams).map((key) => {
           if (!statsData.teams[key]?.length) {
-            return <View></View>;
+            return <View key={key + Math.random()}></View>;
           }
 
           return (
-            <View style={styles.container}>
+            <View style={styles.container} key={key + Math.random()}>
               <Text style={styles.roundText}>{titleCase(key)}</Text>
               {statsData.teams[key].slice(0, 3).map((team) => {
                 return <BestClubElementColumn data={team} key={team.id} />;
@@ -32,7 +32,7 @@ export default function DetaljiList({ statsData, season, handlePress }) {
           );
         })}
       </View>
-    </ScrollView>
+    </FlatList>
   );
 }
 

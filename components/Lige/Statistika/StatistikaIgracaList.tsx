@@ -13,7 +13,7 @@ export default function DetaljiList({ statsData, season, handlePress }) {
       <View style={styles.outerContainer}>
         {Object.keys(statsData.players).map((key) => {
           return (
-            <View style={styles.container}>
+            <View style={styles.container} key={key}>
               <Text style={styles.roundText}>{titleCase(key)}</Text>
               {statsData.players[key].slice(0, 3).map((player) => {
                 return <BestPlayerElementColumn data={player} key={player.id} />;
