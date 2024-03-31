@@ -1,0 +1,105 @@
+import { StyleSheet, ScrollView, ActivityIndicator, Pressable } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View } from "@/components/Themed";
+import { useNavigation } from "expo-router";
+
+import BestPlayerElementColumn from "@/components/Lige/Detalji/BestPlayerElementColumn";
+
+export default function DetaljiList({ season, handlePress }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<Response | null>(null);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    fetch(`http://192.168.0.111:3000/stats/${season.id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading || data === null) {
+    return <ActivityIndicator size="large" color="#00ff00" />;
+  }
+
+  return (
+    <ScrollView>
+      <View style={styles.outerContainer}>
+        {Object.keys(data.players).map((key) => {
+          return (
+            <View style={styles.container}>
+              <Text style={styles.roundText}>{titleCase(key)}</Text>
+              {data.players[key].slice(0, 3).map((player) => {
+                return <BestPlayerElementColumn data={player} key={player.id} />;
+              })}
+
+              <Pressable onPress={() => navigation.navigate("lige/customModal", { season: season, data: data })}>
+                <View style={styles.containerExpand}>
+                  <Text style={styles.expandText}>Proširite</Text>
+                </View>
+              </Pressable>
+            </View>
+          );
+        })}
+      </View>
+    </ScrollView>
+  );
+}
+
+function titleCase(str: string) {
+  const output = str
+    .toLowerCase()
+    .split("_")
+    .map(function (word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+
+  return output.includes("/") ? output.toUpperCase() : output;
+}
+
+const styles = StyleSheet.create({
+  outerContainer: {
+    backgroundColor: "#161e28",
+    position: "relative",
+    flex: 1,
+  },
+  container: {
+    marginTop: 6,
+    backgroundColor: "#10181E",
+    borderWidth: 1,
+    borderColor: "#000000",
+    borderRadius: 10,
+  },
+  roundText: {
+    color: "#686868",
+    fontWeight: "bold",
+    marginLeft: 6,
+    marginTop: 6,
+  },
+  containerExpand: {
+    marginTop: 6,
+    backgroundColor: "#0C1216",
+    borderWidth: 1,
+    borderColor: "#000000",
+    borderRadius: 5,
+    width: 378 - 12,
+    marginLeft: 6,
+    flexDirection: "row",
+    alignItems: "center",
+    textAlign: "center",
+    justifyContent: "center",
+    marginBottom: 6,
+  },
+  expandText: {
+    color: "#C0C0C0",
+    fontWeight: "bold",
+    textAlign: "center",
+    paddingBottom: 3,
+  },
+});

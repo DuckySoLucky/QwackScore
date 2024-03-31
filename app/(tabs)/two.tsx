@@ -1,31 +1,33 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image, ScrollView, Dimensions } from "react-native";
+import { Text, View } from "@/components/Themed";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import LeagueElement from "@/components/Lige/Detalji/LeagueElement";
 
 export default function TabTwoScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
-    </View>
+    <ScrollView style={styles.outerContainer}>
+      <View style={styles.container}>
+        <LeagueElement key={Math.random().toString(36).substring(7)} />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    paddingLeft: 6,
+    paddingRight: 6,
+    paddingTop: 6,
+    backgroundColor: "#161e28", //
+    flexDirection: "row",
+  },
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+    backgroundColor: "#10181E", //
+    borderWidth: 1,
+    borderColor: "#000000",
+    borderRadius: 10,
+    paddingRight: 6,
+    width: Dimensions.get("window").width - 12,
+    height: "100%",
   },
 });
