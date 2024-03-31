@@ -5,11 +5,11 @@ import LeagueElement from "@/components/Lige/Detalji/LeagueElement";
 
 export default function TabTwoScreen() {
   return (
-    <ScrollView style={styles.outerContainer}>
+    <View style={styles.outerContainer}>
       <View style={styles.container}>
         <LeagueElement key={Math.random().toString(36).substring(7)} />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 

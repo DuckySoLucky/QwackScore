@@ -1,5 +1,5 @@
-import { StyleSheet, ScrollView, ActivityIndicator, Pressable, FlatList } from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, ActivityIndicator, Pressable, FlatList } from "react-native";
+import React from "react";
 import { Text, View } from "@/components/Themed";
 import { useNavigation } from "expo-router";
 
@@ -8,31 +8,34 @@ import BestClubElementColumn from "@/components/Lige/Detalji/BestClubElementColu
 export default function DetaljiList({ statsData, season, handlePress }) {
   const navigation = useNavigation();
 
-  return (
-    <FlatList>
-      <View style={styles.outerContainer}>
-        {Object.keys(statsData.teams).map((key) => {
-          if (!statsData.teams[key]?.length) {
-            return <View key={key + Math.random()}></View>;
-          }
+  const renderItem = ({ item: key }) => {
+    if (!statsData.teams[key]?.length) {
+      return <View key={key + Math.random()}></View>;
+    }
 
-          return (
-            <View style={styles.container} key={key + Math.random()}>
-              <Text style={styles.roundText}>{titleCase(key)}</Text>
-              {statsData.teams[key].slice(0, 3).map((team) => {
-                return <BestClubElementColumn data={team} key={team.id} />;
-              })}
-
-              <Pressable onPress={() => navigation.navigate("lige/customModal", { season: season, data: statsData })}>
-                <View style={styles.containerExpand}>
-                  <Text style={styles.expandText}>Proširite</Text>
-                </View>
-              </Pressable>
-            </View>
-          );
+    return (
+      <View style={styles.container} key={key + Math.random()}>
+        <Text style={styles.roundText}>{titleCase(key)}</Text>
+        {statsData.teams[key].slice(0, 3).map((team) => {
+          return <BestClubElementColumn data={team} key={team.id} />;
         })}
+
+        <Pressable onPress={() => navigation.navigate("lige/customModal", { season: season, data: statsData })}>
+          <View style={styles.containerExpand}>
+            <Text style={styles.expandText}>Proširite</Text>
+          </View>
+        </Pressable>
       </View>
-    </FlatList>
+    );
+  };
+
+  return (
+    <FlatList
+      data={Object.keys(statsData.teams)}
+      renderItem={renderItem}
+      keyExtractor={(item) => item}
+      contentContainerStyle={styles.outerContainer}
+    />
   );
 }
 
@@ -52,7 +55,6 @@ const styles = StyleSheet.create({
   outerContainer: {
     backgroundColor: "#161e28",
     position: "relative",
-    flex: 1,
   },
   container: {
     marginTop: 6,

@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, ActivityIndicator, Pressable } from "react-native";
+import { StyleSheet, FlatList, ActivityIndicator, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "@/components/Themed";
 import { useNavigation } from "expo-router";
@@ -8,27 +8,28 @@ import BestPlayerElementColumn from "@/components/Lige/Detalji/BestPlayerElement
 export default function DetaljiList({ statsData, season, handlePress }) {
   const navigation = useNavigation();
 
-  return (
-    <ScrollView>
-      <View style={styles.outerContainer}>
-        {Object.keys(statsData.players).map((key) => {
-          return (
-            <View style={styles.container} key={key}>
-              <Text style={styles.roundText}>{titleCase(key)}</Text>
-              {statsData.players[key].slice(0, 3).map((player) => {
-                return <BestPlayerElementColumn data={player} key={player.id} />;
-              })}
+  const renderItem = ({ item: key }) => (
+    <View style={styles.container}>
+      <Text style={styles.roundText}>{titleCase(key)}</Text>
+      {statsData.players[key].slice(0, 3).map((player) => {
+        return <BestPlayerElementColumn data={player} key={player.id} />;
+      })}
 
-              <Pressable onPress={() => navigation.navigate("lige/customModal", { season: season, data: data })}>
-                <View style={styles.containerExpand}>
-                  <Text style={styles.expandText}>Proširite</Text>
-                </View>
-              </Pressable>
-            </View>
-          );
-        })}
-      </View>
-    </ScrollView>
+      <Pressable onPress={() => navigation.navigate("lige/customModal", { season: season, data: data })}>
+        <View style={styles.containerExpand}>
+          <Text style={styles.expandText}>Proširite</Text>
+        </View>
+      </Pressable>
+    </View>
+  );
+
+  return (
+    <FlatList
+      data={Object.keys(statsData.players)}
+      renderItem={renderItem}
+      keyExtractor={(item) => item}
+      contentContainerStyle={styles.outerContainer}
+    />
   );
 }
 
