@@ -1,0 +1,30 @@
+{
+  "competitors": [
+    {
+      "id": "sr:competitor:43917",
+      "image": "https://media.discordapp.net/attachments/970319574048333865/1223269770703667260/srcompetitor43917.png?ex=66193dc0&is=6606c8c0&hm=3fa4abf320aace11722b52f77196191cd1e7707906061414487e67c163333d25&",
+      "name": "Gorica",
+      "position": "left",
+      "qualifier": "home"
+    },
+    {
+      "id": "sr:competitor:25529",
+      "image": "https://cdn.discordapp.com/attachments/970319574048333865/1223269770057482290/srcompetitor25529.png?ex=66193dc0&is=6606c8c0&hm=f7493f126caad246d493fd36d27ff180f748fabf73657a1a6333af3c089b0791&",
+      "name": "Istra 1961",
+      "position": "right",
+      "qualifier": "away"
+    }
+  ],
+  "information": {
+    "attendance": "???",
+    "capacity": 8000,
+    "date": "5/25/2024, 7:00:00 PM",
+    "location": "Velika Gorica, Hrvatska",
+    "referee": [[]],
+    "round": 36,
+    "stadium": "Radnik",
+    "weather": "Uknown"
+  },
+  "scores": { "away": [], "home": [] },
+  "timeline": []
+}

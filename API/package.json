@@ -1,0 +1,28 @@
+{
+  "name": "footballleague",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@typescript-eslint/parser": "^7.4.0",
+    "chalk": "^5.3.0",
+    "cors": "^2.8.5",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-deprecation": "^2.0.0",
+    "express": "^4.19.2",
+    "moment": "^2.30.1",
+    "mongodb": "^6.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.43.0",
+    "eslint-plugin-import": "^2.27.5",
+    "nodemon": "^2.0.22",
+    "prettier": "2.8.8"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mongo": {
+    "dbUrl": "mongodb://127.0.0.1:27017",
+    "dbName": "duckysoluccky"
+  },
+  "server": {
+    "port": 3000
+  },
+  "API": {
+    "sportTrader": "YRs41BLvZp5lonf3pn6j85NRPk4vk4rj1QxTIeW7"
+  }
+}
