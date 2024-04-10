@@ -7,13 +7,13 @@ export default function LeagueElementColumn({ season }) {
     <View style={styles.container}>
       <Image
         source={{
-          uri: "https://media.discordapp.net/attachments/970319574048333865/1222971718830788828/image.png?ex=6618282b&is=6605b32b&hm=25805bbc9dd4c95bbe8da48c9c8668b096be65f88f8af693598877594f940ca6&=&format=webp&quality=lossless",
+          uri: "https://media.discordapp.net/attachments/970319574048333865/1223271293957312622/default-removebg-preview.png?ex=66193f2b&is=6606ca2b&hm=09fd00eda2fc4ba7292b1cf810c58ca9a211a44a25654d9e606703486dd97a49&=&format=webp&quality=lossless",
         }}
         style={styles.logoImage}
         resizeMode="contain"
       />
 
-      <Text>{season.name}</Text>
+      <Text style={styles.seasonName}>{season.name}</Text>
       <Image
         source={{
           uri: "https://media.discordapp.net/attachments/970319574048333865/1222974383438561391/image.png?ex=66182aa6&is=6605b5a6&hm=8a41fcfe01f5b17609647e57c8946225d59ffe47dad0cd51c1313a3238519734&=&format=webp&quality=lossless",
@@ -54,5 +54,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  seasonName: {
+    marginLeft: 6,
   },
 });

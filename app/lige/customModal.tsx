@@ -8,6 +8,7 @@ import DetaljiList from "@/components/Lige/Detalji/DetaljiList";
 import PoredakList from "@/components/Lige/Poredak/PoredakList";
 
 export default function LigaPoredakScreen() {
+  
   return (
     <View style={styles.container}>
       <Text>YOOOOOOO</Text>

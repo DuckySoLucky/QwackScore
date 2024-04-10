@@ -1,14 +1,18 @@
 import React, { useRef, useEffect, memo } from "react";
-import { StyleSheet, FlatList } from "react-native";
+import { StyleSheet, FlatList, Pressable } from "react-native";
 import { Text, View } from "@/components/Themed";
+import { Link, Tabs } from "expo-router";
 
 import FootballGameListColumn from "@/components/Utakmice/FootballGameListColumn";
 import { Competition, Response, Schedules } from "@/types/data";
 
 const MemoizedFootballGameListColumn = memo(FootballGameListColumn);
 
+import { useNavigation } from "expo-router";
+
 export default function FootballGameList({ data }) {
   const scrollViewRef = useRef(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     setTimeout(() => {
@@ -21,7 +25,11 @@ export default function FootballGameList({ data }) {
       <Text style={styles.roundText}>Runda {round}</Text>
       {matches.map((match) => {
         if (match.status === "closed" || match.status === "not_started") {
-          return <MemoizedFootballGameListColumn data={match} key={match.id} />;
+          return (
+            <Pressable onPress={() => navigation.navigate("utakmice/utakmica", { match: match, test: "teysta" })}>
+              <MemoizedFootballGameListColumn data={match} key={match.id} />
+            </Pressable>
+          );
         } else {
           return null;
         }

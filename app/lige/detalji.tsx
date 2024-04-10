@@ -65,11 +65,27 @@ export default function LigaDetaljiScreen({ state = "details" }) {
   }, []);
 
   const [selectedView, setSelectedView] = useState(state);
-  const ViewComponent = VIEW_COMPONENTS[selectedView] || VIEW_COMPONENTS.default;
+  const ViewComponent = VIEW_COMPONENTS[selectedView as keyof typeof VIEW_COMPONENTS] || VIEW_COMPONENTS.default;
 
-  const handleViewChange = (view) => {
+  const handleViewChange = (view: string) => {
     setSelectedView(view);
   };
+
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#00ff00" />;
+  }
+
+  const teamStatsDisabled = Object.keys(statsData.players).length
+    ? Object.keys(statsData.players)
+        .map((player) => player.team.length)
+        .reduce((acc, curr) => acc + curr, 0) === 0
+    : true;
+
+  const playerStatsDisabled = Object.keys(statsData.players).length
+    ? Object.keys(statsData.players)
+        .map((player) => player.stats.length)
+        .reduce((acc, curr) => acc + curr, 0) === 0
+    : true;
 
   return (
     <View style={styles.container}>
@@ -80,29 +96,39 @@ export default function LigaDetaljiScreen({ state = "details" }) {
         <Pressable onPress={() => handleViewChange("utakmice")}>
           <Text style={selectedView === "utakmice" ? styles.selectedTitle : styles.title}>Utakmice</Text>
         </Pressable>
-        <Pressable onPress={() => handleViewChange("poredak")}>
-          <Text style={selectedView === "poredak" ? styles.selectedTitle : styles.title}>Poredak</Text>
-        </Pressable>
-        <Pressable onPress={() => handleViewChange("player_stats")}>
-          <Text style={selectedView === "player_stats" ? styles.selectedTitle : styles.title}>Statistika Igraca</Text>
-        </Pressable>
-        <Pressable onPress={() => handleViewChange("team_stats")}>
-          <Text style={selectedView === "team_stats" ? styles.selectedTitle : styles.title}>Statistika Timova</Text>
-        </Pressable>
+        {standingsData.length ? (
+          <Pressable onPress={() => handleViewChange("poredak")}>
+            <Text style={selectedView === "poredak" ? styles.selectedTitle : styles.title}>Poredak</Text>
+          </Pressable>
+        ) : (
+          <></>
+        )}
+
+        {!playerStatsDisabled ? (
+          <Pressable onPress={() => handleViewChange("player_stats")}>
+            <Text style={selectedView === "player_stats" ? styles.selectedTitle : styles.title}>Statistika Igraca</Text>
+          </Pressable>
+        ) : (
+          <></>
+        )}
+
+        {!teamStatsDisabled ? (
+          <Pressable onPress={() => handleViewChange("team_stats")}>
+            <Text style={selectedView === "team_stats" ? styles.selectedTitle : styles.title}>Statistika Timova</Text>
+          </Pressable>
+        ) : (
+          <></>
+        )}
       </ScrollView>
 
       <View style={styles.statsContainer}>
-        {isLoading ? (
-          <ActivityIndicator size="large" color="#00ff00" />
-        ) : (
-          <ViewComponent
-            statsData={statsData}
-            utakmiceData={schedulesData}
-            standingsData={standingsData}
-            season={season}
-            handlePress={handleViewChange}
-          />
-        )}
+        <ViewComponent
+          statsData={statsData}
+          utakmiceData={schedulesData}
+          standingsData={standingsData}
+          season={season}
+          handlePress={handleViewChange}
+        />
       </View>
     </View>
   );
