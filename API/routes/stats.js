@@ -1,4 +1,4 @@
-import { getImage, wrap } from "../src/helper.js";
+import { wrap } from "../src/helper.js";
 import { getPlayerStats, getStandings } from "../src/lib.js";
 
 export default wrap(async function (req, res) {
@@ -20,7 +20,7 @@ export default wrap(async function (req, res) {
             return {
                 id: player.id,
                 name: player.name.includes(",") ? (player.name.split(",")[1] + " " + player.name.split(",")[0]).trim() : player.name,
-                clubImage: getImage(player.competitors[0].id),
+                clubImage: "https://i.imgur.com/nDDfr5c.png",
                 clubName: player.competitors[0].name,
                 amount: player.competitors[0].datapoints[0].value,
                 position: allPlayers.indexOf(player) + 1,
@@ -45,7 +45,7 @@ export default wrap(async function (req, res) {
             output.teams[statName].push({
                 id: team.competitor.id,
                 name: team.competitor.name,
-                image: getImage(team.competitor.id),
+                image: "https://i.imgur.com/nDDfr5c.png",
                 amount: amount,
                 position: standing.groups[0].standings.indexOf(team) + 1,
             });

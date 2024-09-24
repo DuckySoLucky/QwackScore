@@ -1,7 +1,7 @@
 import { StyleSheet, Image, ScrollView, Dimensions } from "react-native";
 import { Text, View } from "@/components/Themed";
 
-import LeagueElement from "@/components/Lige/Detalji/LeagueElement";
+import LeagueElement from "@/components/old/Lige/Detalji/LeagueElement";
 
 export default function TabTwoScreen() {
   return (

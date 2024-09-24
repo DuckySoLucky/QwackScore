@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback, memo } from "react";
 import { Link, Tabs } from "expo-router";
 
 import { Text, View } from "@/components/Themed";
-import LeagueElementColumn from "@/components/Lige/Detalji/LeagueElementColumn";
+import LeagueElementColumn from "@/components/old/Lige/Detalji/LeagueElementColumn";
 import { useNavigation } from "expo-router";
 
 const LeagueElement = () => {
@@ -12,7 +12,7 @@ const LeagueElement = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    fetch("http://192.168.0.111:3000/seasons")
+    fetch("http://192.168.90.103:3000/seasons")
       .then((response) => response.json())
       .then((data) => {
         setData(data.data);

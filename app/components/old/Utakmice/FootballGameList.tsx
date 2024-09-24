@@ -3,7 +3,7 @@ import { StyleSheet, FlatList, Pressable } from "react-native";
 import { Text, View } from "@/components/Themed";
 import { Link, Tabs } from "expo-router";
 
-import FootballGameListColumn from "@/components/Utakmice/FootballGameListColumn";
+import FootballGameListColumn from "@/components/old/Utakmice/FootballGameListColumn";
 import { Competition, Response, Schedules } from "@/types/data";
 
 const MemoizedFootballGameListColumn = memo(FootballGameListColumn);
@@ -26,7 +26,7 @@ export default function FootballGameList({ data }) {
       {matches.map((match) => {
         if (match.status === "closed" || match.status === "not_started") {
           return (
-            <Pressable onPress={() => navigation.navigate("utakmice/utakmica", { match: match, test: "teysta" })}>
+            <Pressable onPress={() => navigation.navigate("utakmice/utakmica", { match: match })}>
               <MemoizedFootballGameListColumn data={match} key={match.id} />
             </Pressable>
           );

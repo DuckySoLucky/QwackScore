@@ -1,31 +1,37 @@
-import { StyleSheet, FlatList, ActivityIndicator, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, ActivityIndicator, Pressable, FlatList } from "react-native";
+import React from "react";
 import { Text, View } from "@/components/Themed";
 import { useNavigation } from "expo-router";
 
-import BestPlayerElementColumn from "@/components/Lige/Detalji/BestPlayerElementColumn";
+import BestClubElementColumn from "@/components/old/Lige/Detalji/BestClubElementColumn";
 
 export default function DetaljiList({ statsData, season, handlePress }) {
   const navigation = useNavigation();
 
-  const renderItem = ({ item: key }) => (
-    <View style={styles.container}>
-      <Text style={styles.roundText}>{titleCase(key)}</Text>
-      {statsData.players[key].slice(0, 3).map((player) => {
-        return <BestPlayerElementColumn data={player} key={player.id} />;
-      })}
+  const renderItem = ({ item: key }) => {
+    if (!statsData.teams[key]?.length) {
+      return <View key={key + Math.random()}></View>;
+    }
 
-      <Pressable onPress={() => navigation.navigate("lige/customModal", { season: season, data: data })}>
-        <View style={styles.containerExpand}>
-          <Text style={styles.expandText}>Proširite</Text>
-        </View>
-      </Pressable>
-    </View>
-  );
+    return (
+      <View style={styles.container} key={key + Math.random()}>
+        <Text style={styles.roundText}>{titleCase(key)}</Text>
+        {statsData.teams[key].slice(0, 3).map((team) => {
+          return <BestClubElementColumn data={team} key={team.id} />;
+        })}
+
+        <Pressable onPress={() => navigation.navigate("lige/customModal", { season: season, data: statsData })}>
+          <View style={styles.containerExpand}>
+            <Text style={styles.expandText}>Proširite</Text>
+          </View>
+        </Pressable>
+      </View>
+    );
+  };
 
   return (
     <FlatList
-      data={Object.keys(statsData.players)}
+      data={Object.keys(statsData.teams)}
       renderItem={renderItem}
       keyExtractor={(item) => item}
       contentContainerStyle={styles.outerContainer}
@@ -49,7 +55,6 @@ const styles = StyleSheet.create({
   outerContainer: {
     backgroundColor: "#161e28",
     position: "relative",
-    flex: 1,
   },
   container: {
     marginTop: 6,
@@ -57,6 +62,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#000000",
     borderRadius: 10,
+    paddingRight: 6,
   },
   roundText: {
     color: "#686868",

@@ -12,10 +12,10 @@ import {
 import React, { useEffect, useState } from "react";
 import { Text, View } from "@/components/Themed";
 
-import SoccerFieldElement from "@/components/Competitor/Postave/Elements/SoccerFieldElement";
-import CoachElement from "@/components/Competitor/Postave/Elements/SubstitutionElement";
-import SubstitutionElement from "@/components/Competitor/Postave/Elements/SubstitutionElement";
-import ProgressElement from "@/components/Competitor/Statistika/Elements/ProgressElement";
+import SoccerFieldElement from "@/components/old/Competitor/Postave/Elements/SoccerFieldElement";
+import CoachElement from "@/components/old/Competitor/Postave/Elements/SubstitutionElement";
+import SubstitutionElement from "@/components/old/Competitor/Postave/Elements/SubstitutionElement";
+import ProgressElement from "@/components/old/Competitor/Statistika/Elements/ProgressElement";
 
 export default function DetaljiList({ summaryData }) {
   const renderComponents = () => {

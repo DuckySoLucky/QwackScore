@@ -13,6 +13,9 @@ import EditScreenInfo from "@/components/EditScreenInfo";
 import React, { useEffect, useState, useRef } from "react";
 import { Text, View } from "@/components/Themed";
 import { StatusBar } from "expo-status-bar";
+import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const SearchBar = ({ setSearch }) => {
   const inputRef = useRef(null);
@@ -41,23 +44,24 @@ const SearchBar = ({ setSearch }) => {
 };
 
 export default function ModalScreen() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<Response | null>(null);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Example />
+    </QueryClientProvider>
+  );
+}
+
+function Example() {
   const [search, setSearch] = useState("");
   const navigation = useNavigation();
 
-  useEffect(() => {
-    fetch("http://192.168.0.111:3000/seasons")
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setIsLoading(false);
-      });
-  }, []);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      fetch("http://192.168.90.103:3000/seasons")
+        .then((res) => res.json())
+        .then((data) => data.data),
+  });
 
   useEffect(() => {
     navigation.setOptions({
@@ -71,7 +75,7 @@ export default function ModalScreen() {
     });
   }, [navigation]);
 
-  if (isLoading || data === null) {
+  if (isPending) {
     return <ActivityIndicator size="large" color="#00ff00" />;
   }
 

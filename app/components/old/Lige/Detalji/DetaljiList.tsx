@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Text, View } from "@/components/Themed";
 import { useNavigation } from "expo-router";
 
-import FootballGameAlertColumn from "@/components/Utakmice/FootballGameAlertColumn";
-import BestPlayerElementColumn from "@/components/Lige/Detalji/BestPlayerElementColumn";
-import BestClubElementColumn from "@/components/Lige/Detalji/BestClubElementColumn";
-import FootballGameListColumn from "@/components/Utakmice/FootballGameListColumn";
+import FootballGameAlertColumn from "@/components/old/Utakmice/FootballGameAlertColumn";
+import BestPlayerElementColumn from "@/components/old/Lige/Detalji/BestPlayerElementColumn";
+import BestClubElementColumn from "@/components/old/Lige/Detalji/BestClubElementColumn";
+import FootballGameListColumn from "@/components/old/Utakmice/FootballGameListColumn";
 
 export default function DetaljiList({ utakmiceData, statsData, season, handlePress }) {
   const navigation = useNavigation();

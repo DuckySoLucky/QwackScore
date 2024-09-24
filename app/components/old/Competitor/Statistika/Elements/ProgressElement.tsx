@@ -12,9 +12,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { Text, View } from "@/components/Themed";
 
-import SoccerFieldElement from "@/components/Competitor/Postave/Elements/SoccerFieldElement";
-import CoachElement from "@/components/Competitor/Postave/Elements/SubstitutionElement";
-import SubstitutionElement from "@/components/Competitor/Postave/Elements/SubstitutionElement";
+import SoccerFieldElement from "@/components/old/Competitor/Postave/Elements/SoccerFieldElement";
+import CoachElement from "@/components/old/Competitor/Postave/Elements/SubstitutionElement";
+import SubstitutionElement from "@/components/old/Competitor/Postave/Elements/SubstitutionElement";
 
 export default function DetaljiList({
   name,

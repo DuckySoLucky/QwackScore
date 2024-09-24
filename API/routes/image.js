@@ -1,5 +1,5 @@
 import config from "../config.json" assert { type: "json" };
-import { getHeadshotManifest } from "../src/lib.js";
+import { getPlayerImages } from "../src/lib.js";
 import { wrap } from "../src/helper.js";
 
 export default wrap(async function (req, res) {
@@ -8,7 +8,7 @@ export default wrap(async function (req, res) {
         return res.status(400).json({ error: "Invalid playerId" });
     }
 
-    const data = await getHeadshotManifest();
+    const data = await getPlayerImages();
 
     const output = data.find((a) => a.player_id === playerId);
 

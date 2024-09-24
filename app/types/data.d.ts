@@ -1,8 +1,6 @@
 export type Response = {
   matches: Competition[];
-  schedules: {
-    [number]: Competition[];
-  };
+  schedules: Recprd<number, Competition[]>;
 };
 
 export type Competition = {
@@ -10,7 +8,7 @@ export type Competition = {
   startTime: number;
   startTimeFormatted: string;
   round: number;
-  status: string;
+  status: "not_started" | "closed";
   competitors: {
     id: string;
     name: string;
@@ -22,6 +20,4 @@ export type Competition = {
   winner?: string;
 };
 
-export type Schedules = {
-  [number]: Competition[];
-};
+export type Schedules = Record<string, Competition[]>;

@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, Pressable, ActivityIndicator } from "react-native";
 import { Text, View } from "@/components/Themed";
-import DetaljiList from "@/components/Lige/Detalji/DetaljiList";
-import PoredakList from "@/components/Lige/Poredak/PoredakList";
-import UtakmiceList from "@/components/Lige/Utakmice/UtakmiceList";
-import StatistikaIgracaList from "@/components/Lige/Statistika/StatistikaIgracaList";
-import StatistikaClubaList from "@/components/Lige/Statistika/StatistikaClubaList";
+import DetaljiList from "@/components/old/Lige/Detalji/DetaljiList";
+import PoredakList from "@/components/old/Lige/Poredak/PoredakList";
+import UtakmiceList from "@/components/old/Lige/Utakmice/UtakmiceList";
+import StatistikaIgracaList from "@/components/old/Lige/Statistika/StatistikaIgracaList";
+import StatistikaClubaList from "@/components/old/Lige/Statistika/StatistikaClubaList";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
+import { QueryClient, QueryClientProvider, useQuery, useQueries } from "@tanstack/react-query";
 
 const API_ENDPOINTS = {
-  standings: "http://192.168.0.111:3000/standings",
-  schedules: "http://192.168.0.111:3000/schedules",
-  stats: "http://192.168.0.111:3000/stats",
+  standings: "http://192.168.90.103:3000/standings",
+  schedules: "http://192.168.90.103:3000/schedules",
+  stats: "http://192.168.90.103:3000/stats",
 };
 
-async function fetchData(endpoint, id) {
+async function fetchData(endpoint: string, id: string) {
   const response = await fetch(`${endpoint}/${id}`);
   const data = await response.json();
   return data.data;
@@ -29,9 +30,20 @@ const VIEW_COMPONENTS = {
   default: DetaljiList,
 };
 
+const queryClient = new QueryClient();
+
 export default function LigaDetaljiScreen({ state = "details" }) {
   const route = useRoute();
   const season = route.params.season;
+  if (!season) {
+    return <Text>Season not found</Text>;
+  }
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <DetaljiElement seasonId={season} state={state} />
+    </QueryClientProvider>
+  );
 
   const navigation = useNavigation();
   useEffect(() => {
@@ -86,6 +98,79 @@ export default function LigaDetaljiScreen({ state = "details" }) {
         .map((player) => player.stats.length)
         .reduce((acc, curr) => acc + curr, 0) === 0
     : true;
+}
+
+function DetaljiElement({ seasonId, state }) {
+  const queryMultiple = () => {
+    const {
+      isPending,
+      error,
+      data: standingsData,
+    } = useQuery({
+      queryKey: ["standingsData"],
+      queryFn: () => fetch(`${API_ENDPOINTS.standings}/${seasonId}`).then((res) => res.json()),
+    });
+
+    const {
+      isPending: isPendingSchedules,
+      error: errorSchedules,
+      data: schedulesData,
+    } = useQuery({
+      queryKey: ["schedulesData"],
+      queryFn: () => fetch(`${API_ENDPOINTS.schedules}/${seasonId}`).then((res) => res.json()),
+    });
+
+    const {
+      isPending: isPendingStats,
+      error: errorStats,
+      data: statsData,
+    } = useQuery({
+      queryKey: ["statsData"],
+      queryFn: () => fetch(`${API_ENDPOINTS.stats}/${seasonId}`).then((res) => res.json()),
+    });
+
+    return {
+      isPending,
+      error,
+      standingsData,
+      isPendingSchedules,
+      errorSchedules,
+      schedulesData,
+      isPendingStats,
+      errorStats,
+      statsData,
+    };
+  };
+
+  const {
+    isPending,
+    error,
+    standingsData,
+    isPendingSchedules,
+    errorSchedules,
+    schedulesData,
+    isPendingStats,
+    errorStats,
+    statsData,
+  } = queryMultiple();
+
+  if (isPending) return <Text>Loading...</Text>;
+  if (error) return <Text>Error: {error.message}</Text>;
+
+  const [selectedView, setSelectedView] = useState(state);
+  const handleViewChange = (view: string) => {
+    setSelectedView(view);
+  };
+
+  const statsDataKeys = Object.keys(statsData.players);
+  const teamStatsDisabled = statsDataKeys.length
+    ? statsDataKeys.map((player) => player.team.length).reduce((acc, curr) => acc + curr, 0) === 0
+    : true;
+
+  const playerStatsKeys = Object.keys(statsData.players);
+  const playerStatsDisabled = playerStatsKeys.length
+    ? playerStatsKeys.map((player) => player.stats.length).reduce((acc, curr) => acc + curr, 0) === 0
+    : true;
 
   return (
     <View style={styles.container}>
@@ -93,32 +178,22 @@ export default function LigaDetaljiScreen({ state = "details" }) {
         <Pressable onPress={() => handleViewChange("details")}>
           <Text style={selectedView === "details" ? styles.selectedTitle : styles.title}>Detalji</Text>
         </Pressable>
+
         <Pressable onPress={() => handleViewChange("utakmice")}>
           <Text style={selectedView === "utakmice" ? styles.selectedTitle : styles.title}>Utakmice</Text>
         </Pressable>
-        {standingsData.length ? (
-          <Pressable onPress={() => handleViewChange("poredak")}>
-            <Text style={selectedView === "poredak" ? styles.selectedTitle : styles.title}>Poredak</Text>
-          </Pressable>
-        ) : (
-          <></>
-        )}
 
-        {!playerStatsDisabled ? (
-          <Pressable onPress={() => handleViewChange("player_stats")}>
-            <Text style={selectedView === "player_stats" ? styles.selectedTitle : styles.title}>Statistika Igraca</Text>
-          </Pressable>
-        ) : (
-          <></>
-        )}
+        <Pressable onPress={() => handleViewChange("poredak")}>
+          <Text style={selectedView === "poredak" ? styles.selectedTitle : styles.title}>Poredak</Text>
+        </Pressable>
 
-        {!teamStatsDisabled ? (
-          <Pressable onPress={() => handleViewChange("team_stats")}>
-            <Text style={selectedView === "team_stats" ? styles.selectedTitle : styles.title}>Statistika Timova</Text>
-          </Pressable>
-        ) : (
-          <></>
-        )}
+        <Pressable onPress={() => handleViewChange("player_stats")}>
+          <Text style={selectedView === "player_stats" ? styles.selectedTitle : styles.title}>Statistika Igraca</Text>
+        </Pressable>
+
+        <Pressable onPress={() => handleViewChange("team_stats")}>
+          <Text style={selectedView === "team_stats" ? styles.selectedTitle : styles.title}>Statistika Timova</Text>
+        </Pressable>
       </ScrollView>
 
       <View style={styles.statsContainer}>

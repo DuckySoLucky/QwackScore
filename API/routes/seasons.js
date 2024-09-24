@@ -2,7 +2,7 @@ import { wrap } from "../src/helper.js";
 import { getSeasons } from "../src/lib.js";
 
 export default wrap(async function (req, res) {
-    const seasonsData = await getSeasons("2024");
+    const seasonsData = await getSeasons("2025");
 
     const output = {
         seasons: seasonsData,

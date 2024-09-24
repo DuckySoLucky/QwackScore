@@ -2,7 +2,7 @@ import { StyleSheet, ScrollView, ActivityIndicator, Button, TouchableOpacity } f
 import React, { useEffect, useState } from "react";
 import { Text, View } from "@/components/Themed";
 
-import PoredakListElement from "@/components/Lige/Poredak/PoredakListElement";
+import PoredakListElement from "@/components/old/Lige/Poredak/PoredakListElement";
 
 export default function GamesList({ standingsData, season, handlePress }) {
   const [selectedForm, setSelectedForm] = useState("default");

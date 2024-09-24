@@ -394,13 +394,13 @@ async function getSummary(sportEvent) {
     }
 }
 
-async function getHeadshotManifest() {
-    broadcastMessage("getHeadshotManifest called.", "api");
+async function getPlayerImages() {
+    broadcastMessage("getPlayerImages called.", "api");
     const timeNow = Date.now();
 
     const cache = await db.collection("cache").findOne({ key: "headshotManifest" });
     if (cache && cache.value.lastUpdated > Date.now() - 6 * 60 * 60 * 1000) {
-        broadcastMessage(`getHeadshotManifest returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
+        broadcastMessage(`getPlayerImages returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
         return cache.value.data;
     }
 
@@ -412,7 +412,7 @@ async function getHeadshotManifest() {
     });
 
     if (response.status !== 200 || !response.data) {
-        throw new Error(`getHeadshotManifest failed with status ${response.status}`);
+        throw new Error(`getPlayerImages failed with status ${response.status}`);
     }
 
     const data = response.data;
@@ -425,7 +425,7 @@ async function getHeadshotManifest() {
 
     await db.collection("cache").updateOne({ key: "headshotManifest" }, { $set: { value: output } }, { upsert: true });
 
-    broadcastMessage(`getHeadshotManifest returned. (${Date.now() - timeNow}ms)`, "api");
+    broadcastMessage(`getPlayerImages returned. (${Date.now() - timeNow}ms)`, "api");
     return output.data;
 }
 
@@ -441,5 +441,5 @@ export {
     getTimeline,
     getLineup,
     getSummary,
-    getHeadshotManifest,
+    getPlayerImages,
 };

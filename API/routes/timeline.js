@@ -1,4 +1,4 @@
-import { getImage, getPlayerName, titleCase, wrap } from "../src/helper.js";
+import { getPlayerName, titleCase, wrap } from "../src/helper.js";
 import { getTimeline } from "../src/lib.js";
 
 export default wrap(async function (req, res) {
@@ -29,7 +29,7 @@ export default wrap(async function (req, res) {
         return {
             id: competitor.id,
             name: competitor.name,
-            image: getImage(competitor.id),
+            image: "https://i.imgur.com/nDDfr5c.png",
             position: competitor.qualifier === "home" ? "left" : "right",
             qualifier: competitor.qualifier,
             score: timelineData.sport_event_status[`${competitor.qualifier}_score`],

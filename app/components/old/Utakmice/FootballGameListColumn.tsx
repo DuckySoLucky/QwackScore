@@ -11,14 +11,12 @@ export default function FootballGameResultAlert({ data }) {
   const dateYear = splitStartTime[0];
   if (data.status === "closed") {
     const splitDateYear = dateYear.split(".");
-    splitDateYear[2] = splitDateYear[2].slice(2);
 
     startTime = splitDateYear.join(".") + "\nFT";
   } else {
     const dateYear = splitStartTime[0];
     if (dateYear !== "Danas" && dateYear !== "Sutra" && dateYear !== "Jucer") {
       const splitDateYear = dateYear.split(".");
-      splitDateYear[2] = splitDateYear[2].slice(2);
 
       startTime = splitDateYear.join(".") + "\n" + splitStartTime[1];
     }
@@ -86,7 +84,7 @@ export default function FootballGameResultAlert({ data }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 6,
-    backgroundColor: "#0C1216",
+    backgroundColor: "  ",
     borderWidth: 1,
     borderColor: "#000000",
     borderRadius: 5,

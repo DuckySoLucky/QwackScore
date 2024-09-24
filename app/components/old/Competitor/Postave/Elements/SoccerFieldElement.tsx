@@ -2,7 +2,7 @@ import { StyleSheet, Image, ScrollView, ActivityIndicator, Pressable, Dimensions
 import React, { useEffect, useState } from "react";
 import { Text, View } from "@/components/Themed";
 
-import PlayerElement from "@/components/Competitor/Postave/Elements/PlayerElement";
+import PlayerElement from "@/components/old/Competitor/Postave/Elements/PlayerElement";
 
 export default function DetaljiList({ lineupsData }) {
   return (

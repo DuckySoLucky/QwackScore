@@ -12,15 +12,15 @@ import {
 import React, { useEffect, useState } from "react";
 import { Text, View } from "@/components/Themed";
 
-import YellowCardElement from "@/components/Competitor/Detalji/Elements/YellowCardElement";
-import SubstitutionElement from "@/components/Competitor/Detalji/Elements/SubstitutionElement";
-import FreeKickElement from "@/components/Competitor/Detalji/Elements/FreeKickElement";
-import ThrowInElement from "@/components/Competitor/Detalji/Elements/ThrowInElement";
-import ShotSavedElement from "@/components/Competitor/Detalji/Elements/ShotSavedElement";
-import CornerKickElement from "@/components/Competitor/Detalji/Elements/CornerKickElement";
-import ShotOffTarget from "@/components/Competitor/Detalji/Elements/ShotOffTarget";
-import InjuryElement from "@/components/Competitor/Detalji/Elements/InjuryElement";
-import ScoreChangeElement from "@/components/Competitor/Detalji/Elements/ScoreChangeElement";
+import YellowCardElement from "@/components/old/Competitor/Detalji/Elements/YellowCardElement";
+import SubstitutionElement from "@/components/old/Competitor/Detalji/Elements/SubstitutionElement";
+import FreeKickElement from "@/components/old/Competitor/Detalji/Elements/FreeKickElement";
+import ThrowInElement from "@/components/old/Competitor/Detalji/Elements/ThrowInElement";
+import ShotSavedElement from "@/components/old/Competitor/Detalji/Elements/ShotSavedElement";
+import CornerKickElement from "@/components/old/Competitor/Detalji/Elements/CornerKickElement";
+import ShotOffTarget from "@/components/old/Competitor/Detalji/Elements/ShotOffTarget";
+import InjuryElement from "@/components/old/Competitor/Detalji/Elements/InjuryElement";
+import ScoreChangeElement from "@/components/old/Competitor/Detalji/Elements/ScoreChangeElement";
 
 export default function DetaljiList({ timelineData }) {
   const [selectedForm, setSelectedForm] = useState("default");

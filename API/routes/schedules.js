@@ -2,6 +2,17 @@ import { formatCompetitors, wrap } from "../src/helper.js";
 import { getSeasonSchedules } from "../src/lib.js";
 import moment from "moment";
 
+function formatTime(time) {
+    return moment(time).calendar(null, {
+        sameDay: "[Danas] HH:mm",
+        nextDay: "[Sutra] HH:mm",
+        nextWeek: "DD.MM.YY HH:mm",
+        lastDay: "[Jucer] HH:mm",
+        lastWeek: "DD.MM.YY HH:mm",
+        sameElse: "DD.MM.YY HH:mm",
+    });
+}
+
 export default wrap(async function (req, res) {
     const seasonId = req.params.seasonId;
     if (!seasonId || !seasonId.match(/^sr:season:\d+$/)) {
@@ -16,20 +27,14 @@ export default wrap(async function (req, res) {
     const schedules = {};
     for (const schedule of schedulesData) {
         const matchData = schedule.sport_event;
-        const roundNumber = matchData.sport_event_context.round.number;
 
+        const roundNumber = matchData.sport_event_context.round.number;
         schedules[roundNumber] ??= [];
+
         schedules[roundNumber].push({
             id: matchData.id,
             startTime: new Date(matchData.start_time).getTime(),
-            startTimeFormatted: moment(matchData.start_time).calendar(null, {
-                sameDay: "[Danas] HH:mm",
-                nextDay: "[Sutra] HH:mm",
-                nextWeek: "DD.MM.YYYY HH:mm",
-                lastDay: "[Jucer] HH:mm",
-                lastWeek: "DD.MM.YYYY HH:mm",
-                sameElse: "DD.MM.YYYY HH:mm",
-            }),
+            startTimeFormatted: formatTime(matchData.start_time),
             round: roundNumber,
             status: schedule.sport_event_status.status,
             competitors: formatCompetitors(matchData.competitors, schedule.sport_event_status),

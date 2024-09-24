@@ -4,15 +4,15 @@ import { Text, View } from "@/components/Themed";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
 
-import DetaljiList from "@/components/Competitor/Detalji/DetaljiList";
-import PostaveList from "@/components/Competitor/Postave/PostaveList";
-import StatistikaList from "@/components/Competitor/Statistika/StatistikaList";
+import DetaljiList from "@/components/old/Competitor/Detalji/DetaljiList";
+import PostaveList from "@/components/old/Competitor/Postave/PostaveList";
+import StatistikaList from "@/components/old/Competitor/Statistika/StatistikaList";
 import { useRoute } from "@react-navigation/native";
 
 const API_ENDPOINTS = {
-  standings: "http://192.168.0.111:3000/timeline",
-  lineups: "http://192.168.0.111:3000/lineup",
-  summary: "http://192.168.0.111:3000/summary",
+  standings: "http://192.168.90.103:3000/timeline",
+  lineups: "http://192.168.90.103:3000/lineup",
+  summary: "http://192.168.90.103:3000/summary",
 };
 
 async function fetchData(endpoint: string, id: string) {
@@ -80,12 +80,6 @@ export default function ModalScreen() {
       </View>
     );
   }
-
-  console.log(sportEvent);
-
-  console.log("timelineData", timelineData);
-  console.log("lineupsData", lineupsData);
-  console.log("summaryData", summaryData);
 
   const totalScore = timelineData.scores.away.length + timelineData.scores.home.length;
   const lineupAmount = Object.keys(lineupsData.away)

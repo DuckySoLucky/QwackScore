@@ -2,9 +2,8 @@ import { StyleSheet, Image } from "react-native";
 
 import { Text, View } from "@/components/Themed";
 
-const ballImage =
-  "https://media.discordapp.net/attachments/970319574048333865/1222892505117491200/image.png?ex=6617de65&is=66056965&hm=f7cb3f02da2f4067dbb324094b92793014836ba5a881f615def5456cec1190ca&=&format=webp&quality=lossless";
-
+const ballImage = "https://i.imgur.com/Q6nxcJk.png";
+  
 export default function FootballGameAlert(data: { score: string; firstImage: string; secondImage: string }) {
   return (
     <View style={styles.container}>
