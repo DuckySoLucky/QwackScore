@@ -5,9 +5,6 @@ import UtakmiceColumnElement from './UtakmiceColumnElement';
 
 export default function UtakmiceList({ schedulesData }: { schedulesData: SchedulesDataResponse }) {
   const renderItem = useCallback((item: Schedule) => {
-    const getClubStyle = (clubName: string) =>
-      item.winner === clubName ? { ...styles.clubName, color: '#C0C0C0' } : styles.clubName;
-
     return <UtakmiceColumnElement item={item} />;
   }, []);
 

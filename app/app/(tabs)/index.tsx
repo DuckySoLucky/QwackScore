@@ -1,9 +1,7 @@
-import { StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, ActivityIndicator, Text } from 'react-native';
 import { View } from '@/components/Themed';
-import React, { useEffect, useState, useRef } from 'react';
-
-import { Schedule, SchedulesDataResponse } from '../../types/data';
-
+import React from 'react';
+import { Schedule } from '../../types/data';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { NewsResult } from '@/components/Utakmice/NewsResult';
 import UtakmiceList from '@/components/Utakmice/UtakmiceList';
@@ -40,12 +38,14 @@ function Output({ seasonId }: { seasonId: string }) {
   }
 
   return (
-    <View style={styles.container}>
-      <ScrollView horizontal style={styles.topNews}>
-        {schedulesData.matches.map((match: Schedule) => (
-          <NewsResult data={match} key={match.id} />
-        ))}
-      </ScrollView>
+    <View style={styles.outerContainer}>
+      <View style={styles.newsContainer}>
+        <ScrollView horizontal={true} style={styles.topNews}>
+          {schedulesData.matches.slice(0, 5).map((match: Schedule) => (
+            <NewsResult data={match} key={match.id} />
+          ))}
+        </ScrollView>
+      </View>
 
       <UtakmiceList schedulesData={schedulesData} />
     </View>
@@ -53,14 +53,14 @@ function Output({ seasonId }: { seasonId: string }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  outerContainer: {
     backgroundColor: '#161e28',
   },
+  newsContainer: {
+    backgroundColor: 'transparent',
+    marginVertical: 6,
+  },
   topNews: {
-    marginRight: 6,
-    marginLeft: 6,
-    marginTop: 6,
+    paddingHorizontal: 6,
   },
 });
