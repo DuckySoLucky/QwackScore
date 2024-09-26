@@ -1,18 +1,18 @@
-import { StyleSheet, Image, ScrollView, Pressable, ActivityIndicator, Dimensions } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Text, View } from "@/components/Themed";
-import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "expo-router";
+import { StyleSheet, Image, ScrollView, Pressable, ActivityIndicator, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from '@/components/Themed';
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from 'expo-router';
 
-import DetaljiList from "@/components/old/Competitor/Detalji/DetaljiList";
-import PostaveList from "@/components/old/Competitor/Postave/PostaveList";
-import StatistikaList from "@/components/old/Competitor/Statistika/StatistikaList";
-import { useRoute } from "@react-navigation/native";
+import DetaljiList from '@/components/old/Competitor/Detalji/DetaljiList';
+import PostaveList from '@/components/old/Competitor/Postave/PostaveList';
+import StatistikaList from '@/components/old/Competitor/Statistika/StatistikaList';
+import { useRoute } from '@react-navigation/native';
 
 const API_ENDPOINTS = {
-  standings: "http://192.168.90.103:3000/timeline",
-  lineups: "http://192.168.90.103:3000/lineup",
-  summary: "http://192.168.90.103:3000/summary",
+  standings: 'http://192.168.90.103:3000/timeline',
+  lineups: 'http://192.168.90.103:3000/lineup',
+  summary: 'http://192.168.90.103:3000/summary',
 };
 
 async function fetchData(endpoint: string, id: string) {
@@ -42,9 +42,9 @@ export default function ModalScreen() {
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
-  const [timelineData, setTimelineData] = useState<Response | null>(null);
-  const [lineupsData, setLineupsData] = useState<Response | null>(null);
-  const [summaryData, setSummaryData] = useState<Response | null>(null);
+  const [timelineData, setTimelineData] = useState<SchedulesDataResponse | null>(null);
+  const [lineupsData, setLineupsData] = useState<SchedulesDataResponse | null>(null);
+  const [summaryData, setSummaryData] = useState<SchedulesDataResponse | null>(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -60,14 +60,14 @@ export default function ModalScreen() {
         const summaryData = await fetchData(API_ENDPOINTS.summary, sportEvent.id);
         setSummaryData(summaryData);
       } catch (error) {
-        console.error("Error:", error);
+        console.error('Error:', error);
       }
     };
 
     fetchAllData().then(() => setIsLoading(false));
   }, []);
 
-  const [selectedView, setSelectedView] = useState("default");
+  const [selectedView, setSelectedView] = useState('default');
   const ViewComponent = VIEW_COMPONENTS[selectedView as keyof typeof VIEW_COMPONENTS] || VIEW_COMPONENTS.default;
   const handleViewChange = (view: string) => {
     setSelectedView(view);
@@ -93,7 +93,7 @@ export default function ModalScreen() {
         <AntDesign style={styles.backIcon} size={28} name="arrowleft" />
         <Image
           source={{
-            uri: "https://media.discordapp.net/attachments/970319574048333865/1224086326551253133/image.png?ex=661c363a&is=6609c13a&hm=1eb594e564e0d4a637cd90cd5ef77824dbe893a84b3bbba9185205a8c3f18dd5&=&format=webp&quality=lossless",
+            uri: 'https://media.discordapp.net/attachments/970319574048333865/1224086326551253133/image.png?ex=661c363a&is=6609c13a&hm=1eb594e564e0d4a637cd90cd5ef77824dbe893a84b3bbba9185205a8c3f18dd5&=&format=webp&quality=lossless',
           }}
           style={styles.shareIcon}
           resizeMode="contain"
@@ -114,12 +114,12 @@ export default function ModalScreen() {
 
           <View style={styles.column}>
             <Text style={styles.dateText}>
-              {timelineData.information.status === "ended"
+              {timelineData.information.status === 'ended'
                 ? `${timelineData.competitors[0].score} - ${timelineData.competitors[1].score}`
                 : `${timelineData.information.dateTop}`}
             </Text>
             <Text style={styles.timeText}>
-              {timelineData.information.status === "ended" ? "Finished" : `${timelineData.information.timeTop}`}
+              {timelineData.information.status === 'ended' ? 'Finished' : `${timelineData.information.timeTop}`}
             </Text>
           </View>
 
@@ -145,7 +145,7 @@ export default function ModalScreen() {
 
             <Image
               source={{
-                uri: "https://media.discordapp.net/attachments/970319574048333865/1224481718774534164/image.png?ex=661da677&is=660b3177&hm=92d0931d1c66359c56b34f807c7b442a9b81956b9f5601335f02f4759dd3e93b&=&format=webp&quality=lossless",
+                uri: 'https://media.discordapp.net/attachments/970319574048333865/1224481718774534164/image.png?ex=661da677&is=660b3177&hm=92d0931d1c66359c56b34f807c7b442a9b81956b9f5601335f02f4759dd3e93b&=&format=webp&quality=lossless',
               }}
               style={styles.footballScoreIcon}
               resizeMode="contain"
@@ -162,20 +162,20 @@ export default function ModalScreen() {
         )}
 
         <View style={styles.scrollViewCenter}>
-          <Pressable onPress={() => handleViewChange("default")}>
-            <Text style={selectedView === "default" ? styles.selectedTitle : styles.title}>Detalji</Text>
+          <Pressable onPress={() => handleViewChange('default')}>
+            <Text style={selectedView === 'default' ? styles.selectedTitle : styles.title}>Detalji</Text>
           </Pressable>
           {lineupAmount ? (
-            <Pressable onPress={() => handleViewChange("postave")}>
-              <Text style={selectedView === "postave" ? styles.selectedTitle : styles.title}>Postave</Text>
+            <Pressable onPress={() => handleViewChange('postave')}>
+              <Text style={selectedView === 'postave' ? styles.selectedTitle : styles.title}>Postave</Text>
             </Pressable>
           ) : (
             <></>
           )}
 
           {summaryDisabled ? (
-            <Pressable onPress={() => handleViewChange("statistika")}>
-              <Text style={selectedView === "statistika" ? styles.selectedTitle : styles.title}>Statistika</Text>
+            <Pressable onPress={() => handleViewChange('statistika')}>
+              <Text style={selectedView === 'statistika' ? styles.selectedTitle : styles.title}>Statistika</Text>
             </Pressable>
           ) : (
             <></>
@@ -196,14 +196,14 @@ export default function ModalScreen() {
 
 const styles = StyleSheet.create({
   navbar: {
-    backgroundColor: "#0C1216",
+    backgroundColor: '#0C1216',
     flex: 1,
   },
   outerContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   shareIcon: {
-    position: "absolute",
+    position: 'absolute',
     top: 50,
     right: 16,
     height: 28,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     height: 32,
     width: 32,
-    color: "#C0C0C0",
+    color: '#C0C0C0',
   },
   leftClubIcon: {
     height: 64,
@@ -225,75 +225,75 @@ const styles = StyleSheet.create({
     width: 64,
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginHorizontal: 32,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   column: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
     maxWidth: 96,
   },
   dateText: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   timeText: {
     fontSize: 16,
   },
   clubName: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: 4,
-    alignContent: "center",
-    textAlign: "center",
+    alignContent: 'center',
+    textAlign: 'center',
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#686868",
+    fontWeight: 'bold',
+    color: '#686868',
     marginRight: 40,
-    textAlign: "center",
-    alignItems: "center",
+    textAlign: 'center',
+    alignItems: 'center',
     width: 86,
   },
   selectedTitle: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#CA5509",
+    fontWeight: 'bold',
+    color: '#CA5509',
     marginRight: 40,
-    textAlign: "center",
-    alignItems: "center",
+    textAlign: 'center',
+    alignItems: 'center',
     width: 86,
   },
   goalScorersTextContainerRight: {
     width: 128,
     marginTop: 16,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   goalScorersTextRight: {
-    color: "#C0C0C0",
+    color: '#C0C0C0',
     fontSize: 13,
-    textAlign: "right",
+    textAlign: 'right',
   },
   goalScorersTextLeft: {
-    color: "#C0C0C0",
+    color: '#C0C0C0',
     fontSize: 12,
-    textAlign: "left",
+    textAlign: 'left',
   },
   goalScorersTextContainerLeft: {
     width: 128,
     marginTop: 16,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   rowScoredGoals: {
-    flexDirection: "row",
-    alignContent: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
   },
   footballScoreIcon: {
     height: 24,
@@ -303,14 +303,14 @@ const styles = StyleSheet.create({
     marginRight: 24,
   },
   background: {
-    backgroundColor: "#161F29",
+    backgroundColor: '#161F29',
     flex: 1,
   },
   scrollViewCenter: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "center",
-    backgroundColor: "transparent",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    backgroundColor: 'transparent',
     marginLeft: 5,
     height: 35,
     marginTop: 16,

@@ -4,9 +4,6 @@ import { Link } from "expo-router";
 
 import { Text, View } from "@/components/Themed";
 
-import DetaljiList from "@/components/old/Lige/Detalji/DetaljiList";
-import PoredakList from "@/components/old/Lige/Poredak/PoredakList";
-
 export default function LigaPoredakScreen() {
   return (
     <View style={styles.container}>

@@ -1,33 +1,33 @@
-import { StyleSheet, ScrollView, ActivityIndicator, Button, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Text, View } from "@/components/Themed";
+import { StyleSheet, ScrollView, ActivityIndicator, Button, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from '@/components/Themed';
 
-import PoredakListElement from "@/components/old/Lige/Poredak/PoredakListElement";
+import PoredakListElement from '@/components/old/Lige/Poredak/PoredakListElement';
 
 export default function GamesList({ standingsData, season, handlePress }) {
-  const [selectedForm, setSelectedForm] = useState("default");
+  const [selectedForm, setSelectedForm] = useState('default');
 
   return (
     <View style={styles.outerContainer}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={selectedForm === "default" ? styles.selectedButtonElement : styles.buttonElement}
-          onPress={() => setSelectedForm("default")}
+          style={selectedForm === 'default' ? styles.selectedButtonElement : styles.buttonElement}
+          onPress={() => setSelectedForm('default')}
           activeOpacity={1}
         >
-          <Text style={selectedForm === "default" ? styles.selectedButtonText : styles.buttonText}>Default</Text>
+          <Text style={selectedForm === 'default' ? styles.selectedButtonText : styles.buttonText}>Default</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={selectedForm === "forma" ? styles.selectedButtonElement : styles.buttonElement}
-          onPress={() => setSelectedForm("forma")}
+          style={selectedForm === 'forma' ? styles.selectedButtonElement : styles.buttonElement}
+          onPress={() => setSelectedForm('forma')}
           activeOpacity={1}
         >
-          <Text style={selectedForm === "forma" ? styles.selectedButtonText : styles.buttonText}>Forma</Text>
+          <Text style={selectedForm === 'forma' ? styles.selectedButtonText : styles.buttonText}>Forma</Text>
         </TouchableOpacity>
       </View>
 
-      {selectedForm === "default" ? (
+      {selectedForm === 'default' ? (
         <View style={styles.container}>
           <View style={styles.row}>
             <Text style={styles.positionRow}>#</Text>
@@ -74,77 +74,77 @@ export default function GamesList({ standingsData, season, handlePress }) {
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: "#161e28",
+    backgroundColor: '#161e28',
     paddingBottom: 12,
     paddingRight: 6,
     paddingLeft: 6,
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
   container: {
     marginTop: 6,
-    backgroundColor: "#10181E",
+    backgroundColor: '#10181E',
     borderWidth: 1,
-    borderColor: "#000000",
+    borderColor: '#000000',
     borderRadius: 10,
-    height: "auto",
+    height: 'auto',
   },
   row: {
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 6,
     borderBottomWidth: 1,
-    borderBottomColor: "#000000",
-    backgroundColor: "transparent",
-    alignItems: "center",
+    borderBottomColor: '#000000',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
   },
   positionRow: {
-    color: "#686868",
-    fontWeight: "bold",
+    color: '#686868',
+    fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 13,
   },
   teamNameRow: {
-    color: "#686868",
-    fontWeight: "bold",
+    color: '#686868',
+    fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 19,
   },
   PRow: {
-    color: "#686868",
-    fontWeight: "bold",
+    color: '#686868',
+    fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 170,
   },
   GDRow: {
-    color: "#686868",
-    fontWeight: "bold",
+    color: '#686868',
+    fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 26,
   },
   PTSRow: {
-    color: "#686868",
-    fontWeight: "bold",
+    color: '#686868',
+    fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 26,
   },
   formaRow: {
-    color: "#686868",
-    fontWeight: "bold",
+    color: '#686868',
+    fontWeight: 'bold',
     fontSize: 16,
-    position: "absolute",
+    position: 'absolute',
     right: 13,
   },
   buttonContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 10,
     marginLeft: 6,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   buttonElement: {
-    backgroundColor: "#161F29",
+    backgroundColor: '#161F29',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#686868",
+    borderColor: '#686868',
     paddingTop: 3,
     paddingBottom: 3,
     paddingLeft: 6,
@@ -152,10 +152,10 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   selectedButtonElement: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#686868",
+    borderColor: '#686868',
     paddingTop: 3,
     paddingBottom: 3,
     paddingLeft: 6,
@@ -163,13 +163,13 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   buttonText: {
-    color: "#686868",
+    color: '#686868',
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   selectedButtonText: {
-    color: "#161F29",
+    color: '#161F29',
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });

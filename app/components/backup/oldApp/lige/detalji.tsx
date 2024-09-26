@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { ScrollView, StyleSheet, Pressable, ActivityIndicator } from "react-native";
-import { Text, View } from "@/components/Themed";
-import DetaljiList from "@/components/old/Lige/Detalji/DetaljiList";
-import PoredakList from "@/components/old/Lige/Poredak/PoredakList";
-import UtakmiceList from "@/components/old/Lige/Utakmice/UtakmiceList";
-import StatistikaIgracaList from "@/components/old/Lige/Statistika/StatistikaIgracaList";
-import StatistikaClubaList from "@/components/old/Lige/Statistika/StatistikaClubaList";
-import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "expo-router";
-import { QueryClient, QueryClientProvider, useQuery, useQueries } from "@tanstack/react-query";
+import React, { useState, useEffect } from 'react';
+import { ScrollView, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
+import { Text, View } from '@/components/Themed';
+import DetaljiList from '@/components/old/Lige/Detalji/DetaljiList';
+import PoredakList from '@/components/old/Lige/Poredak/PoredakList';
+import UtakmiceList from '@/components/old/Lige/Utakmice/UtakmiceList';
+import StatistikaIgracaList from '@/components/old/Lige/Statistika/StatistikaIgracaList';
+import StatistikaClubaList from '@/components/old/Lige/Statistika/StatistikaClubaList';
+import { useRoute } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
+import { QueryClient, QueryClientProvider, useQuery, useQueries } from '@tanstack/react-query';
 
 const API_ENDPOINTS = {
-  standings: "http://192.168.90.103:3000/standings",
-  schedules: "http://192.168.90.103:3000/schedules",
-  stats: "http://192.168.90.103:3000/stats",
+  standings: 'http://192.168.90.103:3000/standings',
+  schedules: 'http://192.168.90.103:3000/schedules',
+  stats: 'http://192.168.90.103:3000/stats',
 };
 
 async function fetchData(endpoint: string, id: string) {
@@ -32,7 +32,7 @@ const VIEW_COMPONENTS = {
 
 const queryClient = new QueryClient();
 
-export default function LigaDetaljiScreen({ state = "details" }) {
+export default function LigaDetaljiScreen({ state = 'details' }) {
   const route = useRoute();
   const season = route.params.season;
   if (!season) {
@@ -51,9 +51,9 @@ export default function LigaDetaljiScreen({ state = "details" }) {
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
-  const [statsData, setStatsData] = useState<Response | null>(null);
-  const [schedulesData, setSchedulesData] = useState<Response | null>(null);
-  const [standingsData, setStandingsData] = useState<Response | null>(null);
+  const [statsData, setStatsData] = useState<SchedulesDataResponse | null>(null);
+  const [schedulesData, setSchedulesData] = useState<SchedulesDataResponse | null>(null);
+  const [standingsData, setStandingsData] = useState<SchedulesDataResponse | null>(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -69,7 +69,7 @@ export default function LigaDetaljiScreen({ state = "details" }) {
         const statsData = await fetchData(API_ENDPOINTS.stats, season.id);
         setStatsData(statsData);
       } catch (error) {
-        console.error("Error:", error);
+        console.error('Error:', error);
       }
     };
 
@@ -107,7 +107,7 @@ function DetaljiElement({ seasonId, state }) {
       error,
       data: standingsData,
     } = useQuery({
-      queryKey: ["standingsData"],
+      queryKey: ['standingsData'],
       queryFn: () => fetch(`${API_ENDPOINTS.standings}/${seasonId}`).then((res) => res.json()),
     });
 
@@ -116,7 +116,7 @@ function DetaljiElement({ seasonId, state }) {
       error: errorSchedules,
       data: schedulesData,
     } = useQuery({
-      queryKey: ["schedulesData"],
+      queryKey: ['schedulesData'],
       queryFn: () => fetch(`${API_ENDPOINTS.schedules}/${seasonId}`).then((res) => res.json()),
     });
 
@@ -125,7 +125,7 @@ function DetaljiElement({ seasonId, state }) {
       error: errorStats,
       data: statsData,
     } = useQuery({
-      queryKey: ["statsData"],
+      queryKey: ['statsData'],
       queryFn: () => fetch(`${API_ENDPOINTS.stats}/${seasonId}`).then((res) => res.json()),
     });
 
@@ -175,45 +175,47 @@ function DetaljiElement({ seasonId, state }) {
   return (
     <View style={styles.container}>
       <ScrollView horizontal style={styles.scroll}>
-        <Pressable onPress={() => handleViewChange("details")}>
-          <Text style={selectedView === "details" ? styles.selectedTitle : styles.title}>Detalji</Text>
+        <Pressable onPress={() => handleViewChange('utakmice')}>
+          <Text style={selectedView === 'utakmice' ? styles.selectedTitle : styles.title}>Utakmice</Text>
         </Pressable>
 
-        <Pressable onPress={() => handleViewChange("utakmice")}>
-          <Text style={selectedView === "utakmice" ? styles.selectedTitle : styles.title}>Utakmice</Text>
+        <Pressable onPress={() => handleViewChange('details')}>
+          <Text style={selectedView === 'details' ? styles.selectedTitle : styles.title}>Detalji</Text>
         </Pressable>
 
-        <Pressable onPress={() => handleViewChange("poredak")}>
-          <Text style={selectedView === "poredak" ? styles.selectedTitle : styles.title}>Poredak</Text>
+        <Pressable onPress={() => handleViewChange('poredak')}>
+          <Text style={selectedView === 'poredak' ? styles.selectedTitle : styles.title}>Poredak</Text>
         </Pressable>
 
-        <Pressable onPress={() => handleViewChange("player_stats")}>
-          <Text style={selectedView === "player_stats" ? styles.selectedTitle : styles.title}>Statistika Igraca</Text>
+        <Pressable onPress={() => handleViewChange('player_stats')}>
+          <Text style={selectedView === 'player_stats' ? styles.selectedTitle : styles.title}>Statistika Igraca</Text>
         </Pressable>
 
-        <Pressable onPress={() => handleViewChange("team_stats")}>
-          <Text style={selectedView === "team_stats" ? styles.selectedTitle : styles.title}>Statistika Timova</Text>
+        <Pressable onPress={() => handleViewChange('team_stats')}>
+          <Text style={selectedView === 'team_stats' ? styles.selectedTitle : styles.title}>Statistika Timova</Text>
         </Pressable>
       </ScrollView>
 
-      <View style={styles.statsContainer}>
-        <ViewComponent
-          statsData={statsData}
-          utakmiceData={schedulesData}
-          standingsData={standingsData}
-          season={season}
-          handlePress={handleViewChange}
-        />
-      </View>
+      {/*
+        <View style={styles.statsContainer}>
+          <ViewComponent
+            statsData={statsData}
+            utakmiceData={schedulesData}
+            standingsData={standingsData}
+            season={season}
+            handlePress={handleViewChange}
+          />
+        </View>
+      */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#121212",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#121212',
   },
   scroll: {
     marginLeft: 5,
@@ -221,26 +223,26 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#686868",
+    fontWeight: 'bold',
+    color: '#686868',
     marginRight: 40,
-    textAlign: "center",
-    alignItems: "center",
+    textAlign: 'center',
+    alignItems: 'center',
   },
   selectedTitle: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#CA5509",
+    fontWeight: 'bold',
+    color: '#CA5509',
     marginRight: 40,
-    textAlign: "center",
-    alignItems: "center",
+    textAlign: 'center',
+    alignItems: 'center',
   },
 
   statsContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#161e28",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#161e28',
     height: 730,
-    width: "100%",
+    width: '100%',
   },
 });

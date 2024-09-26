@@ -8,14 +8,14 @@ import {
   Dimensions,
   TouchableOpacity,
   FlatList,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { Text, View } from "@/components/Themed";
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from '@/components/Themed';
 
-import SoccerFieldElement from "@/components/old/Competitor/Postave/Elements/SoccerFieldElement";
-import CoachElement from "@/components/old/Competitor/Postave/Elements/SubstitutionElement";
-import SubstitutionElement from "@/components/old/Competitor/Postave/Elements/SubstitutionElement";
-import ProgressElement from "@/components/old/Competitor/Statistika/Elements/ProgressElement";
+import SoccerFieldElement from '@/components/old/Competitor/Postave/Elements/SoccerFieldElement';
+import CoachElement from '@/components/old/Competitor/Postave/Elements/SubstitutionElement';
+import SubstitutionElement from '@/components/old/Competitor/Postave/Elements/SubstitutionElement';
+import ProgressElement from '@/components/old/Competitor/Statistika/Elements/ProgressElement';
 
 export default function DetaljiList({ summaryData }) {
   const renderComponents = () => {
@@ -48,7 +48,7 @@ export default function DetaljiList({ summaryData }) {
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: "#161F29",
+    backgroundColor: '#161F29',
     paddingBottom: 12,
     paddingRight: 6,
     paddingLeft: 6,
@@ -56,29 +56,29 @@ const styles = StyleSheet.create({
   },
   container: {
     marginTop: 6,
-    backgroundColor: "#10181E",
+    backgroundColor: '#10181E',
     borderWidth: 1,
-    borderColor: "#000000",
+    borderColor: '#000000',
     borderRadius: 10,
-    height: "auto",
+    height: 'auto',
   },
   row: {
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 6,
-    backgroundColor: "transparent",
-    alignItems: "center",
-    justifyContent: "space-between",
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginHorizontal: 6,
   },
   scoreValue: {
     fontSize: 18,
-    color: "#686868",
-    fontWeight: "bold",
+    color: '#686868',
+    fontWeight: 'bold',
   },
   scoreLabel: {
     fontSize: 16,
-    color: "#686868",
-    fontWeight: "bold",
+    color: '#686868',
+    fontWeight: 'bold',
   },
   rightBar: {
     marginLeft: 24,
@@ -86,35 +86,35 @@ const styles = StyleSheet.create({
     height: 16,
     borderTopEndRadius: 10,
     borderBottomEndRadius: 10,
-    backgroundColor: "#222A36",
+    backgroundColor: '#222A36',
   },
   leftBar: {
     width: 166,
     height: 16,
     borderTopStartRadius: 10,
     borderBottomStartRadius: 10,
-    backgroundColor: "#222A36",
+    backgroundColor: '#222A36',
   },
   rightBarFilled: {
     marginLeft: -166,
     height: 16,
     borderTopEndRadius: 10,
     borderBottomEndRadius: 10,
-    backgroundColor: "#CA5509",
+    backgroundColor: '#CA5509',
   },
   leftBarFilled: {
     height: 16,
     borderTopStartRadius: 10,
     borderBottomStartRadius: 10,
-    backgroundColor: "#CA5509",
+    backgroundColor: '#CA5509',
   },
   progressRow: {
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 6,
-    backgroundColor: "transparent",
-    alignItems: "center",
+    backgroundColor: 'transparent',
+    alignItems: 'center',
     marginHorizontal: 6,
     borderBottomWidth: 1,
-    borderBottomColor: "#000000",
+    borderBottomColor: '#000000',
   },
 });

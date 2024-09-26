@@ -18,7 +18,7 @@ export default function FootballGameResultAlert({ data }) {
     if (dateYear !== "Danas" && dateYear !== "Sutra" && dateYear !== "Jucer") {
       const splitDateYear = dateYear.split(".");
 
-      startTime = splitDateYear.join(".") + "\n" + splitStartTime[1];
+      startTime = splitDateYear.join(".") + "\n" +  splitStartTime[1];
     }
   }
 
