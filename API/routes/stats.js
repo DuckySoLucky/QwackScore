@@ -47,11 +47,13 @@ export default wrap(async function (req, res) {
                 name: team.competitor.name,
                 image: "https://i.imgur.com/nDDfr5c.png",
                 amount: amount,
-                position: standing.groups[0].standings.indexOf(team) + 1,
             });
         }
 
-        output.teams[statName] = output.teams[statName].sort((a, b) => b.amount - a.amount);
+        output.teams[statName] = output.teams[statName].sort((a, b) => b.position - a.position);
+        for (let i = 0; i < output.teams[statName].length; i++) {
+            output.teams[statName][i].position = i + 1;
+        }
     }
 
     return res.status(200).json({ data: output });

@@ -10,7 +10,6 @@ export default wrap(async function (req, res) {
     const standing = (await getStandings(seasonId))[0];
     const formStanding = (await getFormStandings(seasonId))[0];
     if (!standing || !formStanding) {
-        console.log(standing, formStanding);
         return res.status(404).json({ error: "Standings not found" });
     }
 
@@ -31,8 +30,6 @@ export default wrap(async function (req, res) {
             form: formStanding.groups[0].form_standings[standing.groups[0].standings.indexOf(team)].form.split("").reverse().slice(1).join(""),
         });
     }
-
-    console.log(output);
 
     return res.status(200).json({ data: output });
 });

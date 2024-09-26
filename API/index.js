@@ -12,7 +12,7 @@ import schedulesRoute from "./routes/schedules.js";
 app.get("/schedules/:seasonId", schedulesRoute);
 
 import seasonsRoute from "./routes/seasons.js";
-app.get("/seasons", seasonsRoute);  
+app.get("/seasons", seasonsRoute);
 
 import statsRoute from "./routes/stats.js";
 app.get("/stats/:seasonId", statsRoute);
@@ -31,6 +31,12 @@ app.get("/summary/:sportEventId", summaryRoute);
 
 import imageRoute from "./routes/image.js";
 app.get("/image/:playerId", imageRoute);
+
+import competitionsRoute from "./routes/competitions.js";
+app.get("/competitions", competitionsRoute);
+
+import competitionRoute from "./routes/competition.js";
+app.get("/competition/:competitionId", competitionRoute);
 
 app.listen(port, () => {
     console.log(`Now listening on port ${port}`);

@@ -113,15 +113,38 @@ async function fetchCompetitions() {
 
 async function getCompetition(id) {
     try {
-        const competitions = await fetchCompetitions();
+        // https://api.sportradar.com/soccer/trial/v4/en/competitions/sr:competition:170/seasons.json?api_key=
+        broadcastMessage("getCompetition called.", "api");
+        const timeNow = Date.now();
 
-        for (const competition of competitions.competitions) {
-            if (competition.id !== id) {
-                continue;
-            }
-
-            return competition;
+        const cache = await db.collection("cache").findOne({ key: `competition-${id}` });
+        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+            broadcastMessage(`getCompetition returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
+            return cache.value.data;    
         }
+
+        const url = `https://api.sportradar.com/soccer/trial/v4/en/competitions/${id}/seasons.json?api_key=${config.API.SportRadar}`;
+        const response = await axios.get(url, {
+            headers: {
+                accept: "application/json",
+            },
+        });
+
+        if (response.status !== 200 || !response.data) {
+            throw new Error(`getCompetition failed with status ${response.status}`);
+        }
+
+        const data = response.data;
+        const output = {
+            generated_at: data.generated_at,
+            lastUpdated: Date.now(),
+            data: data,
+        };
+
+        await db.collection("cache").updateOne({ key: `competition-${id}` }, { $set: { value: output } }, { upsert: true });
+
+        broadcastMessage(`getCompetition returned. (${Date.now() - timeNow}ms)`, "api");
+        return data;
     } catch (error) {
         console.log(error);
     }
@@ -442,4 +465,5 @@ export {
     getLineup,
     getSummary,
     getPlayerImages,
+    fetchCompetitions as getCompetitions,
 };

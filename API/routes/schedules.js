@@ -28,7 +28,7 @@ export default wrap(async function (req, res) {
     for (const schedule of schedulesData) {
         const matchData = schedule.sport_event;
 
-        const roundNumber = matchData.sport_event_context.round.number;
+        const roundNumber = matchData.sport_event_context.round.number ?? Object.keys(schedules).length + 1;
         schedules[roundNumber] ??= [];
 
         schedules[roundNumber].push({
