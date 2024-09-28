@@ -2,7 +2,7 @@ import { Schedule, SchedulesDataResponse, StatsDataReponse } from '@/types/data'
 import PlayerStatisticColumnElement from '../misc/PlayerStatisticColumnElement';
 import TeamStatisticColumnElement from '../misc/TeamStatisticColumnElement';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
-import UtakmiceColumnElement from '../Utakmice/UtakmiceColumnElement';
+import UtakmiceColumnElement from '../Utakmnica/Utakmice/UtakmiceColumnElement';
 
 export default function DetaljiList({
   schedulesData,

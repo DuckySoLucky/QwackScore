@@ -11,9 +11,9 @@ import { useNavigation } from 'expo-router';
 import { QueryClient, QueryClientProvider, useQuery, useQueries } from '@tanstack/react-query';
 
 const API_ENDPOINTS = {
-  standings: 'http://192.168.90.103:3000/standings',
-  schedules: 'http://192.168.90.103:3000/schedules',
-  stats: 'http://192.168.90.103:3000/stats',
+  standings: 'http://192.168.0.104:3000/standings',
+  schedules: 'http://192.168.0.104:3000/schedules',
+  stats: 'http://192.168.0.104:3000/stats',
 };
 
 async function fetchData(endpoint: string, id: string) {

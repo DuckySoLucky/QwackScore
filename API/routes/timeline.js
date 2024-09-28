@@ -1,6 +1,13 @@
 import { getPlayerName, titleCase, wrap } from "../src/helper.js";
 import { getTimeline } from "../src/lib.js";
 
+function formatPlayerName(name) {
+    return name
+        .split(" ")
+        .map((element, index) => (index === name.split(" ").length - 1 ? element : element[0] + "."))
+        .join(" ");
+}
+
 export default wrap(async function (req, res) {
     const sportEventId = req.params.sportEventId;
     if (!sportEventId || !sportEventId.match(/^sr:sport_event:\d+$/)) {
@@ -9,7 +16,7 @@ export default wrap(async function (req, res) {
 
     const timelineData = await getTimeline(sportEventId);
 
-    const validElements = [
+    /*const validElements = [
         "yellow_card",
         "free_kick",
         "throw_in",
@@ -21,8 +28,10 @@ export default wrap(async function (req, res) {
         "score_change",
         "substitution",
         "break_start",
+        "offside",
     ];
     const skipElements = ["match_started", "period_start", "shot_on_target", "shot_off_target", "possible_goal", "injury_time_shown", "injury_return", "match_ended"];
+*/
 
     const output = {};
     output.competitors = timelineData.sport_event.competitors.map((competitor) => {
@@ -53,70 +62,107 @@ export default wrap(async function (req, res) {
     output.information.referee[0].name = getPlayerName(output.information.referee[0].name);
 
     output.timeline = [];
-    let stoppageTime = 0;
+    const ignoreElements = [
+        "match_started",
+        "match_ended",
+        "possible_goal",
+        "period_score",
+        "break_start",
+        "injury_time_shown",
+        "video_assistant_referee",
+        "video_assistant_referee_over",
+        "injury_return",
+    ];
+    const allElements = [];
     for (const element of timelineData?.timeline ?? []) {
-        stoppageTime = element.stoppage_time ? element.stoppage_time : stoppageTime;
-        if (!validElements.includes(element.type)) {
-            if (skipElements.includes(element.type)) {
-                continue;
-            }
-
-            // console.log(`Skipping ${element.type}`);
+        if (ignoreElements.includes(element.type)) {
             continue;
         }
 
-        if (element.type === "break_start") {
-            const data = timelineData.sport_event_status.period_scores.find((element) => element.number === 1);
+        if (element.type === "period_start") {
+            if (element.period === 2) {
+                const data = timelineData.sport_event_status.period_scores.find((element) => element.number === 1);
+                output.timeline.push({
+                    type: "announcement",
+                    position: "center",
+                    message: `HT - ${data.home_score} - ${data.away_score}`,
+                });
+            }
 
+            continue;
+        }
+
+        const basicFormat = ["throw_in", "free_kick", "offside", "goal_kick", "shot_saved", "corner_kick", "injury", "yellow_card", "red_card", "shot_on_target"];
+        if (basicFormat.includes(element.type)) {
+            const player = element.players?.at(0);
             output.timeline.push({
-                type: "announcement",
+                type: element.type,
+                time: `${element.match_time + (element.stoppage_time ?? 0)}'`,
+                position: element.competitor === "away" ? "right" : "left",
+                message: titleCase(element.type),
+                player: player ? formatPlayerName(player.name) : undefined,
+            });
+
+            continue;
+        }
+
+        if (element.type === "shot_off_target") {
+            const player = element.players?.at(0);
+            output.timeline.push({
+                type: element.type,
                 time: `${element.match_time}'`,
-                message: `HT ${data.home_score} - ${data.away_score}`,
-                position: "center",
+                position: element.competitor === "away" ? "right" : "left",
+                message: "Shot off Target",
+                player: player ? formatPlayerName(player.name) : undefined,
+                outcome: element.outcome,
             });
             continue;
         }
 
-        const outputObject = {
-            type: element.type,
-            time: `${element.match_time + (element.stoppage_time ?? 0)}'`,
-            position: element.competitor === "away" ? "right" : "left",
-        };
-
         if (element.type === "score_change") {
-            outputObject.home_score = element.home_score;
-            outputObject.away_score = element.away_score;
-            outputObject.competitor = element.competitor;
+            const player = element.players?.at(0);
+            const assistPlayer = element.players?.at(1);
+
+            output.timeline.push({
+                type: element.type,
+                time: `${element.match_time}'`,
+                position: element.competitor === "away" ? "right" : "left",
+                message: `${element.home_score} - ${element.away_score}`,
+                player: formatPlayerName(player.name),
+                assistPlayer: assistPlayer ? formatPlayerName(assistPlayer.name) : undefined,
+                competitor: element.competitor,
+                score: {
+                    home: element.home_score,
+                    away: element.away_score,
+                },
+            });
+            continue;
         }
 
-        if (element.players) {
-            if (["corner_kick", "injury", "score_change", "yellow_card"].includes(element.type)) {
-                const player = element.players[0];
+        if (element.type === "substitution") {
+            output.timeline.push({
+                type: element.type,
+                time: `${element.match_time}'`,
+                position: element.competitor === "away" ? "right" : "left",
+                message: "Substitution",
+                playerIn: formatPlayerName(element.players[0].name),
+                playerOut: formatPlayerName(element.players[1].name),
+            });
 
-                const playerName = getPlayerName(player.name);
-
-                outputObject.player = playerName;
-            } else if (element.type === "substitution") {
-                const firstPlayer = element.players[0];
-                const secondPlayer = element.players[1];
-
-                const firstPlayerName = getPlayerName(firstPlayer.name);
-                const secondPlayerName = getPlayerName(secondPlayer.name);
-
-                outputObject.player_in = secondPlayerName;
-                outputObject.player_out = firstPlayerName;
-            }
+            continue;
         }
 
-        output.timeline.push(outputObject);
+        if (!allElements.includes(element.type)) {
+            allElements.push(element.type);
+            console.log(`Unused element: ${element.type}`);
+        }
     }
 
     if (output.timeline.length) {
         output.timeline.push({
             type: "announcement",
-            time: `${timelineData.sport_event_status.match_status.match_time + stoppageTime}'`,
-            message: `FT ${output.competitors[0].score} - ${output.competitors[1].score}`,
             position: "center",
+            message: `FT ${output.competitors[0].score} - ${output.competitors[1].score}`,
         });
     }
 
@@ -128,7 +174,7 @@ export default wrap(async function (req, res) {
             output.scores[element.competitor].push({
                 name: element.player,
                 time: element.time,
-                message: `${element.player} ${element.time}`,
+                message: `${formatPlayerName(element.player)} ${element.time}`,
             });
         }
     }

@@ -1,7 +1,8 @@
 import { Schedule, SchedulesDataResponse, Schedules } from '@/types/data';
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, FlatList, Text, ActivityIndicator, StyleSheet, Image } from 'react-native';
-import UtakmiceColumnElement from './UtakmiceColumnElement';
+import { View, FlatList, Text, ActivityIndicator, StyleSheet, Image, Pressable } from 'react-native';
+import UtakmiceColumnElement from './Utakmice/UtakmiceColumnElement';
+import { Link } from 'expo-router';
 
 export default function UtakmiceList({ schedulesData }: { schedulesData: SchedulesDataResponse }) {
   const renderItem = useCallback((item: Schedule) => {

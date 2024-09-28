@@ -55,3 +55,31 @@ export type StandingsData = {
   position: number;
   form: string;
 };
+
+export type TimelineData = {
+  scores: Record<'away' | 'home', ScoreData[]>;
+};
+
+export type ScoreData = {
+  name: string;
+  time: string;
+  message: string;
+};
+
+export type SummaryDataResponse = {
+  timeline: Timeline[];
+  information: Record<string, number | string>;
+};
+
+export type Timeline = {
+  type: string;
+  time: string;
+  position: string;
+  message: string;
+  player?: string;
+  outcome?: string;
+  playerIn?: string;
+  playerOut?: string;
+  assistPlayer: string;
+  score: Record<'home' | 'away', number>;
+};

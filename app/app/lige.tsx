@@ -6,7 +6,7 @@ import { Text, View } from '@/components/Themed';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import UtakmiceList from '@/components/Utakmice/UtakmiceList';
+import UtakmiceList from '@/components/Utakmnica/UtakmiceList';
 import DetaljiList from '@/components/Lige/DetaljiList';
 import PoredakList from '@/components/Lige/PoredakList';
 import StatistikaIgraca from '@/components/Lige/StatistikaIgraca';
@@ -33,7 +33,7 @@ const VIEW_COMPONENTS = {
 function Output() {
   const route = useRoute();
   const navigation = useNavigation();
-  const [selectedView, setSelectedView] = useState('utakmice');
+  const [selectedView, setSelectedView] = useState('details');
   useEffect(() => {
     navigation.setOptions({ title: route.params?.title ?? 'Liga', headerStyle: styles.header });
   }, [navigation]);
@@ -45,7 +45,7 @@ function Output() {
   } = useQuery({
     queryKey: ['standingsData'],
     queryFn: () =>
-      fetch(`http://192.168.90.103:3000/competition/${route.params.id}`)
+      fetch(`http://192.168.0.104:3000/competition/${route.params.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
@@ -58,7 +58,7 @@ function Output() {
     queryKey: ['schedulesData', seasonData?.id],
     queryFn: () =>
       seasonData?.id
-        ? fetch(`http://192.168.90.103:3000/schedules/${seasonData.id}`)
+        ? fetch(`http://192.168.0.104:3000/schedules/${seasonData.id}`)
             .then((res) => res.json())
             .then((data) => data.data)
         : Promise.resolve(null),
@@ -73,7 +73,7 @@ function Output() {
     queryKey: ['statsData', seasonData?.id],
     queryFn: () =>
       seasonData?.id
-        ? fetch(`http://192.168.90.103:3000/stats/${seasonData.id}`)
+        ? fetch(`http://192.168.0.104:3000/stats/${seasonData.id}`)
             .then((res) => res.json())
             .then((data) => data.data)
         : Promise.resolve(null),
@@ -88,7 +88,7 @@ function Output() {
     queryKey: ['standingsData', seasonData?.id],
     queryFn: () =>
       seasonData?.id
-        ? fetch(`http://192.168.90.103:3000/standings/${seasonData.id}`)
+        ? fetch(`http://192.168.0.104:3000/standings/${seasonData.id}`)
             .then((res) => res.json())
             .then((data) => data.data)
         : Promise.resolve(null),

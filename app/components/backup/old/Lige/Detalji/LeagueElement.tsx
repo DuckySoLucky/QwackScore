@@ -12,7 +12,7 @@ const LeagueElement = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    fetch('http://192.168.90.103:3000/seasons')
+    fetch('http://192.168.0.104:3000/seasons')
       .then((response) => response.json())
       .then((data) => {
         setData(data.data);

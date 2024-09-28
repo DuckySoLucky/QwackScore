@@ -2,7 +2,7 @@ import { Schedule, SchedulesDataResponse, StandingsData, StatsDataReponse } from
 import PlayerStatisticColumnElement from '../misc/PlayerStatisticColumnElement';
 import TeamStatisticColumnElement from '../misc/TeamStatisticColumnElement';
 import { View, FlatList, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
-import UtakmiceColumnElement from '../Utakmice/UtakmiceColumnElement';
+import UtakmiceColumnElement from '../Utakmnica/Utakmice/UtakmiceColumnElement';
 import { useState } from 'react';
 import DefaultPoredakColumnElement from './Poredak/DefaultPoredakColumnElement';
 import FormPoredakColumnElement from './Poredak/FormPoredakColumnElement';

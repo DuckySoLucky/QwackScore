@@ -10,9 +10,9 @@ import StatistikaList from '@/components/old/Competitor/Statistika/StatistikaLis
 import { useRoute } from '@react-navigation/native';
 
 const API_ENDPOINTS = {
-  standings: 'http://192.168.90.103:3000/timeline',
-  lineups: 'http://192.168.90.103:3000/lineup',
-  summary: 'http://192.168.90.103:3000/summary',
+  standings: 'http://192.168.0.104:3000/timeline',
+  lineups: 'http://192.168.0.104:3000/lineup',
+  summary: 'http://192.168.0.104:3000/summary',
 };
 
 async function fetchData(endpoint: string, id: string) {

@@ -3,8 +3,8 @@ import { View } from '@/components/Themed';
 import React from 'react';
 import { Schedule } from '../../types/data';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { NewsResult } from '@/components/Utakmice/NewsResult';
-import UtakmiceList from '@/components/Utakmice/UtakmiceList';
+import { NewsResult } from '@/components/Utakmnica/Utakmice/NewsResult';
+import UtakmiceList from '@/components/Utakmnica/UtakmiceList';
 
 const queryClient = new QueryClient();
 
@@ -24,7 +24,7 @@ function Output({ seasonId }: { seasonId: string }) {
   } = useQuery({
     queryKey: ['standingsData'],
     queryFn: () =>
-      fetch(`http://192.168.90.103:3000/schedules/${seasonId}`)
+      fetch(`http://192.168.0.104:3000/schedules/${seasonId}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });

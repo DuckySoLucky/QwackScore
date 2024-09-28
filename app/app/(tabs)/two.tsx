@@ -22,7 +22,7 @@ function Output() {
   } = useQuery({
     queryKey: ['standingsData'],
     queryFn: () =>
-      fetch(`http://192.168.90.103:3000/competitions`)
+      fetch(`http://192.168.0.104:3000/competitions`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
