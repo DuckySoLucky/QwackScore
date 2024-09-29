@@ -1,7 +1,7 @@
 import { Schedule, SchedulesDataResponse, StandingsData, StatsDataReponse } from '@/types/data';
 import PlayerStatisticColumnElement from '../misc/PlayerStatisticColumnElement';
 import TeamStatisticColumnElement from '../misc/TeamStatisticColumnElement';
-import { View, FlatList, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { View, FlatList, Text, StyleSheet, TouchableOpacity, Pressable, ScrollView } from 'react-native';
 import UtakmiceColumnElement from '../Utakmnica/Utakmice/UtakmiceColumnElement';
 import { useState } from 'react';
 import DefaultPoredakColumnElement from './Poredak/DefaultPoredakColumnElement';
@@ -29,11 +29,13 @@ export default function PoredakList({ standingsData }: { standingsData: Standing
       </View>
 
       <View style={styles.container}>
-        {selectedForm === 'default' ? (
-          <DefaultPoredakColumnElement standingsData={standingsData} />
-        ) : (
-          <FormPoredakColumnElement standingsData={standingsData} />
-        )}
+        <ScrollView>
+          {selectedForm === 'default' ? (
+            <DefaultPoredakColumnElement standingsData={standingsData} />
+          ) : (
+            <FormPoredakColumnElement standingsData={standingsData} />
+          )}
+        </ScrollView>
       </View>
     </View>
   );
@@ -43,7 +45,8 @@ const styles = StyleSheet.create({
   outerContainer: {
     width: '100%',
     height: '100%',
-    paddingBottom: 90,
+    backgroundColor: '#161e28',
+    paddingBottom: 100,
   },
   container: {
     backgroundColor: '#10181E',
@@ -51,8 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     marginHorizontal: 6,
-    marginBottom: 6,
-    marginTop: 16,
+    marginTop: 12,
   },
   buttonContainer: {
     flexDirection: 'row',

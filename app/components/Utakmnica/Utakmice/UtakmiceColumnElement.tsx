@@ -1,7 +1,7 @@
-import { Schedule, SchedulesDataResponse, Schedules } from '@/types/data';
+import { Schedule } from '@/types/data';
 import { Link } from 'expo-router';
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, FlatList, Text, ActivityIndicator, StyleSheet, Image, Pressable } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 
 export default function UtakmiceColumnElement({ item }: { item: Schedule }) {
   const getClubStyle = (clubName: string) =>

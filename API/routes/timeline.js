@@ -179,5 +179,7 @@ export default wrap(async function (req, res) {
         }
     }
 
+    output.season = timelineData.sport_event.sport_event_context.season;
+
     return res.status(200).json({ data: output });
 });

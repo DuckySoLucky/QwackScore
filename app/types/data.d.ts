@@ -1,6 +1,6 @@
 export type SchedulesDataResponse = {
   matches: Schedule[];
-  schedules: Recprd<number, Schedule[]>;
+  schedules: Record<number, Schedule[]>;
   firstThreeMatchs: Schedule[];
 };
 
@@ -66,9 +66,9 @@ export type ScoreData = {
   message: string;
 };
 
-export type SummaryDataResponse = {
+export type TimelineDataResponse = {
   timeline: Timeline[];
-  information: Record<string, number | string>;
+  information: Record<string, number | string | object | Array>;
 };
 
 export type Timeline = {
@@ -82,4 +82,19 @@ export type Timeline = {
   playerOut?: string;
   assistPlayer: string;
   score: Record<'home' | 'away', number>;
+};
+
+export type LineupsDataResponse = Record<'away' | 'home', Lineup>;
+
+export type Lineup = Record<
+  'goalkeeper' | 'defenders' | 'midfielders' | 'forwards' | 'coach' | 'substitutions' | 'coach',
+  Substitution[]
+>;
+
+export type Substitution = {
+  name: string;
+  type: string;
+  jersey_number: number;
+  position: string;
+  id: string;
 };

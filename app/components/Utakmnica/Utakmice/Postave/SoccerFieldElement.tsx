@@ -1,12 +1,11 @@
-import { StyleSheet, Image, ScrollView, ActivityIndicator, Pressable, Dimensions } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { Text, View } from '@/components/Themed';
+import { TimelineDataResponse, Timeline, LineupsDataResponse } from '@/types/data';
+import { View, FlatList, Text, StyleSheet, Pressable, ScrollView, Image, Dimensions } from 'react-native';
+import { useState } from 'react';
+import PlayerElement from './PlayerElement';
 
-import PlayerElement from '@/components/old/Competitor/Postave/Elements/PlayerElement';
-
-export default function DetaljiList({ lineupsData }) {
+export default function SoccerFieldElement({ lineupsData }: { lineupsData: LineupsDataResponse }) {
   return (
-    <>
+    <View style={styles.outerContainer}>
       <Image
         source={{
           uri: 'https://i.imgur.com/C7SWI7G.png',
@@ -40,102 +39,69 @@ export default function DetaljiList({ lineupsData }) {
           })}
         </View>
 
-        <View style={styles.forwardRowBottom}>
+        <View style={styles.forwardRow}>
           {lineupsData.away.forwards.map((player) => {
             return <PlayerElement name={player.name} number={player.jersey_number} />;
           })}
         </View>
 
-        <View style={styles.midfielderRowBottom}>
+        <View style={styles.midfielderRow}>
           {lineupsData.away.midfielders.map((player) => {
             return <PlayerElement name={player.name} number={player.jersey_number} />;
           })}
         </View>
 
-        <View style={styles.defenderRowBottom}>
+        <View style={styles.defenderRow}>
           {lineupsData.away.defenders.map((player) => {
             return <PlayerElement name={player.name} number={player.jersey_number} />;
           })}
         </View>
 
-        <View style={styles.goalKeeperRowBottom}>
+        <View style={styles.goalKeeperRow}>
           {lineupsData.away.goalkeeper.map((player) => {
             return <PlayerElement name={player.name} number={player.jersey_number} />;
           })}
         </View>
       </View>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  fieldIcon: {
-    width: Dimensions.get('window').width - 12,
+  outerContainer: {
     height: 600,
-    marginLeft: 6,
-    marginRight: 6,
+    marginHorizontal: 6,
+    backgroundColor: '#161e28',
+  },
+  fieldIcon: {
+    height: 600,
   },
   lineupContainer: {
-    width: Dimensions.get('window').width - 12,
-    height: 576,
-    marginLeft: 6,
-    marginRight: 6,
-    marginTop: -588,
-    backgroundColor: 'transparent',
-    marginBottom: 12,
+    height: 572,
+    marginTop: -600 + 14,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   goalKeeperRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 16,
-    backgroundColor: 'transparent',
+    marginTop: 10,
   },
   defenderRow: {
     flexDirection: 'row',
+    marginTop: 20,
     justifyContent: 'space-around',
     marginHorizontal: 16,
-    marginTop: 16,
-    backgroundColor: 'transparent',
   },
   midfielderRow: {
     flexDirection: 'row',
+    marginTop: 20,
     justifyContent: 'space-around',
     marginHorizontal: 16,
-    marginTop: 16,
-    backgroundColor: 'transparent',
   },
   forwardRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: 'transparent',
-    marginHorizontal: 16,
-    marginTop: 16,
-  },
-
-  goalKeeperRowBottom: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10,
-    backgroundColor: 'transparent',
-  },
-  defenderRowBottom: {
-    flexDirection: 'row',
+    marginTop: 25,
     justifyContent: 'space-around',
     marginHorizontal: 16,
-    marginTop: 10,
-    backgroundColor: 'transparent',
-  },
-  midfielderRowBottom: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginHorizontal: 16,
-    marginTop: 10,
-    backgroundColor: 'transparent',
-  },
-  forwardRowBottom: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 12,
-    backgroundColor: 'transparent',
   },
 });

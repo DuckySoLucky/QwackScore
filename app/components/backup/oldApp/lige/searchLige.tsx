@@ -1,5 +1,4 @@
 import {
-  Platform,
   StyleSheet,
   ActivityIndicator,
   TextInput,

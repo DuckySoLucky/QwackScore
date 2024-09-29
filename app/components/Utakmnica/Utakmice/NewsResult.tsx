@@ -1,8 +1,8 @@
 import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { Schedule } from '@/types/data';
-
-const ballImage = 'https://i.imgur.com/Q6nxcJk.png';
+import React from 'react';
+import { Link } from 'expo-router';
 
 export function NewsResult({ data }: { data: Schedule }) {
   const firstImage = data.competitors[0].image;
@@ -14,17 +14,19 @@ export function NewsResult({ data }: { data: Schedule }) {
       : `${data.competitors[0].score} - ${data.competitors[1].score}`;
 
   return (
-    <View style={styles.container}>
-      <Image source={{ uri: firstImage }} style={styles.leftImage} resizeMode="contain" />
+    <Link href={{ pathname: '/utakmica', params: { item: JSON.stringify(data) } }} style={{ marginRight: 6 }}>
+      <View style={styles.container}>
+        <Image source={{ uri: firstImage }} style={styles.leftImage} resizeMode="contain" />
 
-      <Image source={{ uri: ballImage }} style={styles.middleImage} resizeMode="contain" />
+        <Image source={{ uri: 'https://i.imgur.com/Q6nxcJk.png' }} style={styles.middleImage} resizeMode="contain" />
 
-      <Image source={{ uri: secondImage }} style={styles.rightImage} resizeMode="contain" />
+        <Image source={{ uri: secondImage }} style={styles.rightImage} resizeMode="contain" />
 
-      <View style={data.status === 'not_started' ? styles.textPositionNotStarted : styles.textPositionScore}>
-        <Text style={data.status === 'not_started' ? styles.textStyleNotStarted : styles.textStyleScore}>{text}</Text>
+        <View style={data.status === 'not_started' ? styles.textPositionNotStarted : styles.textPositionScore}>
+          <Text style={data.status === 'not_started' ? styles.textStyleNotStarted : styles.textStyleScore}>{text}</Text>
+        </View>
       </View>
-    </View>
+    </Link>
   );
 }
 

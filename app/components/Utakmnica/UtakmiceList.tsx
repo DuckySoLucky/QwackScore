@@ -1,8 +1,7 @@
-import { Schedule, SchedulesDataResponse, Schedules } from '@/types/data';
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, FlatList, Text, ActivityIndicator, StyleSheet, Image, Pressable } from 'react-native';
+import { Schedule, SchedulesDataResponse } from '@/types/data';
+import React, { useCallback } from 'react';
+import { View, FlatList, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import UtakmiceColumnElement from './Utakmice/UtakmiceColumnElement';
-import { Link } from 'expo-router';
 
 export default function UtakmiceList({ schedulesData }: { schedulesData: SchedulesDataResponse }) {
   const renderItem = useCallback((item: Schedule) => {
@@ -22,7 +21,7 @@ export default function UtakmiceList({ schedulesData }: { schedulesData: Schedul
           <View>
             <Text style={styles.roundText}>Runda {item}</Text>
             <FlatList
-              data={schedulesData.schedules[item]}
+              data={schedulesData.schedules[item as unknown as number]}
               keyExtractor={(subItem) => subItem.id}
               renderItem={({ item: subItem }) => renderItem(subItem)}
             />
@@ -40,6 +39,8 @@ const styles = StyleSheet.create({
   outerContainer: {
     width: '100%',
     height: '100%',
+    backgroundColor: '#161e28',
+    paddingTop: 6,
   },
   roundText: {
     fontSize: 18,

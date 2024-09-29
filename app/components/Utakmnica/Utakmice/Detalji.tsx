@@ -1,6 +1,6 @@
-import { SummaryDataResponse, Timeline } from '@/types/data';
+import { TimelineDataResponse, Timeline } from '@/types/data';
 import { View, FlatList, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { AnnouncementElement } from './DetaljiElements/AnnouncementElement';
 import ThrowInElement from './DetaljiElements/ThrowInElement';
 import FreeKickElement from './DetaljiElements/FreeKickElement';
@@ -18,6 +18,7 @@ import ScoreChangeElement from './DetaljiElements/ScoreChangeElement';
 function titleCase(str: string) {
   return str
     .toLowerCase()
+    .replaceAll('_', ' ')
     .split(' ')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
@@ -30,7 +31,7 @@ function formatName(name: string) {
     .join(' ');
 }
 
-export default function DetaljiList({ summaryData }: { summaryData: SummaryDataResponse }) {
+export default function DetaljiList({ timelineData }: { timelineData: TimelineDataResponse }) {
   const [selectedForm, setSelectedForm] = useState('default');
   function renderItem({ item, selectedForm }: { item: Timeline; selectedForm: string }) {
     switch (item.type) {
@@ -81,59 +82,66 @@ export default function DetaljiList({ summaryData }: { summaryData: SummaryDataR
 
   return (
     <View style={styles.outerContainer}>
-      <View style={styles.buttonContainer}>
-        <Pressable
-          style={selectedForm === 'default' ? styles.selectedButtonElement : styles.buttonElement}
-          onPress={() => setSelectedForm('default')}
-        >
-          <Text style={selectedForm === 'default' ? styles.selectedButtonText : styles.buttonText}>Default</Text>
-        </Pressable>
+      {timelineData.timeline.length ? (
+        <>
+          <View style={styles.buttonContainer}>
+            <Pressable
+              style={selectedForm === 'default' ? styles.selectedButtonElement : styles.buttonElement}
+              onPress={() => setSelectedForm('default')}
+            >
+              <Text style={selectedForm === 'default' ? styles.selectedButtonText : styles.buttonText}>Default</Text>
+            </Pressable>
 
-        <Pressable
-          style={selectedForm === 'all' ? styles.selectedButtonElement : styles.buttonElement}
-          onPress={() => setSelectedForm('all')}
-        >
-          <Text style={selectedForm === 'all' ? styles.selectedButtonText : styles.buttonText}>All</Text>
-        </Pressable>
-      </View>
-
-      <View style={styles.container}>
-        <FlatList
-          data={summaryData.timeline}
-          keyExtractor={(item) => `${item.type}-${Math.random()}`}
-          renderItem={({ item }) => renderItem({ item, selectedForm })}
-          style={styles.flatList}
-        />
-      </View>
+            <Pressable
+              style={selectedForm === 'all' ? styles.selectedButtonElement : styles.buttonElement}
+              onPress={() => setSelectedForm('all')}
+            >
+              <Text style={selectedForm === 'all' ? styles.selectedButtonText : styles.buttonText}>All</Text>
+            </Pressable>
+          </View>
+          <View style={styles.container}>
+            <FlatList
+              data={timelineData.timeline}
+              keyExtractor={(item) => `${item.type}-${Math.random()}`}
+              renderItem={({ item }) => renderItem({ item, selectedForm })}
+              style={styles.flatList}
+            />
+          </View>
+        </>
+      ) : null}
 
       <View style={styles.matchStatsContainer}>
         <Text style={styles.matchStatsHeader}>Match Information</Text>
 
-        {Object.keys(summaryData.information).map((key) => {
-          if (['dateTop', 'timeTop'].includes(key) || key === 'capacity') {
-            return null;
-          }
+        <View style={styles.matchStatsContainerv2}>
+          <ScrollView>
+            {Object.keys(timelineData.information).map((key) => {
+              if (['dateTop', 'timeTop'].includes(key) || key === 'capacity') {
+                return null;
+              }
 
-          const value = summaryData.information[key];
+              const value = timelineData.information[key];
 
-          let formattedValue = typeof value === 'string' ? titleCase(value) : value;
-          if (typeof value === 'number') {
-            formattedValue = value.toLocaleString();
-          } else if (typeof value === 'object') {
-            formattedValue = value.map((v) => formatName(v.name)).join(', ');
-          }
+              let formattedValue = typeof value === 'string' ? titleCase(value) : value;
+              if (typeof value === 'number') {
+                formattedValue = value.toLocaleString();
+              } else if (typeof value === 'object') {
+                formattedValue = value.map((v: { name: string }) => formatName(v.name)).join(', ');
+              }
 
-          if (key === 'attendance') {
-            formattedValue = `${formattedValue} / ${summaryData.information.capacity.toLocaleString()}`;
-          }
+              if (key === 'attendance') {
+                formattedValue = `${formattedValue} / ${timelineData.information.capacity.toLocaleString()}`;
+              }
 
-          return (
-            <View style={{ flexDirection: 'row' }} key={key}>
-              <Text style={styles.matchStatsText} key={key}>{`${titleCase(key)}`}</Text>
-              <Text style={styles.matchStatsValue}>{formattedValue}</Text>
-            </View>
-          );
-        })}
+              return (
+                <View style={{ flexDirection: 'row' }} key={key}>
+                  <Text style={styles.matchStatsText} key={key}>{`${titleCase(key)}`}</Text>
+                  <Text style={styles.matchStatsValue}>{formattedValue}</Text>
+                </View>
+              );
+            })}
+          </ScrollView>
+        </View>
       </View>
     </View>
   );
@@ -158,7 +166,7 @@ const styles = StyleSheet.create({
     borderColor: '#00000',
   },
   flatList: {
-    maxHeight: 400,
+    height: 400,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -202,7 +210,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#00000',
-    height: 196,
+    marginTop: 6,
   },
   matchStatsText: {
     color: '#C0C0C0',
@@ -228,5 +236,8 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     flex: 1,
     textAlign: 'right',
+  },
+  matchStatsContainerv2: {
+    height: 160,
   },
 });
