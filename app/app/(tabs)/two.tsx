@@ -1,8 +1,8 @@
 import DropdownMenu from '@/components/misc/DropdownMenu';
-import { defaultShouldDehydrateMutation } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import { View } from '@/components/Themed';
 
 const queryClient = new QueryClient();
 
@@ -25,7 +25,7 @@ function Output() {
       fetch(`http://192.168.90.103:3000/competitions`)
         .then((res) => res.json())
         .then((data) => data.data),
-  });
+  }) as { isPending: boolean; error: Error; data: Record<string, { id: string; name: string; image: string }[]> };
 
   if (isPending) {
     return <ActivityIndicator size="large" color="#00ff00" />;
@@ -41,7 +41,11 @@ function Output() {
     items: value.map((item) => ({ name: item.name, id: item.id })),
   }));
 
-  const renderItem = ({ item }) => <DropdownMenu title={item.title} imageUri={item.imageUri} items={item.items} />;
+  const renderItem = ({
+    item,
+  }: {
+    item: { title: string; imageUri: string; items: { name: string; id: string }[] };
+  }) => <DropdownMenu title={item.title} imageUri={item.imageUri} items={item.items} />;
 
   const renderFooter = () => {
     return <ActivityIndicator style={{ marginVertical: 20 }} />;

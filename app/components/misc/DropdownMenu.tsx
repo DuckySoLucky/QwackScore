@@ -1,7 +1,7 @@
+import { TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, Pressable } from 'react-native';
-import { Dimensions } from 'react-native';
-import { Link, useNavigation, useRouter } from 'expo-router';
+import { Text, View } from '@/components/Themed';
+import { Link } from 'expo-router';
 
 const DropdownMenu = ({
   title,
@@ -32,7 +32,7 @@ const DropdownMenu = ({
               key={index}
               href={{ pathname: '/lige', params: { id: item.id, title: item.name } }}
             >
-              <Image source={{ uri: imageUri }} style={styles.image} />
+              <Image source={{ uri: imageUri }} style={styles.menuImage} />
               <Text style={styles.menuItem}>{item.name}</Text>
             </Link>
           ))}
@@ -73,15 +73,24 @@ const styles = StyleSheet.create({
   },
   dropdownMenu: {
     backgroundColor: 'transparent', // #10181E
-    padding: 10,
+    marginLeft: 10,
+    paddingBottom: 10,
   },
   menuItem: {
-    color: '#FFFFFF',
+    color: '#686868',
     paddingVertical: 5,
+    paddingRight: 10,
+    marginLeft: 10,
+    paddingLeft: 10,
+  },
+  menuImage: {
+    width: 24,
+    height: 24,
+    marginRight: 10,
+    paddingRight: 10,
   },
   dropdownMenuItemRow: {
-    flexDirection: 'row',
-    marginVertical: 5,
+    marginVertical: 3,
   },
 });
 
