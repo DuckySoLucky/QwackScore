@@ -28,7 +28,7 @@ async function fetchSeasons() {
             return cache.value;
         }
 
-        const url = `https://api.sportradar.com/soccer-extended/trial/v4/hr/seasons?api_key=${config.API.SportRadar}`;
+        const url = `https://api.sportradar.com/soccer-extended/trial/v4/en/seasons?api_key=${config.API.SportRadar}`;
         const response = await axios.get(url, {
             headers: {
                 accept: "application/json",
@@ -84,7 +84,7 @@ async function fetchCompetitions() {
             return cache.value;
         }
 
-        const url = `https://api.sportradar.com/soccer-extended/trial/v4/hr/competitions?api_key=${config.API.SportRadar}`;
+        const url = `https://api.sportradar.com/soccer-extended/trial/v4/en/competitions?api_key=${config.API.SportRadar}`;
         const response = await axios.get(url, {
             headers: {
                 accept: "application/json",
@@ -120,7 +120,7 @@ async function getCompetition(id) {
         const cache = await db.collection("cache").findOne({ key: `competition-${id}` });
         if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
             broadcastMessage(`getCompetition returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
-            return cache.value.data;    
+            return cache.value.data;
         }
 
         const url = `https://api.sportradar.com/soccer/trial/v4/en/competitions/${id}/seasons.json?api_key=${config.API.SportRadar}`;
@@ -161,7 +161,7 @@ async function getSeasonSchedules(seasonId) {
             return cache.value.schedules;
         }
 
-        const url = `https://api.sportradar.com/soccer/trial/v4/hr/seasons/${seasonId}/schedules.json?api_key=${config.API.SportRadar}`;
+        const url = `https://api.sportradar.com/soccer/trial/v4/en/seasons/${seasonId}/schedules.json?api_key=${config.API.SportRadar}`;
         const response = await axios.get(url, {
             headers: {
                 accept: "application/json",
@@ -200,7 +200,7 @@ async function getPlayerStats(seasonId) {
             return cache.value;
         }
 
-        const url = `https://api.sportradar.com/soccer/trial/v4/hr/seasons/${seasonId}/leaders.json?api_key=${config.API.SportRadar}`;
+        const url = `https://api.sportradar.com/soccer/trial/v4/en/seasons/${seasonId}/leaders.json?api_key=${config.API.SportRadar}`;
         const response = await axios.get(url, {
             headers: {
                 accept: "application/json",
@@ -238,7 +238,7 @@ async function getStandings(seasonId) {
             return cache.value.data;
         }
 
-        const url = `https://api.sportradar.com/soccer/trial/v4/hr/seasons/${seasonId}/standings.json?api_key=${config.API.SportRadar}`;
+        const url = `https://api.sportradar.com/soccer/trial/v4/en/seasons/${seasonId}/standings.json?api_key=${config.API.SportRadar}`;
         const response = await axios.get(url, {
             headers: {
                 accept: "application/json",
@@ -276,7 +276,7 @@ async function getFormStandings(seasonId) {
             return cache.value.data;
         }
 
-        const url = `https://api.sportradar.com/soccer/trial/v4/hr/seasons/${seasonId}/form_standings.json?api_key=${config.API.SportRadar}`;
+        const url = `https://api.sportradar.com/soccer/trial/v4/en/seasons/${seasonId}/form_standings.json?api_key=${config.API.SportRadar}`;
         const response = await axios.get(url, {
             headers: {
                 accept: "application/json",
@@ -314,7 +314,7 @@ async function getTimeline(sportEvent) {
             return cache.value.data;
         }
 
-        const url = `https://api.sportradar.com/soccer/trial/v4/hr/sport_events/${sportEvent}/timeline.json?api_key=${config.API.SportRadar}`;
+        const url = `https://api.sportradar.com/soccer/trial/v4/en/sport_events/${sportEvent}/timeline.json?api_key=${config.API.SportRadar}`;
         const response = await axios.get(url, {
             headers: {
                 accept: "application/json",
@@ -352,7 +352,7 @@ async function getLineup(sportEvent) {
             return cache.value.data;
         }
 
-        const url = `https://api.sportradar.com/soccer/trial/v4/hr/sport_events/${sportEvent}/lineups.json?api_key=${config.API.SportRadar}`;
+        const url = `https://api.sportradar.com/soccer/trial/v4/en/sport_events/${sportEvent}/lineups.json?api_key=${config.API.SportRadar}`;
         const response = await axios.get(url, {
             headers: {
                 accept: "application/json",
@@ -390,7 +390,7 @@ async function getSummary(sportEvent) {
             return cache.value.data;
         }
 
-        const url = `https://api.sportradar.com/soccer/trial/v4/hr/sport_events/${sportEvent}/summary.json?api_key=${config.API.SportRadar}`;
+        const url = `https://api.sportradar.com/soccer/trial/v4/en/sport_events/${sportEvent}/summary.json?api_key=${config.API.SportRadar}`;
         const response = await axios.get(url, {
             headers: {
                 accept: "application/json",

@@ -1,8 +1,7 @@
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { Schedule, Timeline } from '@/types/data';
-
-const ballImage = 'https://i.imgur.com/Q6nxcJk.png';
+import { Timeline } from '@/types/data';
+import React from 'react';
 
 export function AnnouncementElement({ item }: { item: Timeline }) {
   return (

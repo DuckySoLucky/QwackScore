@@ -16,23 +16,6 @@ export default wrap(async function (req, res) {
 
     const timelineData = await getTimeline(sportEventId);
 
-    /*const validElements = [
-        "yellow_card",
-        "free_kick",
-        "throw_in",
-        "shot_saved",
-        "corner_kick",
-        "goal_kick",
-        "injury",
-        "period_score",
-        "score_change",
-        "substitution",
-        "break_start",
-        "offside",
-    ];
-    const skipElements = ["match_started", "period_start", "shot_on_target", "shot_off_target", "possible_goal", "injury_time_shown", "injury_return", "match_ended"];
-*/
-
     const output = {};
     output.competitors = timelineData.sport_event.competitors.map((competitor) => {
         return {
@@ -62,6 +45,7 @@ export default wrap(async function (req, res) {
     output.information.referee[0].name = getPlayerName(output.information.referee[0].name);
 
     output.timeline = [];
+    output.commentary = [];
     const ignoreElements = [
         "match_started",
         "match_ended",
@@ -79,6 +63,14 @@ export default wrap(async function (req, res) {
             continue;
         }
 
+        for (const commentary of element.commentaries ?? []) {
+            output.commentary.push({
+                time: `${element.match_time}'`,
+                message: commentary.text,
+                position: element.competitor === "away" ? "right" : "left",
+            });
+        }
+
         if (element.type === "period_start") {
             if (element.period === 2) {
                 const data = timelineData.sport_event_status.period_scores.find((element) => element.number === 1);
@@ -86,6 +78,12 @@ export default wrap(async function (req, res) {
                     type: "announcement",
                     position: "center",
                     message: `HT - ${data.home_score} - ${data.away_score}`,
+                });
+
+                output.commentary.push({
+                    time: "HT",
+                    message: `Half Time - The first half has ended. The score is ${data.home_score} - ${data.away_score}.`,
+                    position: "center",
                 });
             }
 
@@ -164,6 +162,12 @@ export default wrap(async function (req, res) {
             position: "center",
             message: `FT ${output.competitors[0].score} - ${output.competitors[1].score}`,
         });
+
+        output.commentary.push({
+            time: "FT",
+            position: "center",
+            message: `Full Time - The match has ended. The final score is ${output.competitors[0].score} - ${output.competitors[1].score}.`,
+        });
     }
 
     output.timeline.reverse();
@@ -180,6 +184,8 @@ export default wrap(async function (req, res) {
     }
 
     output.season = timelineData.sport_event.sport_event_context.season;
+
+    output.commentary.reverse();
 
     return res.status(200).json({ data: output });
 });

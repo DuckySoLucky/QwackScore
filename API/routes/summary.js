@@ -1,30 +1,6 @@
 import { titleCase, wrap } from "../src/helper.js";
 import { getSummary } from "../src/lib.js";
 
-function calculatRatio(left, right) {
-    const total = left + right;
-    const leftRatio = left / total;
-    const rightRatio = right / total;
-
-    let leftStat, rightStat;
-    if (leftRatio === rightRatio) {
-        leftStat = rightStat = 3;
-    } else if (leftRatio > rightRatio) {
-        const diff = leftRatio - rightRatio;
-        leftStat = Math.min(3, Math.floor(3 * (1 - diff)));
-        rightStat = Math.min(3, Math.ceil(3 * diff));
-    } else {
-        const diff = rightRatio - leftRatio;
-        leftStat = Math.min(3, Math.ceil(3 * diff));
-        rightStat = Math.min(3, Math.floor(3 * (1 - diff)));
-    }
-
-    if (isNaN(leftStat)) leftStat = 0;
-    if (isNaN(rightStat)) rightStat = 0;
-
-    return { left: leftStat, right: rightStat ?? 0 };
-}
-
 export default wrap(async function (req, res) {
     const sportEventId = req.params.sportEventId;
     if (!sportEventId || !sportEventId.match(/^sr:sport_event:\d+$/)) {
@@ -38,16 +14,18 @@ export default wrap(async function (req, res) {
         return res.status(200).json({ data: output });
     }
 
-    for (const stat in summary[0].statistics) {
-        const home = summary[0].statistics[stat] ?? 0;
-        const away = summary[1].statistics[stat] ?? 0;
+    const home = summary[0].statistics;
+    const away = summary[1].statistics;
+    for (const stat of [...new Set([...Object.keys(home), ...Object.keys(away)])]) {
+        const homeStat = home[stat] ?? 0;
+        const awayStat = away[stat] ?? 0;
 
         output.push({
             id: stat,
             name: titleCase(stat, "_"),
-            home: home,
-            away: away,
-            progress: calculatRatio(home, away),
+            home: homeStat,
+            away: awayStat,
+            visible: homeStat + awayStat > 0,
         });
     }
 

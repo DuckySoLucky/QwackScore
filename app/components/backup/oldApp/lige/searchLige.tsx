@@ -1,12 +1,4 @@
-import {
-  StyleSheet,
-  ActivityIndicator,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  Pressable,
-  Image,
-} from 'react-native';
+import { StyleSheet, ActivityIndicator, TextInput, FlatList, TouchableOpacity, Pressable, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import React, { useEffect, useState, useRef } from 'react';
@@ -57,7 +49,7 @@ function Example() {
   const { isPending, error, data } = useQuery({
     queryKey: ['repoData'],
     queryFn: () =>
-      fetch('http://192.168.0.104:3000/seasons')
+      fetch('http://192.168.90.103:3000/seasons')
         .then((res) => res.json())
         .then((data) => data.data),
   });

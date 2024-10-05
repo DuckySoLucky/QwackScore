@@ -239,5 +239,6 @@ const styles = StyleSheet.create({
   },
   matchStatsContainerv2: {
     height: 160,
+    paddingBottom: 12,
   },
 });

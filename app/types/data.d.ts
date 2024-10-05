@@ -69,6 +69,7 @@ export type ScoreData = {
 export type TimelineDataResponse = {
   timeline: Timeline[];
   information: Record<string, number | string | object | Array>;
+  commentary: Commentary[];
 };
 
 export type Timeline = {
@@ -97,4 +98,20 @@ export type Substitution = {
   jersey_number: number;
   position: string;
   id: string;
+};
+
+export type SummaryData = Summary[];
+
+export type Summary = {
+  id: string;
+  name: string;
+  home: number;
+  away: number;
+  visible: boolean;
+};
+
+export type Commentary = {
+  time: string;
+  position: string;
+  message: string;
 };

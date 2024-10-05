@@ -1,7 +1,6 @@
 import { StyleSheet, ScrollView, Pressable, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
@@ -9,10 +8,11 @@ import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-quer
 import Header from '@/components/Utakmnica/Header';
 import { Schedule, SchedulesDataResponse } from '@/types/data';
 import DetaljiList from '@/components/Utakmnica/Utakmice/Detalji';
-import UtakmiceColumnElement from '@/components/Utakmnica/Utakmice/UtakmiceColumnElement';
 import UtakmiceList from '@/components/Utakmnica/UtakmiceList';
 import PostaveList from '@/components/Utakmnica/Utakmice/Postave';
 import PoredakList from '@/components/Lige/PoredakList';
+import StatistikaList from '@/components/Utakmnica/StatistikaList';
+import CommentaryList from '@/components/Utakmnica/CommentaryList';
 
 const queryClient = new QueryClient();
 
@@ -23,12 +23,14 @@ export default function TabTwoScreen() {
     </QueryClientProvider>
   );
 }
-``;
+
 const VIEW_COMPONENTS = {
   detalji: DetaljiList,
   utakmice: UtakmiceList,
   postave: PostaveList,
   poredak: PoredakList,
+  stats: StatistikaList,
+  commentary: CommentaryList,
 } as Record<string, React.ComponentType<any>>;
 
 function Output() {
@@ -44,7 +46,7 @@ function Output() {
   } = useQuery({
     queryKey: ['timelineData', utakmicaData?.id],
     queryFn: () =>
-      fetch(`http://192.168.0.104:3000/timeline/${utakmicaData.id}`)
+      fetch(`http://192.168.90.103:3000/timeline/${utakmicaData.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
@@ -56,7 +58,7 @@ function Output() {
   } = useQuery({
     queryKey: ['schedulesData', utakmicaData?.id],
     queryFn: () =>
-      fetch(`http://192.168.0.104:3000/schedules/${timelineData.season.id}`)
+      fetch(`http://192.168.90.103:3000/schedules/${timelineData.season.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
@@ -68,7 +70,7 @@ function Output() {
   } = useQuery({
     queryKey: ['standingsData', utakmicaData?.id],
     queryFn: () =>
-      fetch(`http://192.168.0.104:3000/standings/${timelineData.season.id}`)
+      fetch(`http://192.168.90.103:3000/standings/${timelineData.season.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
@@ -80,7 +82,19 @@ function Output() {
   } = useQuery({
     queryKey: ['lineupsData', utakmicaData?.id],
     queryFn: () =>
-      fetch(`http://192.168.0.104:3000/lineup/${utakmicaData.id}`)
+      fetch(`http://192.168.90.103:3000/lineup/${utakmicaData.id}`)
+        .then((res) => res.json())
+        .then((data) => data.data),
+  });
+
+  const {
+    isLoading: isLoadingSummary,
+    error: errorSummary,
+    data: summaryData,
+  } = useQuery({
+    queryKey: ['summaryData', utakmicaData?.id],
+    queryFn: () =>
+      fetch(`http://192.168.90.103:3000/summary/${utakmicaData.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
@@ -102,13 +116,20 @@ function Output() {
     }
   }, [timelineData]);
 
-  if (isLoading || isLoadingSchedule || isLoadingLineups || isLoadingStandingsData) {
+  if (isLoading || isLoadingSchedule || isLoadingLineups || isLoadingStandingsData || isLoadingSummary) {
     return <ActivityIndicator size="large" color="#00ff00" />;
   }
 
-  if (error || errorSchedule || errorLineups || errorStandings) {
+  if (error || errorSchedule || errorLineups || errorStandings || errorSummary) {
     return (
-      <Text>Error: {error?.message || errorSchedule?.message || errorLineups?.message || errorStandings?.message}</Text>
+      <Text>
+        Error:{' '}
+        {error?.message ||
+          errorSchedule?.message ||
+          errorLineups?.message ||
+          errorStandings?.message ||
+          errorSummary?.message}
+      </Text>
     );
   }
 
@@ -143,6 +164,14 @@ function Output() {
             <Text style={selectedView === 'poredak' ? styles.selectedTitle : styles.title}>Poredak</Text>
           </Pressable>
 
+          <Pressable onPress={() => setSelectedView('stats')}>
+            <Text style={selectedView === 'stats' ? styles.selectedTitle : styles.title}>Statistika</Text>
+          </Pressable>
+
+          <Pressable onPress={() => setSelectedView('commentary')}>
+            <Text style={selectedView === 'commentary' ? styles.selectedTitle : styles.title}>Commentary</Text>
+          </Pressable>
+
           <Pressable onPress={() => setSelectedView('utakmice')}>
             <Text style={selectedView === 'utakmice' ? styles.selectedTitle : styles.title}>Utakmice</Text>
           </Pressable>
@@ -154,6 +183,7 @@ function Output() {
         schedulesData={newSchedulesData}
         lineupsData={lineupsData}
         standingsData={standingsData}
+        summaryData={summaryData}
       />
     </View>
   );

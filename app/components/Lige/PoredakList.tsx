@@ -1,9 +1,6 @@
-import { Schedule, SchedulesDataResponse, StandingsData, StatsDataReponse } from '@/types/data';
-import PlayerStatisticColumnElement from '../misc/PlayerStatisticColumnElement';
-import TeamStatisticColumnElement from '../misc/TeamStatisticColumnElement';
-import { View, FlatList, Text, StyleSheet, TouchableOpacity, Pressable, ScrollView } from 'react-native';
-import UtakmiceColumnElement from '../Utakmnica/Utakmice/UtakmiceColumnElement';
-import { useState } from 'react';
+import { StandingsData } from '@/types/data';
+import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
+import React, { useState } from 'react';
 import DefaultPoredakColumnElement from './Poredak/DefaultPoredakColumnElement';
 import FormPoredakColumnElement from './Poredak/FormPoredakColumnElement';
 
