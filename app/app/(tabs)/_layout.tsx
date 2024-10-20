@@ -1,7 +1,8 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
-import { Pressable, View, StyleSheet, Text, ScrollView, Image } from 'react-native';
+import { Pressable, View } from 'react-native';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -10,7 +11,7 @@ import { useRouter } from 'expo-router';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['name']; color: string }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={24} style={{ marginBottom: -3 }} {...props} />;
 }
 
 export default function TabLayout() {
@@ -18,7 +19,7 @@ export default function TabLayout() {
 
   const router = useRouter();
   const handleNavigation = () => {
-    router.push('lige/searchLige');
+    router.push('/modal');
   };
 
   return (
@@ -42,23 +43,22 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Utakmice',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="soccer-ball-o" color={color} />,
           headerRight: () => (
             <View style={{ flexDirection: 'row', marginRight: 15 }}>
-              <Link href="/modal" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="search"
-                      size={25}
-                      color={Colors[colorScheme].navbarIcons}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
+              <Pressable onPress={handleNavigation}>
+                {({ pressed }) => (
+                  <AntDesign
+                    name="search1"
+                    size={24}
+                    color={Colors[colorScheme].navbarIcons}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+
               <View style={{ width: 15 }} />
-              <Pressable>
+              <Pressable onPress={() => router.push('/three')}>
                 {({ pressed }) => (
                   <FontAwesome
                     name="bars"
@@ -77,21 +77,21 @@ export default function TabLayout() {
         name="two"
         options={{
           title: 'Lige',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="search1" size={24} color={color} />,
           headerRight: () => (
             <View style={{ flexDirection: 'row', marginRight: 15 }}>
               <Pressable onPress={handleNavigation}>
                 {({ pressed }) => (
-                  <FontAwesome
-                    name="search"
-                    size={25}
+                  <AntDesign
+                    name="search1"
+                    size={24}
                     color={Colors[colorScheme].navbarIcons}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
               </Pressable>
               <View style={{ width: 15 }} />
-              <Pressable>
+              <Pressable onPress={() => router.push('/three')}>
                 {({ pressed }) => (
                   <FontAwesome
                     name="bars"
@@ -108,22 +108,22 @@ export default function TabLayout() {
       <Tabs.Screen
         name="three"
         options={{
-          title: 'Lige',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Settings',
+          tabBarIcon: ({ color }) => <AntDesign name="setting" size={24} color={color} />,
           headerRight: () => (
             <View style={{ flexDirection: 'row', marginRight: 15 }}>
               <Pressable onPress={handleNavigation}>
                 {({ pressed }) => (
-                  <FontAwesome
-                    name="search"
-                    size={25}
+                  <AntDesign
+                    name="search1"
+                    size={24}
                     color={Colors[colorScheme].navbarIcons}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
               </Pressable>
               <View style={{ width: 15 }} />
-              <Pressable>
+              <Pressable onPress={() => router.push('/three')}>
                 {({ pressed }) => (
                   <FontAwesome
                     name="bars"

@@ -1,35 +1,103 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
+import { QueryClientProvider, useQuery, QueryClient } from '@tanstack/react-query';
+import { ActivityIndicator, StyleSheet, TextInput, FlatList, Text, TouchableOpacity } from 'react-native';
+import { View } from '@/components/Themed';
+import React, { useState } from 'react';
+import { Link, useNavigation } from 'expo-router';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+const queryClient = new QueryClient();
 
 export default function ModalScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/modal.tsx" />
+    <QueryClientProvider client={queryClient}>
+      <Output />
+    </QueryClientProvider>
+  );
+}
 
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+function Output() {
+  const navigation = useNavigation();
+  navigation.setOptions({ title: 'Leagues' });
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const {
+    isLoading,
+    error,
+    data: seasonsData,
+  } = useQuery({
+    queryKey: ['standingsData'],
+    queryFn: () =>
+      fetch(`http://192.168.90.105:3000/seasons`)
+        .then((res) => res.json())
+        .then((data) => data.data),
+  });
+
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#00ff00" />;
+  }
+
+  if (error) {
+    return <View>Error: {error.message}</View>;
+  }
+
+  const filteredLeagues = seasonsData.seasons.filter((league: { name: string; competition_id: string }) =>
+    league.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <View style={styles.outerContainer}>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search leagues..."
+          placeholderTextColor={'#ccc'}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <FlatList
+          data={filteredLeagues}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <Link
+              href={{ pathname: '/lige', params: { id: item.competition_id, title: item.name } }}
+              style={styles.leagueItem}
+            >
+              <Text style={styles.leagueItem}>{item.name}</Text>
+            </Link>
+          )}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 6,
+    backgroundColor: '#161e28',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  container: {
+    backgroundColor: '#10181E',
+    borderColor: '#000000',
+    borderRadius: 5,
+    borderWidth: 1,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  searchBar: {
+    backgroundColor: '#161F29',
+    borderColor: '#000000',
+    borderRadius: 5,
+    borderWidth: 1,
+    marginHorizontal: 6,
+    marginTop: 6,
+    height: 40,
+    color: 'white',
+    paddingLeft: 10,
+  },
+  leagueItem: {
+    color: '#686868',
+    fontSize: 16,
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#000000',
   },
 });

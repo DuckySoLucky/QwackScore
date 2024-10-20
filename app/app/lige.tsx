@@ -34,6 +34,7 @@ function Output() {
   const route = useRoute();
   const navigation = useNavigation();
   const [selectedView, setSelectedView] = useState('details');
+
   useEffect(() => {
     navigation.setOptions({ title: route.params?.title ?? 'Liga', headerStyle: styles.header });
   }, [navigation]);
@@ -45,7 +46,7 @@ function Output() {
   } = useQuery({
     queryKey: ['standingsData'],
     queryFn: () =>
-      fetch(`http://192.168.90.103:3000/competition/${route.params.id}`)
+      fetch(`http://192.168.90.105:3000/competition/${route.params.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
@@ -58,7 +59,7 @@ function Output() {
     queryKey: ['schedulesData', seasonData?.id],
     queryFn: () =>
       seasonData?.id
-        ? fetch(`http://192.168.90.103:3000/schedules/${seasonData.id}`)
+        ? fetch(`http://192.168.90.105:3000/schedules/${seasonData.id}`)
             .then((res) => res.json())
             .then((data) => data.data)
         : Promise.resolve(null),
@@ -73,7 +74,7 @@ function Output() {
     queryKey: ['statsData', seasonData?.id],
     queryFn: () =>
       seasonData?.id
-        ? fetch(`http://192.168.90.103:3000/stats/${seasonData.id}`)
+        ? fetch(`http://192.168.90.105:3000/stats/${seasonData.id}`)
             .then((res) => res.json())
             .then((data) => data.data)
         : Promise.resolve(null),
@@ -88,7 +89,7 @@ function Output() {
     queryKey: ['standingsData', seasonData?.id],
     queryFn: () =>
       seasonData?.id
-        ? fetch(`http://192.168.90.103:3000/standings/${seasonData.id}`)
+        ? fetch(`http://192.168.90.105:3000/standings/${seasonData.id}`)
             .then((res) => res.json())
             .then((data) => data.data)
         : Promise.resolve(null),
@@ -100,7 +101,11 @@ function Output() {
   }
 
   if (error || errorSchedules || errorStats || errorStandings) {
-    return <Text>Error: {error?.message || errorSchedules?.message || errorSchedules?.message}</Text>;
+    return (
+      <Text>
+        Error: {error?.message || errorSchedules?.message || errorSchedules?.message || errorStandings?.message}
+      </Text>
+    );
   }
 
   const ViewComponent = VIEW_COMPONENTS[selectedView] ?? VIEW_COMPONENTS.details;

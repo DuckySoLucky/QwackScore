@@ -46,7 +46,7 @@ function Output() {
   } = useQuery({
     queryKey: ['timelineData', utakmicaData?.id],
     queryFn: () =>
-      fetch(`http://192.168.90.103:3000/timeline/${utakmicaData.id}`)
+      fetch(`http://192.168.90.105:3000/timeline/${utakmicaData.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
@@ -58,7 +58,7 @@ function Output() {
   } = useQuery({
     queryKey: ['schedulesData', utakmicaData?.id],
     queryFn: () =>
-      fetch(`http://192.168.90.103:3000/schedules/${timelineData.season.id}`)
+      fetch(`http://192.168.90.105:3000/schedules/${timelineData.season.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
@@ -70,7 +70,7 @@ function Output() {
   } = useQuery({
     queryKey: ['standingsData', utakmicaData?.id],
     queryFn: () =>
-      fetch(`http://192.168.90.103:3000/standings/${timelineData.season.id}`)
+      fetch(`http://192.168.90.105:3000/standings/${timelineData.season.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
@@ -82,7 +82,7 @@ function Output() {
   } = useQuery({
     queryKey: ['lineupsData', utakmicaData?.id],
     queryFn: () =>
-      fetch(`http://192.168.90.103:3000/lineup/${utakmicaData.id}`)
+      fetch(`http://192.168.90.105:3000/lineup/${utakmicaData.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });
@@ -94,7 +94,7 @@ function Output() {
   } = useQuery({
     queryKey: ['summaryData', utakmicaData?.id],
     queryFn: () =>
-      fetch(`http://192.168.90.103:3000/summary/${utakmicaData.id}`)
+      fetch(`http://192.168.90.105:3000/summary/${utakmicaData.id}`)
         .then((res) => res.json())
         .then((data) => data.data),
   });

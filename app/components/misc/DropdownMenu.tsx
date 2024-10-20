@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   menuItem: {
-    color: '#686868',
+    // color: '#686868',
     paddingVertical: 5,
     paddingRight: 10,
     marginLeft: 10,

@@ -34,9 +34,9 @@ export default wrap(async function (req, res) {
         timeTop: new Date(timelineData.sport_event.start_time).toLocaleString().split(", ")[1],
 
         date: new Date(timelineData.sport_event.start_time).toLocaleString(),
-        stadium: timelineData.sport_event.venue.name,
-        location: `${timelineData.sport_event.venue.city_name}, ${timelineData.sport_event.venue.country_name}`,
-        capacity: timelineData.sport_event.venue.capacity,
+        stadium: timelineData.sport_event.venue?.name ?? "Unknown",
+        location: `${timelineData.sport_event.venue?.city_name ?? "Unknown"}, ${timelineData.sport_event.venue?.country_name ?? "Unknown"}`,
+        capacity: timelineData.sport_event.venue?.capacity ?? "Unknown",
         attendance: timelineData.sport_event.sport_event_conditions.attendance?.count ?? "???",
         referee: timelineData.sport_event.sport_event_conditions.referees ?? [{ name: "Unknown" }],
         weather: titleCase(timelineData.sport_event.sport_event_conditions.weather?.overall_conditions ?? "Uknown"),

@@ -1,12 +1,12 @@
 {
-  "mongo": {
-    "dbUrl": "mongodb://127.0.0.1:27017",
-    "dbName": "duckysoluccky"
-  },
-  "server": {
-    "port": 3000
-  },
-  "API": {
-    "SportRadar": "5b7YMaYk6dURwXi10AfUIA1aggyZuGDnMEHBm2ED"
-  }
+    "mongo": {
+        "dbUrl": "mongodb://127.0.0.1:27017",
+        "dbName": "duckysoluccky"
+    },
+    "server": {
+        "port": 3000
+    },
+    "API": {
+        "SportRadar": "esJwZP76dHEQqBgBJgHQqUlkSI5SAaQg7o1rzvy0"
+    }
 }

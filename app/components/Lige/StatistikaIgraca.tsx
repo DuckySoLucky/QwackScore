@@ -12,6 +12,14 @@ function titleCase(str: string) {
 }
 
 const StatistikaIgraca = ({ statsData }: { statsData: StatsDataReponse }) => {
+  if (!statsData?.players) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.roundText}>No player stats available</Text>
+      </View>
+    );
+  }
+
   const renderPlayerStats = ({ item }: { item: [string, PlayerStat[]] }) => {
     const [key, data] = item;
     return (

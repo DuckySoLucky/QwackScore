@@ -14,16 +14,24 @@ export default function DetaljiList({
   const combinedData = [
     { type: 'header', title: 'Utakmice' },
     ...schedulesData.firstThreeMatchs.map((match: Schedule) => ({ type: 'match', item: match })),
-
-    { type: 'header', title: 'Broj bodova' },
-    ...statsData.teams['points'].slice(0, 5).map((club) => ({ type: 'team', item: club })),
-
-    { type: 'header', title: 'Points / Goals' },
-    ...statsData.teams['PTS/G'].slice(0, 3).map((club) => ({ type: 'team', item: club })),
-
-    { type: 'header', title: 'Najbolji strijelci' },
-    ...statsData.players['goals'].slice(0, 3).map((club) => ({ type: 'player', item: club })),
   ];
+
+  if (statsData?.teams) {
+    combinedData.push(
+      { type: 'header', title: 'Broj bodova' },
+      ...statsData.teams['points'].slice(0, 5).map((club) => ({ type: 'team', item: club })),
+
+      { type: 'header', title: 'Points / Goals' },
+      ...statsData.teams['PTS/G'].slice(0, 3).map((club) => ({ type: 'team', item: club }))
+    );
+  }
+
+  if (statsData?.players) {
+    combinedData.push(
+      { type: 'header', title: 'Najbolji strijelci' },
+      ...statsData.players['goals'].slice(0, 3).map((club) => ({ type: 'player', item: club }))
+    );
+  }
 
   const groupedData = [];
   let currentGroup = [] as any[];

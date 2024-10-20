@@ -17,6 +17,14 @@ const CUSTOM_KEYS = {
 } as Record<string, string>;
 
 const StatistikaTimova = ({ statsData }: { statsData: StatsDataReponse }) => {
+  if (!statsData?.teams) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.roundText}>No team stats available</Text>
+      </View>
+    );
+  }
+
   const renderTeamStats = ({ item }: { item: [string, TeamStat[]] }) => {
     const [key, data] = item;
     if (data.length < 5) {

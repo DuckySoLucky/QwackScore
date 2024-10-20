@@ -7,6 +7,31 @@ import FormPoredakColumnElement from './Poredak/FormPoredakColumnElement';
 export default function PoredakList({ standingsData }: { standingsData: StandingsData[] }) {
   const [selectedForm, setSelectedForm] = useState('default');
 
+  if (!standingsData) {
+    return (
+      <View style={styles.outerContainer}>
+        <View
+          style={{
+            ...styles.buttonContainer,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Text
+            style={{
+              color: '#686868',
+              fontSize: 16,
+              fontWeight: 'bold',
+              marginLeft: 6,
+            }}
+          >
+            No standingsData found
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.outerContainer}>
       <View style={styles.buttonContainer}>

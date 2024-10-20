@@ -32,6 +32,10 @@ export default wrap(async function (req, res) {
     const statKey = ["points", "points_per_game", "win", "loss", "{win}/{loss}", "goals_diff", "goals_for", "goals_against", "draw"];
 
     const standing = (await getStandings(seasonId))[0];
+    if (!standing?.groups.length) {
+        return res.status(200).json({ data: null });
+    }
+
     for (const statName of statNames) {
         output.teams[statName] = [];
         for (const team of standing.groups[0].standings) {

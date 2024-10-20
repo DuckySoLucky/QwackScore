@@ -22,7 +22,7 @@ function Output() {
   } = useQuery({
     queryKey: ['standingsData'],
     queryFn: () =>
-      fetch(`http://192.168.90.103:3000/competitions`)
+      fetch(`http://192.168.90.105:3000/competitions`)
         .then((res) => res.json())
         .then((data) => data.data),
   }) as { isPending: boolean; error: Error; data: Record<string, { id: string; name: string; image: string }[]> };
