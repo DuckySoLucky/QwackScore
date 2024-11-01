@@ -8,6 +8,7 @@ import ErrorComponent from '@/components/global/ErrorComponents';
 
 import { fetchCompetitions } from '@/API/src/routes/competitions';
 import { CompetitionsResponse } from '@/API/types/competitions';
+import { config } from '@/API/config';
 
 export default function TabTwoScreen() {
   const [data, setData] = useState<null | CompetitionsResponse>(null);
@@ -17,7 +18,7 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchCompetitions({ useLocalAPI: false });
+        const result = await fetchCompetitions({ useLocalAPI: config.useLocalAPI });
         setData(result);
       } catch (err) {
         setError(err as Error);

@@ -17,6 +17,7 @@ import StatistikaList from '@/components/Utakmnica/StatistikaList';
 import CommentaryList from '@/components/Utakmnica/CommentaryList';
 import LoadingComponent from '@/components/global/LoadingComponent';
 import ErrorComponent from '@/components/global/ErrorComponents';
+import { config } from '@/API/config';
 
 export default function TabTwoScreen() {
   const navigation = useNavigation();
@@ -32,7 +33,7 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchUtakmicaData(utakmicaData.id, { useLocalAPI: false });
+        const result = await fetchUtakmicaData(utakmicaData.id, { useLocalAPI: config.useLocalAPI });
         setData(result);
       } catch (err) {
         setError(err as Error);

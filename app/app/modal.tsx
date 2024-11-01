@@ -6,6 +6,7 @@ import { fetchSeasons } from '@/API/src/routes/seasons';
 import { SeasonsResponse } from '@/API/types/seasons';
 import LoadingComponent from '@/components/global/LoadingComponent';
 import ErrorComponent from '@/components/global/ErrorComponents';
+import { config } from '@/API/config';
 
 export default function ModalScreen() {
   const navigation = useNavigation();
@@ -17,7 +18,7 @@ export default function ModalScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchSeasons({ useLocalAPI: false });
+        const result = await fetchSeasons({ useLocalAPI: config.useLocalAPI });
         setData(result);
       } catch (err) {
         setError(err as Error);

@@ -9,6 +9,7 @@ import LoadingComponent from '@/components/global/LoadingComponent';
 import { fetchSeasons } from '@/API/src/routes/seasons';
 import { SeasonsResponse } from '@/API/types/seasons';
 import { clearCache } from '@/API/src/handler';
+import { config } from '@/API/config';
 
 export default function TabTwoScreen() {
   const [selectedLanguage, setSelectedLanguage] = useState('english');
@@ -31,7 +32,7 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchSeasons({ useLocalAPI: false });
+        const result = await fetchSeasons({ useLocalAPI: config.useLocalAPI });
         setData(result);
       } catch (err) {
         setError(err as Error);

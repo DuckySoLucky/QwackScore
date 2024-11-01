@@ -9,6 +9,7 @@ import ErrorComponent from '@/components/global/ErrorComponents';
 
 import { fetchSchedules } from '@/API/src/routes/schedules';
 import { SchedulesMatch, SchedulesResponse } from '@/API/types/schedules';
+import { config } from '@/API/config';
 
 export default function TabOneScreen() {
   const seasonId = 'sr:season:118691';
@@ -20,7 +21,7 @@ export default function TabOneScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchSchedules(seasonId, { useLocalAPI: false });
+        const result = await fetchSchedules(seasonId, { useLocalAPI: config.useLocalAPI });
         setData(result);
       } catch (err) {
         setError(err as Error);
