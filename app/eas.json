@@ -1,5 +1,6 @@
 {
   "build": {
+    "prebuildCommand": "prebuild --template expo-template-bare-minimum@51.0.50",
     "preview": {
       "android": {
         "buildType": "apk"
