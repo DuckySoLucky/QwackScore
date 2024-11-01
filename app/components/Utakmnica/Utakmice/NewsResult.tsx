@@ -1,8 +1,8 @@
+import { SchedulesMatch } from '@/API/types/schedules';
 import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import React from 'react';
 import { Link } from 'expo-router';
-import { SchedulesMatch } from '@/API/types/schedules';
+import React from 'react';
 
 function NewsResult({ data }: { data: SchedulesMatch }) {
   if (!data || !data.competitors || data.competitors.length !== 2) {
@@ -12,10 +12,9 @@ function NewsResult({ data }: { data: SchedulesMatch }) {
   const firstImage = data.competitors[0].image;
   const secondImage = data.competitors[1].image;
 
-  const text =
-    data.status === 'not_started'
-      ? data.startTimeFormatted.split(' ').join('\n')
-      : `${data.competitors[0].score} - ${data.competitors[1].score}`;
+  const text = ['not_started', 'postponed'].includes(data.status)
+    ? data.startTimeFormatted.split(' ').join('\n')
+    : `${data.competitors[0].score} - ${data.competitors[1].score}`;
 
   return (
     <Link href={{ pathname: '/utakmica', params: { item: JSON.stringify(data) } }} style={{ marginRight: 6 }}>
@@ -26,8 +25,20 @@ function NewsResult({ data }: { data: SchedulesMatch }) {
 
         <Image source={{ uri: secondImage }} style={styles.rightImage} resizeMode="contain" />
 
-        <View style={data.status === 'not_started' ? styles.textPositionNotStarted : styles.textPositionScore}>
-          <Text style={data.status === 'not_started' ? styles.textStyleNotStarted : styles.textStyleScore}>{text}</Text>
+        <View
+          style={
+            ['not_started', 'postponed'].includes(data.status)
+              ? styles.textPositionNotStarted
+              : styles.textPositionScore
+          }
+        >
+          <Text
+            style={
+              ['not_started', 'postponed'].includes(data.status) ? styles.textStyleNotStarted : styles.textStyleScore
+            }
+          >
+            {text}
+          </Text>
         </View>
       </View>
     </Link>

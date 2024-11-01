@@ -1,6 +1,7 @@
 import { LineupResponse } from '@/API/types/lineup';
 import { fetchJson } from '@/API/src/handler';
 import { config } from '@/API/config';
+import { formatLineup } from '../processing/lineup';
 
 export const fetchLineup = async (id: string, options = { useLocalAPI: false }): Promise<LineupResponse | null> => {
   try {
@@ -13,7 +14,10 @@ export const fetchLineup = async (id: string, options = { useLocalAPI: false }):
       return seasonData;
     }
 
-    return null;
+    const url = `https://api.sportradar.com/soccer/trial/v4/en/sport_events/${id}/lineups.json?api_key=${config.sportRadarAPIKey}`;
+    const repsonse = await fetchJson(url);
+
+    return formatLineup(repsonse);
   } catch (error) {
     console.error(error);
     return null;

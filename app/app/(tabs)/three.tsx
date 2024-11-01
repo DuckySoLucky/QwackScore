@@ -31,7 +31,7 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchSeasons({ useLocalAPI: true });
+        const result = await fetchSeasons({ useLocalAPI: false });
         setData(result);
       } catch (err) {
         setError(err as Error);

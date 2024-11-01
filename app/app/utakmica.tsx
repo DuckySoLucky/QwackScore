@@ -32,7 +32,7 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchUtakmicaData(utakmicaData.id, { useLocalAPI: true });
+        const result = await fetchUtakmicaData(utakmicaData.id, { useLocalAPI: false });
         setData(result);
       } catch (err) {
         setError(err as Error);

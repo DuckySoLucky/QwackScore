@@ -17,7 +17,7 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchCompetitions({ useLocalAPI: true });
+        const result = await fetchCompetitions({ useLocalAPI: false });
         setData(result);
       } catch (err) {
         setError(err as Error);

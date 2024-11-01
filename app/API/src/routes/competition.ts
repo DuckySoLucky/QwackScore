@@ -16,7 +16,10 @@ export const fetchSeason = async (
       return seasonData;
     }
 
-    return null;
+    const url = `https://api.sportradar.com/soccer/trial/v4/en/competitions/${id}/seasons.json?api_key=${config.sportRadarAPIKey}`;
+    const response = await fetchJson(url);
+
+    return response.seasons.at(-1) as CompetitionResponse;
   } catch (error) {
     console.error(error);
     return null;

@@ -6,12 +6,17 @@ export const fetchJson = async (url: string) => {
       return cache.get(url);
     }
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        accept: 'application/json',
+      },
+    });
     const data = await response.json();
 
-    cache.set(url, data.data);
+    const formattedData = data?.data ?? data;
 
-    return data.data;
+    cache.set(url, formattedData);
+    return formattedData;
   } catch (error) {
     console.error(error);
     return null;
