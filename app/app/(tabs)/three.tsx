@@ -2,6 +2,7 @@ import { Dimensions, Pressable, StyleSheet, Switch, TextInput, ToastAndroid } fr
 import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from '@/components/Themed';
+import * as Updates from 'expo-updates';
 
 import ErrorComponent from '@/components/global/ErrorComponents';
 import LoadingComponent from '@/components/global/LoadingComponent';
@@ -41,6 +42,14 @@ export default function TabTwoScreen() {
 
     loadConfig();
   }, []);
+
+  const reloadApp = async () => {
+    try {
+      await Updates.reloadAsync();
+    } catch (e) {
+      console.error('Failed to reload app:', e);
+    }
+  };
 
   const toggleDeveloperMode = () => {
     setIsDeveloperMode((prev) => !prev);
@@ -204,6 +213,13 @@ export default function TabTwoScreen() {
             <Text style={styles.cacheText}>Clear Cache</Text>
           </Pressable>
         </View>
+
+        <View style={styles.row}>
+          <Text style={styles.title}>Restart App:</Text>
+          <Pressable onPress={() => reloadApp()} style={styles.clearCacheButton}>
+            <Text style={styles.cacheText}>Restart App</Text>
+          </Pressable>
+        </View>
       </View>
 
       <View style={styles.container}>
@@ -252,6 +268,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 6,
     width: Dimensions.get('window').width - 12,
+    height: 50,
   },
   clearCacheButton: {
     backgroundColor: '#0C1216',

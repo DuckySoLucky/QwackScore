@@ -5,7 +5,7 @@ import { config } from '@/API/config';
 
 export const fetchSchedules = async (
   id: string,
-  options = { useLocalAPI: false }
+  options = { useLocalAPI: false },
 ): Promise<SchedulesResponse | null> => {
   try {
     if (options.useLocalAPI) {

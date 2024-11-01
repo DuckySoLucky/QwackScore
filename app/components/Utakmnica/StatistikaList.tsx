@@ -5,10 +5,6 @@ import { Summary, SummaryData } from '@/types/data';
 import React, { useCallback } from 'react';
 
 export default function StatistikaList({ summaryData }: { summaryData: SummaryData }) {
-  if (!summaryData) {
-    return <ErrorComponent message="Error: Couldn't find stats data" />;
-  }
-
   const renderItem = useCallback(
     (item: Summary) => {
       if (item.visible === false) {
@@ -17,8 +13,12 @@ export default function StatistikaList({ summaryData }: { summaryData: SummaryDa
 
       return <ProgressBarElement item={item} percentage={summaryData.indexOf(item) === 0} />;
     },
-    [summaryData]
+    [summaryData],
   );
+
+  if (!summaryData) {
+    return <ErrorComponent message="Error: Couldn't find stats data" />;
+  }
 
   const statsItems = summaryData.filter((item) => item.visible === true).length;
   if (statsItems === 0) {

@@ -53,4 +53,4 @@ export type TimelineResponseScoreData = {
   name: string;
   time: string;
   message: string;
-}
+};

@@ -68,7 +68,7 @@ export type ScoreData = {
 
 export type TimelineDataResponse = {
   timeline: Timeline[];
-  information: Record<string, number | string | object | Array>;
+  information: Record<string, number | string | object>;
   commentary: Commentary[];
 };
 

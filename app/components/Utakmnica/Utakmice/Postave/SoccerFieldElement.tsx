@@ -1,6 +1,6 @@
-import { TimelineDataResponse, Timeline, LineupsDataResponse } from '@/types/data';
-import { View, FlatList, Text, StyleSheet, Pressable, ScrollView, Image, Dimensions } from 'react-native';
-import { useState } from 'react';
+import { LineupsDataResponse } from '@/types/data';
+import { View, StyleSheet, Image } from 'react-native';
+import React from 'react';
 import PlayerElement from './PlayerElement';
 
 export default function SoccerFieldElement({ lineupsData }: { lineupsData: LineupsDataResponse }) {

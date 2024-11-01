@@ -22,7 +22,7 @@ export const fetchLigeData = async (id: string, options = { useLocalAPI: false }
 
 export const fetchUtakmicaData = async (
   id: string,
-  options = { useLocalAPI: false }
+  options = { useLocalAPI: false },
 ): Promise<fetchUtakmicaDataResponse> => {
   const timelineData = await fetchTimeline(id, options);
   if (!timelineData) {

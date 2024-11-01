@@ -6,11 +6,11 @@ import { LineupsDataResponse } from '@/types/data';
 import React, { useState } from 'react';
 
 export default function PostaveList({ lineupsData }: { lineupsData: LineupsDataResponse }) {
+  const [selectedForm, setSelectedForm] = useState<'default' | 'all'>('default');
   if (!lineupsData) {
     return <ErrorComponent message="Error: Couldn't find lineup data" />;
   }
 
-  const [selectedForm, setSelectedForm] = useState<'default' | 'all'>('default');
   const totalPlayers =
     Object.values(lineupsData.away).reduce((acc, curr) => acc + curr.length, 0) +
     Object.values(lineupsData.home).reduce((acc, curr) => acc + curr.length, 0);
@@ -67,7 +67,7 @@ export default function PostaveList({ lineupsData }: { lineupsData: LineupsDataR
                   key={player.id}
                 />
               );
-            }
+            },
           )}
         </View>
       </ScrollView>

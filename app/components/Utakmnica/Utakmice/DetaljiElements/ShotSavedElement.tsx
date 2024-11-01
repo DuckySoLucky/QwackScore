@@ -1,5 +1,5 @@
-import { StyleSheet, Image, ScrollView, ActivityIndicator, Pressable, Dimensions } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, Image } from 'react-native';
+import React from 'react';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 
@@ -11,7 +11,7 @@ const images = [
 
 function getRandomImage() {
   return images[1];
-  return images[Math.floor(Math.random() * images.length)];
+  // return images[Math.floor(Math.random() * images.length)];
 }
 
 export default function ShotSavedElement({ item }: { item: Timeline }) {

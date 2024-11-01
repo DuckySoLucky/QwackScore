@@ -17,7 +17,6 @@ import StatistikaList from '@/components/Utakmnica/StatistikaList';
 import CommentaryList from '@/components/Utakmnica/CommentaryList';
 import LoadingComponent from '@/components/global/LoadingComponent';
 import ErrorComponent from '@/components/global/ErrorComponents';
-import { config } from '@/API/config';
 import { CONFIG } from '@/API/storage';
 
 export default function TabTwoScreen() {
@@ -51,7 +50,7 @@ export default function TabTwoScreen() {
     });
 
     loadData();
-  }, [utakmicaData.id]);
+  }, [utakmicaData.id, navigation]);
 
   if (isLoading) {
     return <LoadingComponent />;
@@ -82,7 +81,7 @@ export default function TabTwoScreen() {
           const competitorIds = game.competitors.map((competitor) => competitor.id);
           return [firstCompetitor, secondCompetitor].some((id) => competitorIds.includes(id));
         }),
-      ])
+      ]),
     ),
   };
 

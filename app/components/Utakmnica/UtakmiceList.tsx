@@ -6,13 +6,13 @@ import React, { useCallback } from 'react';
 import { Schedule } from '@/types/data';
 
 export default function UtakmiceList({ schedulesData }: { schedulesData: SchedulesResponse }) {
-  if (!schedulesData) {
-    return <ErrorComponent message="Error: Couldn't find schedules data" />;
-  }
-
   const renderItem = useCallback((item: Schedule) => {
     return <UtakmiceColumnElement item={item} />;
   }, []);
+
+  if (!schedulesData) {
+    return <ErrorComponent message="Error: Couldn't find schedules data" />;
+  }
 
   const renderFooter = () => {
     return <ActivityIndicator style={{ marginVertical: 20 }} />;

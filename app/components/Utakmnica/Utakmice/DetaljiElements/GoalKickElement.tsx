@@ -1,5 +1,5 @@
-import { StyleSheet, Image, ScrollView, ActivityIndicator, Pressable, Dimensions } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, Image } from 'react-native';
+import React from 'react';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 

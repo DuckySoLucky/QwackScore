@@ -1,8 +1,7 @@
-import { StandignsResponse } from '@/API/types/standings';
 import ErrorComponent from '@/components/global/ErrorComponents';
-import { Schedule, SchedulesDataResponse, StandingsData, StatsDataReponse } from '@/types/data';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { StandignsResponse } from '@/API/types/standings';
 import React from 'react';
-import { View, FlatList, Text, StyleSheet, Image } from 'react-native';
 
 export default function FormPoredakColumnElement({ standingsData }: { standingsData: StandignsResponse }) {
   if (!standingsData) {

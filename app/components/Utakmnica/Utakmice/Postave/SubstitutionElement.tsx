@@ -1,6 +1,6 @@
-import { StyleSheet, Image, ScrollView, ActivityIndicator, Pressable, Dimensions } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
+import React from 'react';
 
 export default function SubstitutionElement({
   number,

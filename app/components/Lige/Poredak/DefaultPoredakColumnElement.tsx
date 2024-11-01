@@ -1,5 +1,5 @@
-import { Schedule, SchedulesDataResponse, StandingsData, StatsDataReponse } from '@/types/data';
-import { View, FlatList, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { StandingsData } from '@/types/data';
 
 export default function DefaultPoredakColumnElement({ standingsData }: { standingsData: StandingsData[] }) {
   return (

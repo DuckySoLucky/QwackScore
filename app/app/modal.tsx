@@ -33,7 +33,7 @@ export default function ModalScreen() {
     });
 
     loadData();
-  }, []);
+  }, [navigation]);
 
   if (isLoading) {
     return <LoadingComponent />;
@@ -49,7 +49,7 @@ export default function ModalScreen() {
 
   const seasons = data.seasons;
   const filteredLeagues = seasons.filter((league: { name: string; competition_id: string }) =>
-    league.name.toLowerCase().includes(searchQuery.toLowerCase())
+    league.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (

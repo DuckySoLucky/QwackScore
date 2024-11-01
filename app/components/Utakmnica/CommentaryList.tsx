@@ -5,12 +5,12 @@ import ErrorComponent from '../global/ErrorComponents';
 import React, { useCallback, useMemo } from 'react';
 
 export default function CommentaryList({ timelineData }: { timelineData: TimelineResponse }) {
-  if (!timelineData || !timelineData?.commentary || !timelineData?.commentary?.length) {
-    return <ErrorComponent message="Error: Couldn't find commentary data" />;
-  }
-
   const renderItem = useCallback(
     ({ item }: { item: TimelineResponseCommentary }) => {
+      if (!timelineData) {
+        return <ErrorComponent message="Error: Couldn't find commentary data" />;
+      }
+
       const index = timelineData.commentary.indexOf(item);
       const previousElement = timelineData.commentary[index - 1];
 
@@ -33,10 +33,14 @@ export default function CommentaryList({ timelineData }: { timelineData: Timelin
 
       return <CommentaryElement key={item.time} item={item} />;
     },
-    [timelineData.commentary]
+    [timelineData],
   );
 
   const memoizedRenderItem = useMemo(() => renderItem, [renderItem]);
+
+  if (!timelineData || !timelineData?.commentary || !timelineData?.commentary?.length) {
+    return <ErrorComponent message="Error: Couldn't find commentary data" />;
+  }
 
   return (
     <View style={styles.outerContainer}>

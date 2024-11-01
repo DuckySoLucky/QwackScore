@@ -4,7 +4,7 @@ import { config } from '@/API/config';
 
 export const fetchSeason = async (
   id: string,
-  options = { useLocalAPI: false }
+  options = { useLocalAPI: false },
 ): Promise<CompetitionResponse | null> => {
   try {
     if (options.useLocalAPI) {

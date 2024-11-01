@@ -1,7 +1,7 @@
-import { StyleSheet, Image, ScrollView, ActivityIndicator, Pressable, Dimensions } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
+import React from 'react';
 
 export default function ThrowInElement({ item }: { item: Timeline }) {
   if (item.position === 'right') {

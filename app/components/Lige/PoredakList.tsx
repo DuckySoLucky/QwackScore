@@ -6,11 +6,10 @@ import ErrorComponent from '../global/ErrorComponents';
 import React, { useState } from 'react';
 
 export default function PoredakList({ standingsData }: { standingsData: StandignsResponse }) {
+  const [selectedForm, setSelectedForm] = useState('default');
   if (!standingsData) {
     return <ErrorComponent message="Error: Couldn't find standings data" />;
   }
-
-  const [selectedForm, setSelectedForm] = useState('default');
 
   return (
     <View style={styles.outerContainer}>

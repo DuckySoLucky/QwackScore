@@ -21,15 +21,11 @@ export default function TabTwoScreen() {
   const route = useRoute();
   const navigation = useNavigation();
   const [selectedView, setSelectedView] = useState('details');
-
   const params = route.params as { id: string; title: string };
-  if (!params?.id || !params?.title) {
-    return <ErrorComponent message="Error: Couldn't find parameters" />;
-  }
 
   useEffect(() => {
     navigation.setOptions({ title: params.title ?? 'Liga', headerStyle: styles.header });
-  }, [navigation]);
+  }, [navigation, params.title]);
 
   const [data, setData] = useState<null | fetchLigeDataResponse>(null);
   const [error, setError] = useState<null | Error>(null);
@@ -49,6 +45,10 @@ export default function TabTwoScreen() {
 
     loadData();
   }, [params.id]);
+
+  if (!params?.id || !params?.title) {
+    return <ErrorComponent message="Error: Couldn't find parameters" />;
+  }
 
   if (isLoading) {
     return <LoadingComponent />;

@@ -17,7 +17,7 @@ export function formatSeasons(seasons) {
 
   return {
     seasons: ouput.sort(
-      (a, b) => parseInt(a.competition_id.split(':').at(-1)) - parseInt(b.competition_id.split(':').at(-1))
+      (a, b) => parseInt(a.competition_id.split(':').at(-1)) - parseInt(b.competition_id.split(':').at(-1)),
     ),
   };
 }

@@ -72,3 +72,4 @@ const fillStorage = async () => {
 };
 
 fillStorage();
+bumpCache();

@@ -5,7 +5,7 @@ import { formatStandings } from '../processing/standings';
 
 export const fetchStandings = async (
   id: string,
-  options = { useLocalAPI: false }
+  options = { useLocalAPI: false },
 ): Promise<StandignsResponse | null> => {
   try {
     if (options.useLocalAPI) {

@@ -13,28 +13,28 @@ function getCombinedData(schedulesData: SchedulesResponse, statsData: StatsRespo
   if (schedulesData?.firstThreeMatchs) {
     combinedData.push(
       { type: 'header', title: 'Utakmice' },
-      ...schedulesData.firstThreeMatchs.map((match: SchedulesMatch) => ({ type: 'match', item: match }))
+      ...schedulesData.firstThreeMatchs.map((match: SchedulesMatch) => ({ type: 'match', item: match })),
     );
   }
 
   if (statsData?.teams && statsData.teams['points']) {
     combinedData.push(
       { type: 'header', title: 'Broj bodova' },
-      ...statsData.teams['points'].slice(0, 5).map((club: StatsResponseStatsTeam) => ({ type: 'team', item: club }))
+      ...statsData.teams['points'].slice(0, 5).map((club: StatsResponseStatsTeam) => ({ type: 'team', item: club })),
     );
   }
 
   if (statsData?.players && statsData.teams['PTS/G']) {
     combinedData.push(
       { type: 'header', title: 'Points / Goals' },
-      ...statsData.teams['PTS/G'].slice(0, 3).map((club: StatsResponseStatsTeam) => ({ type: 'team', item: club }))
+      ...statsData.teams['PTS/G'].slice(0, 3).map((club: StatsResponseStatsTeam) => ({ type: 'team', item: club })),
     );
   }
 
   if (statsData?.players && statsData.players['goals']) {
     combinedData.push(
       { type: 'header', title: 'Najbolji strijelci' },
-      ...statsData.players['goals'].slice(0, 3).map((club) => ({ type: 'player', item: club }))
+      ...statsData.players['goals'].slice(0, 3).map((club) => ({ type: 'player', item: club })),
     );
   }
 

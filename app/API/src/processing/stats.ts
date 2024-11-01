@@ -63,8 +63,8 @@ export function formatStats(playerStats, standing) {
         key === '{win}/{loss}'
           ? (team.win / team.loss).toFixed(1)
           : team[key].toString().includes('.')
-          ? team[key].toFixed(1)
-          : team[key];
+            ? team[key].toFixed(1)
+            : team[key];
 
       output.teams[statName].push({
         id: team.competitor.id,
