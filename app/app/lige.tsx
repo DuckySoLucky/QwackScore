@@ -15,7 +15,7 @@ import ErrorComponent from '@/components/global/ErrorComponents';
 
 import { fetchLigeDataResponse } from '@/API/types';
 import { fetchLigeData } from '@/API';
-import { config } from '@/API/config';
+import { CONFIG } from '@/API/storage';
 
 export default function TabTwoScreen() {
   const route = useRoute();
@@ -38,7 +38,7 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchLigeData(params.id, { useLocalAPI: config.useLocalAPI });
+        const result = await fetchLigeData(params.id, { useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean });
         setData(result);
       } catch (err) {
         setError(err as Error);

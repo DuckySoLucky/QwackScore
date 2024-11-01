@@ -1,7 +1,7 @@
-import { Dimensions, Pressable, StyleSheet, Switch } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Switch, TextInput, ToastAndroid } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { Text, View } from '@/components/Themed';
 import React, { useEffect, useState } from 'react';
+import { Text, View } from '@/components/Themed';
 
 import ErrorComponent from '@/components/global/ErrorComponents';
 import LoadingComponent from '@/components/global/LoadingComponent';
@@ -9,20 +9,85 @@ import LoadingComponent from '@/components/global/LoadingComponent';
 import { fetchSeasons } from '@/API/src/routes/seasons';
 import { SeasonsResponse } from '@/API/types/seasons';
 import { clearCache } from '@/API/src/handler';
-import { config } from '@/API/config';
+import { CONFIG } from '@/API/storage';
 
 export default function TabTwoScreen() {
-  const [selectedLanguage, setSelectedLanguage] = useState('english');
-  const [selectedLeague, setSelectedLeague] = useState('sr:season:118691');
-  const [selectedTheme, setSelectedTheme] = useState('dark');
-  const [isDeveloperMode, setIsDeveloperMode] = useState(true);
-  const [isLocalAPI, setIsLocalAPI] = useState(true);
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
+  const [selectedLeague, setSelectedLeague] = useState<string | null>(null);
+  const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
+  const [isDeveloperMode, setIsDeveloperMode] = useState<boolean>(false);
+  const [useLocalAPI, setUseLocalAPI] = useState<boolean>(false);
+  const [localAPI, setLocalAPI] = useState('');
+  const [apiKey, setApiKey] = useState('');
 
-  const toggleDeveloperMode = () => (isDeveloperMode ? setIsDeveloperMode(false) : setIsDeveloperMode(true));
-  const switchAPIMode = () => (isLocalAPI ? setIsLocalAPI(false) : setIsLocalAPI(true));
+  useEffect(() => {
+    const loadConfig = async () => {
+      const league = await CONFIG.get('defaultLeague');
+      const language = await CONFIG.get('language');
+      const theme = await CONFIG.get('theme');
+      const developerMode = await CONFIG.get('developerMode');
+      const localAPI = await CONFIG.get('localAPI');
+      const useLocalAPI = await CONFIG.get('useLocalAPI');
+      const apiKey = await CONFIG.get('sportRadarAPIKey');
+
+      setSelectedLanguage(language);
+      setSelectedLeague(league);
+      setSelectedTheme(theme);
+      setIsDeveloperMode(developerMode);
+      setUseLocalAPI(useLocalAPI);
+      setLocalAPI(localAPI);
+      setApiKey(apiKey);
+    };
+
+    loadConfig();
+  }, []);
+
+  const toggleDeveloperMode = () => {
+    setIsDeveloperMode((prev) => !prev);
+    CONFIG.set('developerMode', !isDeveloperMode);
+    ToastAndroid.show('Developer mode toggled', ToastAndroid.SHORT);
+  };
+
+  const switchAPIMode = () => {
+    setUseLocalAPI((prev) => !prev);
+    CONFIG.set('useLocalAPI', !useLocalAPI);
+    ToastAndroid.show('API mode toggled', ToastAndroid.SHORT);
+  };
+
+  const changeSelectedLanguage = (language: string) => {
+    setSelectedLanguage(language);
+    CONFIG.set('language', language);
+    ToastAndroid.show('Language changed', ToastAndroid.SHORT);
+  };
+
+  const changeSelectedLeague = (league: string) => {
+    setSelectedLeague(league);
+    CONFIG.set('defaultLeague', league);
+    ToastAndroid.show('Default league changed', ToastAndroid.SHORT);
+  };
+
+  const changeSelectedTheme = (theme: string) => {
+    setSelectedTheme(theme);
+    CONFIG.set('theme', theme);
+    ToastAndroid.show('Theme changed', ToastAndroid.SHORT);
+  };
+
+  const changeLocalAPI = (api: string) => {
+    setLocalAPI(api.trim());
+    CONFIG.set('localAPI', api.trim());
+    ToastAndroid.show('API URL changed', ToastAndroid.SHORT);
+  };
+
+  const changeApiKey = (key: string) => {
+    setApiKey(key.trim());
+    CONFIG.set('sportRadarAPIKey', key.trim());
+    ToastAndroid.show('API Key changed', ToastAndroid.SHORT);
+  };
+
   const clearCacheButton = () => {
     console.log('Clearing cache');
     clearCache();
+    ToastAndroid.show('Cache cleared', ToastAndroid.SHORT);
   };
 
   const [data, setData] = useState<null | SeasonsResponse>(null);
@@ -32,7 +97,7 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchSeasons({ useLocalAPI: config.useLocalAPI });
+        const result = await fetchSeasons({ useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean });
         setData(result);
       } catch (err) {
         setError(err as Error);
@@ -67,10 +132,10 @@ export default function TabTwoScreen() {
           <Picker
             selectedValue={selectedLanguage}
             style={styles.picker}
-            onValueChange={(itemValue) => setSelectedLanguage(itemValue)}
+            onValueChange={(itemValue: string) => changeSelectedLanguage(itemValue)}
           >
-            <Picker.Item label="English" value="english" />
-            <Picker.Item label="Croatian" value="croatian" />
+            <Picker.Item label="English" value="en" />
+            <Picker.Item label="Croatian" value="hr" />
           </Picker>
         </View>
 
@@ -79,7 +144,7 @@ export default function TabTwoScreen() {
           <Picker
             selectedValue={selectedLeague}
             style={styles.picker}
-            onValueChange={(itemValue) => setSelectedLeague(itemValue)}
+            onValueChange={(itemValue: string) => changeSelectedLeague(itemValue)}
           >
             {seasons.map((season: { id: string; name: string }) => (
               <Picker.Item key={season.id} label={season.name} value={season.id} />
@@ -92,7 +157,7 @@ export default function TabTwoScreen() {
           <Picker
             selectedValue={selectedTheme}
             style={styles.picker}
-            onValueChange={(itemValue) => setSelectedTheme(itemValue)}
+            onValueChange={(itemValue: string) => changeSelectedTheme(itemValue)}
           >
             <Picker.Item label="Dark" value="dark" />
             <Picker.Item label="Light" value="light" />
@@ -115,12 +180,22 @@ export default function TabTwoScreen() {
         <View style={styles.row}>
           <Text style={styles.title}>Local API Mode:</Text>
           <Switch
-            value={isLocalAPI}
+            value={useLocalAPI}
             onValueChange={switchAPIMode}
             style={styles.switchStyle}
             thumbColor={'#C0C0C0'}
             trackColor={{ true: '#222A36' }}
           />
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.title}>API URL:</Text>
+          <TextInput value={localAPI} onChangeText={changeLocalAPI} style={styles.input} />
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.title}>API Key:</Text>
+          <TextInput value={apiKey} onChangeText={changeApiKey} secureTextEntry={true} style={styles.input} />
         </View>
 
         <View style={styles.row}>
@@ -202,5 +277,16 @@ const styles = StyleSheet.create({
     color: '#C0C0C0',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  input: {
+    backgroundColor: '#0C1216',
+    color: '#C0C0C0',
+    width: 250,
+    height: 30,
+    margin: 6,
+    borderRadius: 10,
+    borderColor: '#000000',
+    borderWidth: 1,
+    padding: 6,
   },
 });
