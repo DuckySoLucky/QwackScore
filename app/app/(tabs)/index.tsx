@@ -50,7 +50,7 @@ export default function TabOneScreen() {
       <View style={styles.newsContainer}>
         <ScrollView horizontal={true} style={styles.topNews}>
           {schedulesData.matches.slice(0, 5).map((match: SchedulesMatch) => (
-            <NewsResult data={match} key={match.id} />
+            <NewsResult data={match} key={`${match.id}-${Math.random()}`} />
           ))}
         </ScrollView>
       </View>

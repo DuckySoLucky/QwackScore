@@ -86,12 +86,6 @@ const styles = StyleSheet.create({
     marginRight: 12,
     marginLeft: 6,
   },
-  column2: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-    marginRight: 12,
-  },
   mainTextRight: {
     textAlign: 'right',
     color: '#C0C0C0',

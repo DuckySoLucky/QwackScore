@@ -1,6 +1,6 @@
 import { StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Text, View } from '@/components/Themed';
 import { useNavigation } from 'expo-router';
 
@@ -30,6 +30,14 @@ export default function TabTwoScreen() {
   const [isLoading, setIsLoading] = useState(true);
 
   const utakmicaData = JSON.parse(params.item) as Schedule;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: '',
+      headerStyle: { display: 'none', height: 0 },
+    });
+  }, [navigation]);
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -44,13 +52,16 @@ export default function TabTwoScreen() {
       }
     };
 
-    navigation.setOptions({
-      headerTitle: '',
-      headerStyle: { display: 'none', height: 0 },
-    });
-
     loadData();
-  }, [utakmicaData.id, navigation]);
+  }, [utakmicaData.id]);
+
+  useLayoutEffect(() => {
+    if (data?.timelineData) {
+      navigation.setOptions({
+        header: () => <Header item={utakmicaData} timelineData={data.timelineData} />,
+      });
+    }
+  }, [data, navigation, utakmicaData]);
 
   if (isLoading) {
     return <LoadingComponent />;
@@ -65,11 +76,6 @@ export default function TabTwoScreen() {
   }
 
   const { timelineData, schedulesData, lineupData, standingsData, summaryData } = data;
-  if (timelineData) {
-    navigation.setOptions({
-      header: () => <Header item={utakmicaData} timelineData={timelineData} />,
-    });
-  }
 
   const firstCompetitor = utakmicaData.competitors[0].id;
   const secondCompetitor = utakmicaData.competitors[1].id;

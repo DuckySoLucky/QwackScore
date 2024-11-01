@@ -13,9 +13,7 @@ const DropdownMenu = ({
   items: { name: string; id: string }[];
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const toggleDropdown = () => {
-    setIsVisible(!isVisible);
-  };
+  const toggleDropdown = () => setIsVisible(!isVisible);
 
   return (
     <View style={styles.outerContainer}>

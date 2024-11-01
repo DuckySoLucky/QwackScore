@@ -7,7 +7,7 @@ import { Schedule } from '@/types/data';
 
 export default function UtakmiceList({ schedulesData }: { schedulesData: SchedulesResponse }) {
   const renderItem = useCallback((item: Schedule) => {
-    return <UtakmiceColumnElement item={item} />;
+    return <UtakmiceColumnElement item={item} key={`${item.id}-${Math.random()}`} />;
   }, []);
 
   if (!schedulesData) {
@@ -26,9 +26,7 @@ export default function UtakmiceList({ schedulesData }: { schedulesData: Schedul
         renderItem={({ item }) => (
           <View>
             <Text style={styles.roundText}>Runda {item}</Text>
-            {Object.values(schedulesData.schedules[item]).map((value) => {
-              return renderItem(value);
-            })}
+            {Object.values(schedulesData.schedules[item]).map((value) => renderItem(value))}
           </View>
         )}
         onEndReachedThreshold={0.5}
@@ -58,48 +56,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     marginHorizontal: 6,
-  },
-
-  gameDetailsContainer: {
-    backgroundColor: '#0C1216',
-    borderColor: '#000000',
-    borderRadius: 5,
-    borderWidth: 1,
-    marginHorizontal: 6,
-    marginTop: 6,
-    height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  dateText: {
-    marginLeft: 6,
-    color: '#686868',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 9,
-    width: 40,
-  },
-  seperator: {
-    height: '80%',
-    width: 1,
-    backgroundColor: '#222A36',
-    marginLeft: 10,
-  },
-  clubImage: {
-    marginLeft: 12,
-    height: 18,
-    width: 18,
-  },
-  clubName: {
-    marginLeft: 10,
-    fontSize: 12,
-    color: '#686868',
-    fontWeight: 'bold',
-  },
-  notificationIcon: {
-    position: 'absolute',
-    right: 6,
-    height: 32,
-    width: 32,
   },
 });

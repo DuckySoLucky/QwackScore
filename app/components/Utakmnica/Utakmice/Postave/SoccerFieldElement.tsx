@@ -17,49 +17,97 @@ export default function SoccerFieldElement({ lineupsData }: { lineupsData: Lineu
       <View style={styles.lineupContainer}>
         <View style={styles.goalKeeperRow}>
           {lineupsData.home.goalkeeper.map((player) => {
-            return <PlayerElement name={player.name} number={player.jersey_number} />;
+            return (
+              <PlayerElement
+                name={player.name}
+                number={player.jersey_number}
+                key={`${player.name}-${player.id}-${Math.random()}-${Math.random()}`}
+              />
+            );
           })}
         </View>
 
         <View style={styles.defenderRow}>
           {lineupsData.home.defenders.map((player) => {
-            return <PlayerElement name={player.name} number={player.jersey_number} />;
+            return (
+              <PlayerElement
+                name={player.name}
+                number={player.jersey_number}
+                key={`${player.name}-${player.id}-${Math.random()}`}
+              />
+            );
           })}
         </View>
 
         <View style={styles.midfielderRow}>
           {lineupsData.home.midfielders.map((player) => {
-            return <PlayerElement name={player.name} number={player.jersey_number} />;
+            return (
+              <PlayerElement
+                name={player.name}
+                number={player.jersey_number}
+                key={`${player.name}-${player.id}-${Math.random()}`}
+              />
+            );
           })}
         </View>
 
         <View style={styles.forwardRow}>
           {lineupsData.home.forwards.map((player) => {
-            return <PlayerElement name={player.name} number={player.jersey_number} />;
+            return (
+              <PlayerElement
+                name={player.name}
+                number={player.jersey_number}
+                key={`${player.name}-${player.id}-${Math.random()}`}
+              />
+            );
           })}
         </View>
 
         <View style={styles.forwardRow}>
           {lineupsData.away.forwards.map((player) => {
-            return <PlayerElement name={player.name} number={player.jersey_number} />;
+            return (
+              <PlayerElement
+                name={player.name}
+                number={player.jersey_number}
+                key={`${player.name}-${player.id}-${Math.random()}`}
+              />
+            );
           })}
         </View>
 
         <View style={styles.midfielderRow}>
           {lineupsData.away.midfielders.map((player) => {
-            return <PlayerElement name={player.name} number={player.jersey_number} />;
+            return (
+              <PlayerElement
+                name={player.name}
+                number={player.jersey_number}
+                key={`${player.name}-${player.id}-${Math.random()}`}
+              />
+            );
           })}
         </View>
 
         <View style={styles.defenderRow}>
           {lineupsData.away.defenders.map((player) => {
-            return <PlayerElement name={player.name} number={player.jersey_number} />;
+            return (
+              <PlayerElement
+                name={player.name}
+                number={player.jersey_number}
+                key={`${player.name}-${player.id}-${Math.random()}`}
+              />
+            );
           })}
         </View>
 
         <View style={styles.goalKeeperRow}>
           {lineupsData.away.goalkeeper.map((player) => {
-            return <PlayerElement name={player.name} number={player.jersey_number} />;
+            return (
+              <PlayerElement
+                name={player.name}
+                number={player.jersey_number}
+                key={`${player.name}-${player.id}-${Math.random()}`}
+              />
+            );
           })}
         </View>
       </View>

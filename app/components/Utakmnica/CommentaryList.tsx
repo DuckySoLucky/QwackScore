@@ -61,12 +61,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#161e28',
     paddingTop: 6,
   },
-  roundText: {
-    fontSize: 18,
-    color: '#686868',
-    marginLeft: 6,
-    fontWeight: 'bold',
-  },
   container: {
     backgroundColor: '#10181E',
     borderColor: '#000000',
@@ -75,16 +69,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     marginBottom: 70,
   },
-  statContainer: {
-    alignItems: 'center',
-  },
-  statValue: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '90%',
-    alignItems: 'center',
-  },
-
   borderLine: {
     width: '95%',
     height: 1,

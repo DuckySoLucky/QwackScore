@@ -74,12 +74,6 @@ const styles = StyleSheet.create({
     width: 1,
     backgroundColor: '#222A36',
   },
-  column2: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-    marginRight: 12,
-  },
   mainTextRight: {
     textAlign: 'right',
     color: '#C0C0C0',
