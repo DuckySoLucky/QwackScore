@@ -1,7 +1,9 @@
-import React from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
-import { PlayerStat, StatsDataReponse } from '@/types/data';
 import PlayerStatisticColumnElement from '../misc/PlayerStatisticColumnElement';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
+import { StatsResponseStatsPlayer } from '@/API/types/stats';
+import ErrorComponent from '../global/ErrorComponents';
+import { StatsDataReponse } from '@/types/data';
+import React from 'react';
 
 function titleCase(str: string) {
   return str
@@ -12,16 +14,16 @@ function titleCase(str: string) {
 }
 
 const StatistikaIgraca = ({ statsData }: { statsData: StatsDataReponse }) => {
-  if (!statsData?.players) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.roundText}>No player stats available</Text>
-      </View>
-    );
+  if (!statsData?.players || Object.keys(statsData?.players ?? {}).length === 0) {
+    return <ErrorComponent message="Error: Couldn't find player stats data" />;
   }
 
-  const renderPlayerStats = ({ item }: { item: [string, PlayerStat[]] }) => {
+  const renderPlayerStats = ({ item }: { item: [string, StatsResponseStatsPlayer[]] }) => {
     const [key, data] = item;
+    if (!data) {
+      return null;
+    }
+
     return (
       <View style={styles.container}>
         <Text style={styles.roundText}>{titleCase(key)}</Text>

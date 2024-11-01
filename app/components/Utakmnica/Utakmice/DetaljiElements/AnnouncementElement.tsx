@@ -3,7 +3,7 @@ import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 import React from 'react';
 
-export function AnnouncementElement({ item }: { item: Timeline }) {
+function AnnouncementElement({ item }: { item: Timeline }) {
   return (
     <View style={styles.container}>
       <Text style={styles.timeText}>{item.message}</Text>
@@ -30,3 +30,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+export default AnnouncementElement;

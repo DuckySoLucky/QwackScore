@@ -1,12 +1,16 @@
-import { Commentary, TimelineDataResponse } from '@/types/data';
-import React, { useCallback, useMemo } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { TimelineResponse, TimelineResponseCommentary } from '@/API/types/timeline';
 import CommentaryElement from './Commentary/CommentaryElement';
-import { Text } from '@/components/Themed';
+import { View, FlatList, StyleSheet } from 'react-native';
+import ErrorComponent from '../global/ErrorComponents';
+import React, { useCallback, useMemo } from 'react';
 
-export default function CommentaryList({ timelineData }: { timelineData: TimelineDataResponse }) {
+export default function CommentaryList({ timelineData }: { timelineData: TimelineResponse }) {
+  if (!timelineData || !timelineData?.commentary || !timelineData?.commentary?.length) {
+    return <ErrorComponent message="Error: Couldn't find commentary data" />;
+  }
+
   const renderItem = useCallback(
-    ({ item }: { item: Commentary }) => {
+    ({ item }: { item: TimelineResponseCommentary }) => {
       const index = timelineData.commentary.indexOf(item);
       const previousElement = timelineData.commentary[index - 1];
 
@@ -18,11 +22,7 @@ export default function CommentaryList({ timelineData }: { timelineData: Timelin
         if (isSwitchFromRightToLeft) {
           return (
             <View key={item.time}>
-              <View
-                style={{
-                  alignItems: 'center',
-                }}
-              >
+              <View style={styles.center}>
                 <View style={styles.borderLine} />
               </View>
               <CommentaryElement item={item} />
@@ -38,26 +38,14 @@ export default function CommentaryList({ timelineData }: { timelineData: Timelin
 
   const memoizedRenderItem = useMemo(() => renderItem, [renderItem]);
 
-  const commentaryItems = timelineData.commentary.length;
-
   return (
     <View style={styles.outerContainer}>
-      {commentaryItems === 0 ? (
-        <>
-          <Text style={{ color: 'white', textAlign: 'center', margin: 10, fontWeight: 'bold' }}>
-            No commentary data available
-          </Text>
-        </>
-      ) : (
-        <>
-          <FlatList
-            data={timelineData.commentary}
-            keyExtractor={(item) => `${item.time}-${item.message}-${Math.random()}`}
-            renderItem={memoizedRenderItem}
-            style={styles.container}
-          />
-        </>
-      )}
+      <FlatList
+        data={timelineData.commentary}
+        keyExtractor={(item) => `${item.time}-${item.message}-${Math.random()}`}
+        renderItem={memoizedRenderItem}
+        style={styles.container}
+      />
     </View>
   );
 }
@@ -98,5 +86,8 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#222A36',
     marginVertical: 12,
+  },
+  center: {
+    alignItems: 'center',
   },
 });

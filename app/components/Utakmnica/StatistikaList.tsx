@@ -1,10 +1,14 @@
+import ProgressBarElement from './Statistika/ProgressBarElement';
+import { View, FlatList, StyleSheet } from 'react-native';
+import ErrorComponent from '../global/ErrorComponents';
 import { Summary, SummaryData } from '@/types/data';
 import React, { useCallback } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
-import ProgressBarElement from './Statistika/ProgressBarElement';
-import { Text } from '@/components/Themed';
 
 export default function StatistikaList({ summaryData }: { summaryData: SummaryData }) {
+  if (!summaryData) {
+    return <ErrorComponent message="Error: Couldn't find stats data" />;
+  }
+
   const renderItem = useCallback(
     (item: Summary) => {
       if (item.visible === false) {
@@ -17,26 +21,19 @@ export default function StatistikaList({ summaryData }: { summaryData: SummaryDa
   );
 
   const statsItems = summaryData.filter((item) => item.visible === true).length;
+  if (statsItems === 0) {
+    return <ErrorComponent message="Error: Couldn't find stats data" />;
+  }
 
   return (
     <View style={styles.outerContainer}>
-      {statsItems === 0 ? (
-        <>
-          <Text style={{ color: 'white', textAlign: 'center', margin: 10, fontWeight: 'bold' }}>
-            No stats data available
-          </Text>
-        </>
-      ) : (
-        <>
-          <FlatList
-            data={summaryData}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => renderItem(item)}
-            onEndReachedThreshold={0.5}
-            style={styles.container}
-          />
-        </>
-      )}
+      <FlatList
+        data={summaryData}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => renderItem(item)}
+        onEndReachedThreshold={0.5}
+        style={styles.container}
+      />
     </View>
   );
 }

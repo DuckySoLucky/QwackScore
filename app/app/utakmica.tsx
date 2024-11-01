@@ -1,136 +1,71 @@
-import { StyleSheet, ScrollView, Pressable, ActivityIndicator } from 'react-native';
-import React, { useState, useEffect } from 'react';
-
-import { Text, View } from '@/components/Themed';
+import { StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { Text, View } from '@/components/Themed';
 import { useNavigation } from 'expo-router';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import Header from '@/components/Utakmnica/Header';
+
 import { Schedule, SchedulesDataResponse } from '@/types/data';
+import { fetchUtakmicaDataResponse } from '@/API/types';
+import { fetchUtakmicaData } from '@/API';
+
+import Header from '@/components/Utakmnica/Header';
 import DetaljiList from '@/components/Utakmnica/Utakmice/Detalji';
 import UtakmiceList from '@/components/Utakmnica/UtakmiceList';
 import PostaveList from '@/components/Utakmnica/Utakmice/Postave';
 import PoredakList from '@/components/Lige/PoredakList';
 import StatistikaList from '@/components/Utakmnica/StatistikaList';
 import CommentaryList from '@/components/Utakmnica/CommentaryList';
-
-const queryClient = new QueryClient();
+import LoadingComponent from '@/components/global/LoadingComponent';
+import ErrorComponent from '@/components/global/ErrorComponents';
 
 export default function TabTwoScreen() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Output />
-    </QueryClientProvider>
-  );
-}
-
-const VIEW_COMPONENTS = {
-  detalji: DetaljiList,
-  utakmice: UtakmiceList,
-  postave: PostaveList,
-  poredak: PoredakList,
-  stats: StatistikaList,
-  commentary: CommentaryList,
-} as Record<string, React.ComponentType<any>>;
-
-function Output() {
   const navigation = useNavigation();
   const route = useRoute();
+  const params = route.params as { item: string };
+
+  const [data, setData] = useState<null | fetchUtakmicaDataResponse>(null);
   const [selectedView, setSelectedView] = useState('details');
-  const utakmicaData = JSON.parse(route.params.item) as Schedule;
+  const [error, setError] = useState<null | Error>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const {
-    isLoading,
-    error,
-    data: timelineData,
-  } = useQuery({
-    queryKey: ['timelineData', utakmicaData?.id],
-    queryFn: () =>
-      fetch(`http://192.168.90.105:3000/timeline/${utakmicaData.id}`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-  });
-
-  const {
-    isLoading: isLoadingSchedule,
-    error: errorSchedule,
-    data: schedulesData,
-  } = useQuery({
-    queryKey: ['schedulesData', utakmicaData?.id],
-    queryFn: () =>
-      fetch(`http://192.168.90.105:3000/schedules/${timelineData.season.id}`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-  });
-
-  const {
-    isLoading: isLoadingStandingsData,
-    error: errorStandings,
-    data: standingsData,
-  } = useQuery({
-    queryKey: ['standingsData', utakmicaData?.id],
-    queryFn: () =>
-      fetch(`http://192.168.90.105:3000/standings/${timelineData.season.id}`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-  });
-
-  const {
-    isLoading: isLoadingLineups,
-    error: errorLineups,
-    data: lineupsData,
-  } = useQuery({
-    queryKey: ['lineupsData', utakmicaData?.id],
-    queryFn: () =>
-      fetch(`http://192.168.90.105:3000/lineup/${utakmicaData.id}`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-  });
-
-  const {
-    isLoading: isLoadingSummary,
-    error: errorSummary,
-    data: summaryData,
-  } = useQuery({
-    queryKey: ['summaryData', utakmicaData?.id],
-    queryFn: () =>
-      fetch(`http://192.168.90.105:3000/summary/${utakmicaData.id}`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-  });
-
+  const utakmicaData = JSON.parse(params.item) as Schedule;
   useEffect(() => {
+    const loadData = async () => {
+      try {
+        const result = await fetchUtakmicaData(utakmicaData.id, { useLocalAPI: true });
+        setData(result);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     navigation.setOptions({
       headerTitle: '',
       headerStyle: { display: 'none', height: 0 },
     });
-  }, []);
 
-  useEffect(() => {
-    if (timelineData) {
-      navigation.setOptions({
-        // headerTitle: '',
-        // headerStyle: styles.header,
-        header: () => <Header item={utakmicaData} timelineData={timelineData} />,
-      });
-    }
-  }, [timelineData]);
+    loadData();
+  }, [utakmicaData.id]);
 
-  if (isLoading || isLoadingSchedule || isLoadingLineups || isLoadingStandingsData || isLoadingSummary) {
-    return <ActivityIndicator size="large" color="#00ff00" />;
+  if (isLoading) {
+    return <LoadingComponent />;
   }
 
-  if (error || errorSchedule || errorLineups || errorStandings || errorSummary) {
-    return (
-      <Text>
-        Error:{' '}
-        {error?.message ||
-          errorSchedule?.message ||
-          errorLineups?.message ||
-          errorStandings?.message ||
-          errorSummary?.message}
-      </Text>
-    );
+  if (error) {
+    return <ErrorComponent message={`Error: ${error.message}`} />;
+  }
+
+  if (!data) {
+    return <ErrorComponent message={`Error: Couldn't find data`} />;
+  }
+
+  const { timelineData, schedulesData, lineupData, standingsData, summaryData } = data;
+  if (timelineData) {
+    navigation.setOptions({
+      header: () => <Header item={utakmicaData} timelineData={timelineData} />,
+    });
   }
 
   const firstCompetitor = utakmicaData.competitors[0].id;
@@ -181,13 +116,22 @@ function Output() {
       <ViewComponent
         timelineData={timelineData}
         schedulesData={newSchedulesData}
-        lineupsData={lineupsData}
+        lineupsData={lineupData}
         standingsData={standingsData}
         summaryData={summaryData}
       />
     </View>
   );
 }
+
+const VIEW_COMPONENTS = {
+  detalji: DetaljiList,
+  postave: PostaveList,
+  poredak: PoredakList,
+  stats: StatistikaList,
+  commentary: CommentaryList,
+  utakmice: UtakmiceList,
+} as Record<string, React.ComponentType<any>>;
 
 const styles = StyleSheet.create({
   container: {

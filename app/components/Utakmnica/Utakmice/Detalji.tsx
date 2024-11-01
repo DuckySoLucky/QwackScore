@@ -1,7 +1,8 @@
-import { TimelineDataResponse, Timeline } from '@/types/data';
 import { View, FlatList, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { TimelineDataResponse, Timeline } from '@/types/data';
 import React, { useState } from 'react';
-import { AnnouncementElement } from './DetaljiElements/AnnouncementElement';
+
+import AnnouncementElement from './DetaljiElements/AnnouncementElement';
 import ThrowInElement from './DetaljiElements/ThrowInElement';
 import FreeKickElement from './DetaljiElements/FreeKickElement';
 import OffsideElement from './DetaljiElements/OffsideElement';

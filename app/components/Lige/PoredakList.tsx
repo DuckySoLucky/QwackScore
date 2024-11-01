@@ -1,36 +1,16 @@
-import { StandingsData } from '@/types/data';
-import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
-import React, { useState } from 'react';
 import DefaultPoredakColumnElement from './Poredak/DefaultPoredakColumnElement';
+import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import FormPoredakColumnElement from './Poredak/FormPoredakColumnElement';
+import { StandignsResponse } from '@/API/types/standings';
+import ErrorComponent from '../global/ErrorComponents';
+import React, { useState } from 'react';
 
-export default function PoredakList({ standingsData }: { standingsData: StandingsData[] }) {
-  const [selectedForm, setSelectedForm] = useState('default');
-
+export default function PoredakList({ standingsData }: { standingsData: StandignsResponse }) {
   if (!standingsData) {
-    return (
-      <View style={styles.outerContainer}>
-        <View
-          style={{
-            ...styles.buttonContainer,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Text
-            style={{
-              color: '#686868',
-              fontSize: 16,
-              fontWeight: 'bold',
-              marginLeft: 6,
-            }}
-          >
-            No standingsData found
-          </Text>
-        </View>
-      </View>
-    );
+    return <ErrorComponent message="Error: Couldn't find standings data" />;
   }
+
+  const [selectedForm, setSelectedForm] = useState('default');
 
   return (
     <View style={styles.outerContainer}>

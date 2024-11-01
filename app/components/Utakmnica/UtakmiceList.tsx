@@ -1,9 +1,15 @@
-import { Schedule, SchedulesDataResponse } from '@/types/data';
-import React, { useCallback } from 'react';
 import { View, FlatList, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import UtakmiceColumnElement from './Utakmice/UtakmiceColumnElement';
+import { SchedulesResponse } from '@/API/types/schedules';
+import ErrorComponent from '../global/ErrorComponents';
+import React, { useCallback } from 'react';
+import { Schedule } from '@/types/data';
 
-export default function UtakmiceList({ schedulesData }: { schedulesData: SchedulesDataResponse }) {
+export default function UtakmiceList({ schedulesData }: { schedulesData: SchedulesResponse }) {
+  if (!schedulesData) {
+    return <ErrorComponent message="Error: Couldn't find schedules data" />;
+  }
+
   const renderItem = useCallback((item: Schedule) => {
     return <UtakmiceColumnElement item={item} />;
   }, []);
@@ -20,11 +26,9 @@ export default function UtakmiceList({ schedulesData }: { schedulesData: Schedul
         renderItem={({ item }) => (
           <View>
             <Text style={styles.roundText}>Runda {item}</Text>
-            <FlatList
-              data={schedulesData.schedules[item as unknown as number]}
-              keyExtractor={(subItem) => subItem.id}
-              renderItem={({ item: subItem }) => renderItem(subItem)}
-            />
+            {Object.values(schedulesData.schedules[item]).map((value) => {
+              return renderItem(value);
+            })}
           </View>
         )}
         onEndReachedThreshold={0.5}
@@ -56,9 +60,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
   },
 
-  //
-  //
-  //
   gameDetailsContainer: {
     backgroundColor: '#0C1216',
     borderColor: '#000000',
@@ -66,9 +67,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginHorizontal: 6,
     marginTop: 6,
-
     height: 50,
-
     flexDirection: 'row',
     alignItems: 'center',
   },

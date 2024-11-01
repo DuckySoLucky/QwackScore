@@ -1,8 +1,8 @@
-import { Schedule, SchedulesDataResponse, Schedules, PlayerStat, TeamStat } from '@/types/data';
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, FlatList, Text, ActivityIndicator, StyleSheet, Image } from 'react-native';
+import { StatsResponseStatsPlayer } from '@/API/types/stats';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import React from 'react';
 
-export default function PlayerStatisticColumnElement({ item }: { item: PlayerStat }) {
+export default function PlayerStatisticColumnElement({ item }: { item: StatsResponseStatsPlayer }) {
   return (
     <View style={styles.gameDetailsContainer}>
       <Text style={styles.positionText}>{item.position}</Text>

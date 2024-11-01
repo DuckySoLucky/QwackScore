@@ -1,10 +1,15 @@
-import { StyleSheet, ScrollView, Pressable, ActivityIndicator, Image } from 'react-native';
-import React, { useState, useEffect } from 'react';
-
+import { TimelineResponse } from '@/API/types/timeline';
+import ErrorComponent from '../global/ErrorComponents';
+import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { Schedule, TimelineData } from '@/types/data';
+import { Schedule } from '@/types/data';
+import React from 'react';
 
-export default function Header({ item, timelineData }: { item: Schedule; timelineData: TimelineData }) {
+export default function Header({ item, timelineData }: { item: Schedule; timelineData: TimelineResponse }) {
+  if (!timelineData) {
+    return <ErrorComponent message="Error: Couldn't find timeline data" />;
+  }
+
   const firstTeam = item.competitors[0];
   const secondTeam = item.competitors[1];
   const totalScore = (firstTeam.score ?? 0) + (secondTeam.score ?? 0);

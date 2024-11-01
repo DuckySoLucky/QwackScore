@@ -1,20 +1,16 @@
-import { ActivityIndicator, Dimensions, Pressable, StyleSheet, Switch } from 'react-native';
-import { Text, View } from '@/components/Themed';
+import { Dimensions, Pressable, StyleSheet, Switch } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import React, { useState } from 'react';
-import { QueryClientProvider, useQuery, QueryClient } from '@tanstack/react-query';
+import { Text, View } from '@/components/Themed';
+import React, { useEffect, useState } from 'react';
 
-const queryClient = new QueryClient();
+import ErrorComponent from '@/components/global/ErrorComponents';
+import LoadingComponent from '@/components/global/LoadingComponent';
+
+import { fetchSeasons } from '@/API/src/routes/seasons';
+import { SeasonsResponse } from '@/API/types/seasons';
+import { clearCache } from '@/API/src/handler';
 
 export default function TabTwoScreen() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Output />
-    </QueryClientProvider>
-  );
-}
-
-function Output() {
   const [selectedLanguage, setSelectedLanguage] = useState('english');
   const [selectedLeague, setSelectedLeague] = useState('sr:season:118691');
   const [selectedTheme, setSelectedTheme] = useState('dark');
@@ -23,28 +19,43 @@ function Output() {
 
   const toggleDeveloperMode = () => (isDeveloperMode ? setIsDeveloperMode(false) : setIsDeveloperMode(true));
   const switchAPIMode = () => (isLocalAPI ? setIsLocalAPI(false) : setIsLocalAPI(true));
-  const clearCache = () => queryClient.clear();
+  const clearCacheButton = () => {
+    console.log('Clearing cache');
+    clearCache();
+  };
 
-  const {
-    isPending,
-    error,
-    data: seasonsData,
-  } = useQuery({
-    queryKey: ['standingsData'],
-    queryFn: () =>
-      fetch(`http://192.168.90.105:3000/seasons`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-  });
+  const [data, setData] = useState<null | SeasonsResponse>(null);
+  const [error, setError] = useState<null | Error>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (isPending) {
-    return <ActivityIndicator size="large" color="#00ff00" />;
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const result = await fetchSeasons({ useLocalAPI: true });
+        setData(result);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  if (isLoading) {
+    return <LoadingComponent />;
   }
 
   if (error) {
-    return <View>Error: {error.message}</View>;
+    return <ErrorComponent message={`Error: ${error.message}`} />;
   }
 
+  if (!data) {
+    return <ErrorComponent message={`Error: Couldn't find data`} />;
+  }
+
+  const seasons = data.seasons;
   return (
     <View style={{ backgroundColor: '#161e28', flex: 1 }}>
       <View style={styles.container}>
@@ -69,7 +80,7 @@ function Output() {
             style={styles.picker}
             onValueChange={(itemValue) => setSelectedLeague(itemValue)}
           >
-            {seasonsData.seasons.map((season: { id: string; name: string }) => (
+            {seasons.map((season: { id: string; name: string }) => (
               <Picker.Item key={season.id} label={season.name} value={season.id} />
             ))}
           </Picker>
@@ -113,7 +124,7 @@ function Output() {
 
         <View style={styles.row}>
           <Text style={styles.title}>Clear Cache:</Text>
-          <Pressable onPress={clearCache} style={styles.clearCacheButton}>
+          <Pressable onPress={clearCacheButton} style={styles.clearCacheButton}>
             <Text style={styles.cacheText}>Clear Cache</Text>
           </Pressable>
         </View>

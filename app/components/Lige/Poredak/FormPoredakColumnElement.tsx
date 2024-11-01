@@ -1,7 +1,14 @@
+import { StandignsResponse } from '@/API/types/standings';
+import ErrorComponent from '@/components/global/ErrorComponents';
 import { Schedule, SchedulesDataResponse, StandingsData, StatsDataReponse } from '@/types/data';
+import React from 'react';
 import { View, FlatList, Text, StyleSheet, Image } from 'react-native';
 
-export default function FormPoredakColumnElement({ standingsData }: { standingsData: StandingsData[] }) {
+export default function FormPoredakColumnElement({ standingsData }: { standingsData: StandignsResponse }) {
+  if (!standingsData) {
+    return <ErrorComponent message="Error: Couldn't find standings data" />;
+  }
+
   return (
     <View>
       <View style={styles.row}>

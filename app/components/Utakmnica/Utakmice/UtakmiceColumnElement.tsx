@@ -1,9 +1,9 @@
-import { Schedule } from '@/types/data';
+import { SchedulesMatch } from '@/API/types/schedules';
 import { Link } from 'expo-router';
 import React from 'react';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 
-export default function UtakmiceColumnElement({ item }: { item: Schedule }) {
+export default function UtakmiceColumnElement({ item }: { item: SchedulesMatch }) {
   const getClubStyle = (clubName: string) =>
     item.winner === clubName ? { ...styles.clubName, color: '#C0C0C0' } : styles.clubName;
 
@@ -54,9 +54,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginHorizontal: 6,
     marginTop: 6,
-
     height: 50,
-
     flexDirection: 'row',
     alignItems: 'center',
   },

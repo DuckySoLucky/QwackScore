@@ -1,8 +1,8 @@
-import { Schedule, SchedulesDataResponse, Schedules, PlayerStat, TeamStat } from '@/types/data';
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, FlatList, Text, ActivityIndicator, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { StatsResponseStatsTeam } from '@/API/types/stats';
+import React from 'react';
 
-export default function TeamStatisticColumnElement({ item }: { item: TeamStat }) {
+export default function TeamStatisticColumnElement({ item }: { item: StatsResponseStatsTeam }) {
   return (
     <View style={styles.gameDetailsContainer}>
       <Text style={styles.positionText}>{item.position}</Text>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   clubName: {
     marginLeft: 10,
-    color: '#C0C0C0', //'#686868',
+    color: '#C0C0C0',
     fontSize: 15,
     fontWeight: 'bold',
   },

@@ -1,51 +1,56 @@
-import DropdownMenu from '@/components/misc/DropdownMenu';
-import React from 'react';
 import { StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
 import { View } from '@/components/Themed';
 
-const queryClient = new QueryClient();
+import DropdownMenu from '@/components/misc/DropdownMenu';
+import LoadingComponent from '@/components/global/LoadingComponent';
+import ErrorComponent from '@/components/global/ErrorComponents';
+
+import { fetchCompetitions } from '@/API/src/routes/competitions';
+import { CompetitionsResponse } from '@/API/types/competitions';
 
 export default function TabTwoScreen() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Output />
-    </QueryClientProvider>
-  );
-}
+  const [data, setData] = useState<null | CompetitionsResponse>(null);
+  const [error, setError] = useState<null | Error>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-function Output() {
-  const {
-    isPending,
-    error,
-    data: schedulesData,
-  } = useQuery({
-    queryKey: ['standingsData'],
-    queryFn: () =>
-      fetch(`http://192.168.90.105:3000/competitions`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-  }) as { isPending: boolean; error: Error; data: Record<string, { id: string; name: string; image: string }[]> };
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const result = await fetchCompetitions({ useLocalAPI: true });
+        setData(result);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  if (isPending) {
-    return <ActivityIndicator size="large" color="#00ff00" />;
+    loadData();
+  }, []);
+
+  if (isLoading) {
+    return <LoadingComponent />;
   }
 
   if (error) {
-    return <View>Error: {error.message}</View>;
+    return <ErrorComponent message={`Error: ${error.message}`} />;
   }
 
-  const dropdownData = Object.entries(schedulesData).map(([key, value]) => ({
+  if (!data) {
+    return <ErrorComponent message={`Error: Couldn't find data`} />;
+  }
+
+  const dropdownData = Object.entries(data).map(([key, value]) => ({
     title: key,
     imageUri: value[0].image,
     items: value.map((item) => ({ name: item.name, id: item.id })),
   }));
 
-  const renderItem = ({
-    item,
-  }: {
-    item: { title: string; imageUri: string; items: { name: string; id: string }[] };
-  }) => <DropdownMenu title={item.title} imageUri={item.imageUri} items={item.items} />;
+  type DropDownItem = { title: string; imageUri: string; items: { name: string; id: string }[] };
+  const renderItem = ({ item }: { item: DropDownItem }) => (
+    <DropdownMenu title={item.title} imageUri={item.imageUri} items={item.items} />
+  );
 
   const renderFooter = () => {
     return <ActivityIndicator style={{ marginVertical: 20 }} />;
@@ -67,7 +72,7 @@ function Output() {
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: '#161e28', // 10181E
+    backgroundColor: '#161e28',
     flex: 1,
   },
   container: {

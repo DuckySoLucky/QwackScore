@@ -1,46 +1,72 @@
-import { Schedule, SchedulesDataResponse, StatsDataReponse } from '@/types/data';
 import PlayerStatisticColumnElement from '../misc/PlayerStatisticColumnElement';
 import TeamStatisticColumnElement from '../misc/TeamStatisticColumnElement';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import UtakmiceColumnElement from '../Utakmnica/Utakmice/UtakmiceColumnElement';
+import { SchedulesMatch, SchedulesResponse } from '@/API/types/schedules';
+import { StatsResponse, StatsResponseStatsPlayer, StatsResponseStatsTeam } from '@/API/types/stats';
+import React from 'react';
+import ErrorComponent from '../global/ErrorComponents';
 
-export default function DetaljiList({
-  schedulesData,
-  statsData,
-}: {
-  schedulesData: SchedulesDataResponse;
-  statsData: StatsDataReponse;
-}) {
-  const combinedData = [
-    { type: 'header', title: 'Utakmice' },
-    ...schedulesData.firstThreeMatchs.map((match: Schedule) => ({ type: 'match', item: match })),
-  ];
+function getCombinedData(schedulesData: SchedulesResponse, statsData: StatsResponse) {
+  const combinedData = [];
 
-  if (statsData?.teams) {
+  if (schedulesData?.firstThreeMatchs) {
     combinedData.push(
-      { type: 'header', title: 'Broj bodova' },
-      ...statsData.teams['points'].slice(0, 5).map((club) => ({ type: 'team', item: club })),
-
-      { type: 'header', title: 'Points / Goals' },
-      ...statsData.teams['PTS/G'].slice(0, 3).map((club) => ({ type: 'team', item: club }))
+      { type: 'header', title: 'Utakmice' },
+      ...schedulesData.firstThreeMatchs.map((match: SchedulesMatch) => ({ type: 'match', item: match }))
     );
   }
 
-  if (statsData?.players) {
+  if (statsData?.teams && statsData.teams['points']) {
+    combinedData.push(
+      { type: 'header', title: 'Broj bodova' },
+      ...statsData.teams['points'].slice(0, 5).map((club: StatsResponseStatsTeam) => ({ type: 'team', item: club }))
+    );
+  }
+
+  if (statsData?.players && statsData.teams['PTS/G']) {
+    combinedData.push(
+      { type: 'header', title: 'Points / Goals' },
+      ...statsData.teams['PTS/G'].slice(0, 3).map((club: StatsResponseStatsTeam) => ({ type: 'team', item: club }))
+    );
+  }
+
+  if (statsData?.players && statsData.players['goals']) {
     combinedData.push(
       { type: 'header', title: 'Najbolji strijelci' },
       ...statsData.players['goals'].slice(0, 3).map((club) => ({ type: 'player', item: club }))
     );
   }
 
+  return combinedData;
+}
+
+export default function DetaljiList({
+  schedulesData,
+  statsData,
+}: {
+  schedulesData: SchedulesResponse;
+  statsData: StatsResponse;
+}) {
+  if (!schedulesData || !statsData) {
+    return <ErrorComponent message="Error: Couldn't find data" />;
+  }
+
+  const combinedData = getCombinedData(schedulesData, statsData);
+
   const groupedData = [];
-  let currentGroup = [] as any[];
+  let currentGroup = [] as {
+    type: string;
+    title?: string;
+    item: StatsResponseStatsPlayer | StatsResponseStatsTeam | SchedulesMatch;
+  }[];
 
   combinedData.forEach((item) => {
     if (item.type === 'header') {
       if (currentGroup.length > 0) {
         groupedData.push(currentGroup);
       }
+
       currentGroup = [item];
     } else {
       currentGroup.push(item);
@@ -51,7 +77,11 @@ export default function DetaljiList({
     groupedData.push(currentGroup);
   }
 
-  const renderGroup = ({ item }: { item: { type: string; title?: string; item: any }[] }) => (
+  const renderGroup = ({
+    item,
+  }: {
+    item: { type: string; title?: string; item: StatsResponseStatsPlayer | StatsResponseStatsTeam | SchedulesMatch }[];
+  }) => (
     <View style={styles.container}>
       {item.map((subItem, index) => {
         switch (subItem.type) {
@@ -62,17 +92,21 @@ export default function DetaljiList({
               </Text>
             );
           case 'match':
-            return <UtakmiceColumnElement key={index} item={subItem.item} />;
+            return <UtakmiceColumnElement key={index} item={subItem.item as SchedulesMatch} />;
           case 'team':
-            return <TeamStatisticColumnElement key={index} item={subItem.item} />;
+            return <TeamStatisticColumnElement key={index} item={subItem.item as StatsResponseStatsTeam} />;
           case 'player':
-            return <PlayerStatisticColumnElement key={index} item={subItem.item} />;
+            return <PlayerStatisticColumnElement key={index} item={subItem.item as StatsResponseStatsPlayer} />;
           default:
             return null;
         }
       })}
     </View>
   );
+
+  if (groupedData.length === 0) {
+    return <ErrorComponent message="Error: Couldn't find any data" />;
+  }
 
   return (
     <View style={styles.outerContainer}>

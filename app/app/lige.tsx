@@ -1,112 +1,67 @@
-import { StyleSheet, ScrollView, Pressable, ActivityIndicator } from 'react-native';
-import React, { useState, useEffect } from 'react';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { Text, View } from '@/components/Themed';
 import { useNavigation } from 'expo-router';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+
+import StatistikaIgraca from '@/components/Lige/StatistikaIgraca';
+import StatistikaTimova from '@/components/Lige/StatistikaTimova';
 import UtakmiceList from '@/components/Utakmnica/UtakmiceList';
 import DetaljiList from '@/components/Lige/DetaljiList';
 import PoredakList from '@/components/Lige/PoredakList';
-import StatistikaIgraca from '@/components/Lige/StatistikaIgraca';
-import StatistikaTimova from '@/components/Lige/StatistikaTimova';
 
-const queryClient = new QueryClient();
+import LoadingComponent from '@/components/global/LoadingComponent';
+import ErrorComponent from '@/components/global/ErrorComponents';
+
+import { fetchLigeDataResponse } from '@/API/types';
+import { fetchLigeData } from '@/API';
 
 export default function TabTwoScreen() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Output />
-    </QueryClientProvider>
-  );
-}
-
-const VIEW_COMPONENTS = {
-  utakmice: UtakmiceList,
-  details: DetaljiList,
-  poredak: PoredakList,
-  player_stats: StatistikaIgraca,
-  team_stats: StatistikaTimova,
-} as Record<string, React.ComponentType<any>>;
-
-function Output() {
   const route = useRoute();
   const navigation = useNavigation();
   const [selectedView, setSelectedView] = useState('details');
 
+  const params = route.params as { id: string; title: string };
+  if (!params?.id || !params?.title) {
+    return <ErrorComponent message="Error: Couldn't find parameters" />;
+  }
+
   useEffect(() => {
-    navigation.setOptions({ title: route.params?.title ?? 'Liga', headerStyle: styles.header });
+    navigation.setOptions({ title: params.title ?? 'Liga', headerStyle: styles.header });
   }, [navigation]);
 
-  const {
-    isPending,
-    error,
-    data: seasonData,
-  } = useQuery({
-    queryKey: ['standingsData'],
-    queryFn: () =>
-      fetch(`http://192.168.90.105:3000/competition/${route.params.id}`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-  });
+  const [data, setData] = useState<null | fetchLigeDataResponse>(null);
+  const [error, setError] = useState<null | Error>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const {
-    isPending: isPendingSchedules,
-    error: errorSchedules,
-    data: schedulesData,
-  } = useQuery({
-    queryKey: ['schedulesData', seasonData?.id],
-    queryFn: () =>
-      seasonData?.id
-        ? fetch(`http://192.168.90.105:3000/schedules/${seasonData.id}`)
-            .then((res) => res.json())
-            .then((data) => data.data)
-        : Promise.resolve(null),
-    enabled: !!seasonData?.id,
-  });
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const result = await fetchLigeData(params.id, { useLocalAPI: true });
+        setData(result);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const {
-    isPending: isPendingStats,
-    error: errorStats,
-    data: statsData,
-  } = useQuery({
-    queryKey: ['statsData', seasonData?.id],
-    queryFn: () =>
-      seasonData?.id
-        ? fetch(`http://192.168.90.105:3000/stats/${seasonData.id}`)
-            .then((res) => res.json())
-            .then((data) => data.data)
-        : Promise.resolve(null),
-    enabled: !!seasonData?.id,
-  });
+    loadData();
+  }, [params.id]);
 
-  const {
-    isPending: isPendingStandings,
-    error: errorStandings,
-    data: standingsData,
-  } = useQuery({
-    queryKey: ['standingsData', seasonData?.id],
-    queryFn: () =>
-      seasonData?.id
-        ? fetch(`http://192.168.90.105:3000/standings/${seasonData.id}`)
-            .then((res) => res.json())
-            .then((data) => data.data)
-        : Promise.resolve(null),
-    enabled: !!seasonData?.id,
-  });
-
-  if (isPending || isPendingSchedules || isPendingStats || isPendingStandings) {
-    return <ActivityIndicator size="large" color="#00ff00" />;
+  if (isLoading) {
+    return <LoadingComponent />;
   }
 
-  if (error || errorSchedules || errorStats || errorStandings) {
-    return (
-      <Text>
-        Error: {error?.message || errorSchedules?.message || errorSchedules?.message || errorStandings?.message}
-      </Text>
-    );
+  if (error) {
+    return <ErrorComponent message={`Error: ${error.message}`} />;
   }
+
+  if (!data) {
+    return <ErrorComponent message={`Error: Couldn't find data`} />;
+  }
+
+  const { schedulesData, statsData, seasonData, standingsData } = data;
 
   const ViewComponent = VIEW_COMPONENTS[selectedView] ?? VIEW_COMPONENTS.details;
   return (
@@ -147,6 +102,14 @@ function Output() {
   );
 }
 
+const VIEW_COMPONENTS = {
+  utakmice: UtakmiceList,
+  details: DetaljiList,
+  poredak: PoredakList,
+  player_stats: StatistikaIgraca,
+  team_stats: StatistikaTimova,
+} as Record<string, React.FC<any>>;
+
 const styles = StyleSheet.create({
   container: {
     paddingTop: 5,
@@ -173,7 +136,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    backgroundColor: '#10181E', // 10181E
+    backgroundColor: '#10181E',
   },
   selectedView: {
     backgroundColor: '#161e28',

@@ -1,45 +1,53 @@
-import { QueryClientProvider, useQuery, QueryClient } from '@tanstack/react-query';
-import { ActivityIndicator, StyleSheet, TextInput, FlatList, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, FlatList, Text } from 'react-native';
 import { View } from '@/components/Themed';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigation } from 'expo-router';
-
-const queryClient = new QueryClient();
+import { fetchSeasons } from '@/API/src/routes/seasons';
+import { SeasonsResponse } from '@/API/types/seasons';
+import LoadingComponent from '@/components/global/LoadingComponent';
+import ErrorComponent from '@/components/global/ErrorComponents';
 
 export default function ModalScreen() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Output />
-    </QueryClientProvider>
-  );
-}
-
-function Output() {
   const navigation = useNavigation();
-  navigation.setOptions({ title: 'Leagues' });
-
   const [searchQuery, setSearchQuery] = useState('');
-  const {
-    isLoading,
-    error,
-    data: seasonsData,
-  } = useQuery({
-    queryKey: ['standingsData'],
-    queryFn: () =>
-      fetch(`http://192.168.90.105:3000/seasons`)
-        .then((res) => res.json())
-        .then((data) => data.data),
-  });
+  const [data, setData] = useState<null | SeasonsResponse>(null);
+  const [error, setError] = useState<null | Error>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const result = await fetchSeasons({ useLocalAPI: true });
+        setData(result);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    navigation.setOptions({
+      headerTitle: 'Search for Leagues',
+      headerStyle: { display: 'none', height: 0 },
+    });
+
+    loadData();
+  }, []);
 
   if (isLoading) {
-    return <ActivityIndicator size="large" color="#00ff00" />;
+    return <LoadingComponent />;
   }
 
   if (error) {
-    return <View>Error: {error.message}</View>;
+    return <ErrorComponent message={`Error: ${error.message}`} />;
   }
 
-  const filteredLeagues = seasonsData.seasons.filter((league: { name: string; competition_id: string }) =>
+  if (!data) {
+    return <ErrorComponent message={`Error: Couldn't find data`} />;
+  }
+
+  const seasons = data.seasons;
+  const filteredLeagues = seasons.filter((league: { name: string; competition_id: string }) =>
     league.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -69,7 +77,6 @@ function Output() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,

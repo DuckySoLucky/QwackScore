@@ -7,7 +7,7 @@ export default function ProgressBarElement({ item, percentage }: { item: Summary
   const total = item.home + item.away;
   const leftProgress = item.home / total;
   const rightProgress = item.away / total;
-  const progress = Dimensions.get('window').width * 0.45;
+  const progress = Dimensions.get('window').width * 0.41;
 
   return (
     <View style={styles.bottomContainer}>

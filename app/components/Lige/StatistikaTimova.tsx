@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
-import { PlayerStat, StatsDataReponse, TeamStat } from '@/types/data';
 import TeamStatisticColumnElement from '@/components/misc/TeamStatisticColumnElement';
+import { StatsResponse, StatsResponseStatsTeam } from '@/API/types/stats';
+import ErrorComponent from '../global/ErrorComponents';
 
 function titleCase(str: string) {
   return str
@@ -16,18 +17,14 @@ const CUSTOM_KEYS = {
   'P/G': 'P/G',
 } as Record<string, string>;
 
-const StatistikaTimova = ({ statsData }: { statsData: StatsDataReponse }) => {
-  if (!statsData?.teams) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.roundText}>No team stats available</Text>
-      </View>
-    );
+const StatistikaTimova = ({ statsData }: { statsData: StatsResponse }) => {
+  if (!statsData?.teams || Object.keys(statsData?.teams ?? {}).length === 0) {
+    return <ErrorComponent message="Error: Couldn't find team stats data" />;
   }
 
-  const renderTeamStats = ({ item }: { item: [string, TeamStat[]] }) => {
+  const renderTeamStats = ({ item }: { item: [string, StatsResponseStatsTeam[]] }) => {
     const [key, data] = item;
-    if (data.length < 5) {
+    if (!data) {
       return null;
     }
 

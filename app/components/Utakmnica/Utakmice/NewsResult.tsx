@@ -1,10 +1,14 @@
 import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { Schedule } from '@/types/data';
 import React from 'react';
 import { Link } from 'expo-router';
+import { SchedulesMatch } from '@/API/types/schedules';
 
-export function NewsResult({ data }: { data: Schedule }) {
+function NewsResult({ data }: { data: SchedulesMatch }) {
+  if (!data || !data.competitors || data.competitors.length !== 2) {
+    return null;
+  }
+
   const firstImage = data.competitors[0].image;
   const secondImage = data.competitors[1].image;
 
@@ -87,3 +91,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default NewsResult;
