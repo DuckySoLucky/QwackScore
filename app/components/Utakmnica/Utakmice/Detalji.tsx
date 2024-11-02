@@ -15,6 +15,7 @@ import SubstitutionElement from './DetaljiElements/SubstitutionElement';
 import ShotOnTargetElement from './DetaljiElements/ShotOnTargetElement';
 import YellowCardElement from './DetaljiElements/YellowCardElement';
 import ScoreChangeElement from './DetaljiElements/ScoreChangeElement';
+import RedCardElement from './DetaljiElements/RedCardElement';
 
 function titleCase(str: string) {
   return str
@@ -71,6 +72,9 @@ export default function DetaljiList({ timelineData }: { timelineData: TimelineDa
 
       case 'yellow_card':
         return <YellowCardElement item={item} />;
+
+      case 'red_card':
+        return <RedCardElement item={item} />;
 
       case 'score_change':
         return <ScoreChangeElement item={item} />;
