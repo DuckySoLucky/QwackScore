@@ -1,16 +1,16 @@
 // https://docs.expo.dev/guides/using-eslint/
 module.exports = {
-  extends: "expo",
-  plugins: ["react", "react-native", "prettier"],
+  extends: 'expo',
+  plugins: ['react', 'react-native', 'prettier'],
   rules: {
-    "prettier/prettier": "error",
-    "react-native/no-unused-styles": 2,
-    "react-native/split-platform-components": 2,
+    'prettier/prettier': 'error',
+    'react-native/no-unused-styles': 2,
+    'react-native/split-platform-components': 2,
     // 'react-native/no-inline-styles': 2,
     // 'react-native/no-color-literals': 2,
-    "react-native/no-raw-text": 2,
+    'react-native/no-raw-text': 2,
     // 'react-native/no-single-element-style-arrays': 2,
-    "react/jsx-key": 2,
+    'react/jsx-key': 2,
   },
   parserOptions: {
     ecmaFeatures: {
@@ -18,6 +18,6 @@ module.exports = {
     },
   },
   env: {
-    "react-native/react-native": true,
+    'react-native/react-native': true,
   },
 };
