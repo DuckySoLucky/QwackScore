@@ -49,7 +49,11 @@ export default function PostaveList({ lineupsData }: { lineupsData: LineupsDataR
         </View>
 
         <SubstitutionElement
-          name={selectedForm === 'default' ? lineupsData.away.coach[0].name : lineupsData.home.coach[0].name}
+          name={
+            selectedForm === 'default'
+              ? (lineupsData.away.coach[0]?.name ?? 'Unknown')
+              : (lineupsData.home.coach[0]?.name ?? 'Unknown')
+          }
           type={null}
           number={0}
         />

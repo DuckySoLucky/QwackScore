@@ -34,7 +34,10 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchLigeData(params.id, { useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean });
+        const result = await fetchLigeData(params.id, {
+          useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean,
+          name: params.title,
+        });
         setData(result);
       } catch (err) {
         setError(err as Error);

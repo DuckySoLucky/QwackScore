@@ -6,7 +6,7 @@ import { CONFIG } from '@/API/storage';
 
 export const fetchSeason = async (
   id: string,
-  options = { useLocalAPI: false },
+  options = { useLocalAPI: false, name: null } as { useLocalAPI: boolean; name: string | null },
 ): Promise<CompetitionResponse | null> => {
   try {
     broadcastMessage(`fetchSeason(${id}) called.`, 'api');
@@ -26,7 +26,9 @@ export const fetchSeason = async (
     const response = await fetchJson(url);
 
     broadcastMessage(`fetchSeason(${id}) returned. (${Date.now() - timeNow}ms)`, 'api');
-    return response.seasons.at(-1) as CompetitionResponse;
+    return ((options.name
+      ? response.seasons.find((season: CompetitionResponse) => season?.name === options.name)
+      : response.seasons.at(-1)) ?? response.seasons.at(-1)) as CompetitionResponse;
   } catch (error) {
     console.error(error);
     return null;

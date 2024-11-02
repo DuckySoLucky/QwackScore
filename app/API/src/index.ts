@@ -7,7 +7,10 @@ import { fetchTimeline } from './routes/timeline';
 import { fetchLineup } from './routes/lineup';
 import { fetchSummary } from './routes/summary';
 
-export const fetchLigeData = async (id: string, options = { useLocalAPI: false }): Promise<fetchLigeDataResponse> => {
+export const fetchLigeData = async (
+  id: string,
+  options = { useLocalAPI: false, name: null } as { useLocalAPI: boolean; name: string | null },
+): Promise<fetchLigeDataResponse> => {
   const seasonData = await fetchSeason(id, options);
   if (!seasonData?.id) {
     throw new Error(`Couldn't find the selected competition with id: ${id}`);

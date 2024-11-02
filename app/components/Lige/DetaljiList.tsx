@@ -10,7 +10,7 @@ import ErrorComponent from '../global/ErrorComponents';
 function getCombinedData(schedulesData: SchedulesResponse, statsData: StatsResponse) {
   const combinedData = [];
 
-  if (schedulesData?.firstThreeMatchs) {
+  if (schedulesData?.firstThreeMatchs && schedulesData.firstThreeMatchs.length > 0) {
     combinedData.push(
       { type: 'header', title: 'Utakmice' },
       ...schedulesData.firstThreeMatchs.map((match: SchedulesMatch) => ({ type: 'match', item: match })),

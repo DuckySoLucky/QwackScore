@@ -7,6 +7,7 @@ import { SeasonsResponse } from '@/API/types/seasons';
 import LoadingComponent from '@/components/global/LoadingComponent';
 import ErrorComponent from '@/components/global/ErrorComponents';
 import { CONFIG } from '@/API/storage';
+import { getBackgroundColorAsync } from 'expo-system-ui';
 
 export default function ModalScreen() {
   const navigation = useNavigation();
@@ -29,7 +30,7 @@ export default function ModalScreen() {
 
     navigation.setOptions({
       headerTitle: 'Search for Leagues',
-      headerStyle: { display: 'none', height: 0 },
+      headerStyle: { display: 'none', height: 0, backgroundColor: '#10181E' },
     });
 
     loadData();
