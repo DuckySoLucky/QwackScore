@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "TestExpoApp",
-    "slug": "TestExpoApp",
+    "name": "QwackScore",
+    "slug": "QwackScore",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -12,12 +12,8 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.duckysolucky.QwackScore"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
@@ -32,15 +28,14 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
-      "expo-font"
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
       "eas": {
-        "projectId": "db7a43fd-7267-4c80-b238-829525950cea"
+        "projectId": "4fe5e5e9-1fd3-4bd5-8d11-dae5fd87c506"
       }
     }
   }
