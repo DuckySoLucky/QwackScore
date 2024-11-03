@@ -3,6 +3,7 @@ import { View, FlatList, Text, StyleSheet } from 'react-native';
 import TeamStatisticColumnElement from '@/components/misc/TeamStatisticColumnElement';
 import { StatsResponse, StatsResponseStatsTeam } from '@/API/types/stats';
 import ErrorComponent from '../global/ErrorComponents';
+import { useTranslation } from 'react-i18next';
 
 function titleCase(str: string) {
   return str
@@ -12,25 +13,21 @@ function titleCase(str: string) {
     .join(' ');
 }
 
-const CUSTOM_KEYS = {
-  'PTS/G': 'Points / Goals',
-  'P/G': 'P/G',
-} as Record<string, string>;
-
 const StatistikaTimova = ({ statsData }: { statsData: StatsResponse }) => {
+  const { t: translate } = useTranslation();
   if (!statsData?.teams || Object.keys(statsData?.teams ?? {}).length === 0) {
-    return <ErrorComponent message="Error: Couldn't find team stats data" />;
+    return <ErrorComponent message="Couldn't find team stats data" />;
   }
 
   const renderTeamStats = ({ item }: { item: [string, StatsResponseStatsTeam[]] }) => {
     const [key, data] = item;
-    if (!data) {
+    if (!data || data.length === 0) {
       return null;
     }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.roundText}>{CUSTOM_KEYS[key] ?? titleCase(key)}</Text>
+        <Text style={styles.roundText}>{translate(`league.statistics.stats.${key}`)}</Text>
         {data.slice(0, 5).map((item, index) => (
           <TeamStatisticColumnElement key={index} item={item} />
         ))}

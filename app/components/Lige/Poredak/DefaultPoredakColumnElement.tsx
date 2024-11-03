@@ -1,13 +1,16 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { StandingsData } from '@/types/data';
+import { useTranslation } from 'react-i18next';
 
 export default function DefaultPoredakColumnElement({ standingsData }: { standingsData: StandingsData[] }) {
+  const { t: translate } = useTranslation();
+
   return (
     <View>
       <View style={styles.row}>
         <View style={styles.leftContainer}>
           <Text style={styles.topText}>#</Text>
-          <Text style={styles.teamNameText}>Tim</Text>
+          <Text style={styles.teamNameText}>{translate(`match.standings.formKeys.team`)}</Text>
         </View>
         <View style={styles.rightContainer}>
           <Text style={styles.topText}>P</Text>

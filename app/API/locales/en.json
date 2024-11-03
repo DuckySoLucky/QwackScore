@@ -1,0 +1,203 @@
+{
+  "index": {
+    "title": "Matches",
+    "timeFormat": {
+      "yesterday": "Yesterday",
+      "today": "Today",
+      "tomorrow": "Tomorrow"
+    }
+  },
+  "three": {
+    "title": "Settings",
+    "settings": "Settings",
+    "language": "Language",
+    "languages": {
+      "hr": "Croatian",
+      "en": "English"
+    },
+    "defaultLeague": "Default League",
+    "theme": "Theme",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "developerSettings": "Developer Settings",
+    "developerMode": "Developer Mode",
+    "localAPIMode": "Local API Mode",
+    "APIUrl": "API URL",
+    "APIKey": "API Key",
+    "clearCache": "Clear Cache",
+    "clearCacheButton": "Clear",
+    "restartApp": "Restart App",
+    "restartAppButton": "Restart",
+    "about": "About",
+    "version": "Version"
+  },
+  "modal": {
+    "title": "Search for Leagues",
+    "search": "Search"
+  },
+  "global": {
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "match": {
+    "details": {
+      "title": "Details",
+      "summary": {
+        "default": "Default",
+        "all": "All",
+        "events": {
+          "announcement": "Announcement",
+          "throw_in": "Throw-in",
+          "free_kick": "Free Kick",
+          "offside": "Offside",
+          "goal_kick": "Goal Kick",
+          "injury": "Injury",
+          "shot_saved": "Goalkeeper Save",
+          "shot_off_target": "Shot Off Target",
+          "shot_off_target_outcome": {
+            "blocked": "Blocked",
+            "wide": "Wide",
+            "high": "High",
+            "miss": "Miss",
+            "post": "Post",
+            "bar": "Bar"
+          },
+          "corner_kick": "Corner Kick",
+          "substitution": "Substitution",
+          "substitution_outcome": {
+            "in": "In",
+            "out": "Out"
+          },
+          "shot_on_target": "Shot On Target",
+          "yellow_card": "Yellow Card",
+          "red_card": "Red Card",
+          "score_change": "Score Change"
+        }
+      },
+      "information": {
+        "title": "Match Information",
+        "status": "Status",
+        "statuses": {
+          "not_started": "Not Started",
+          "in_play": "In Play",
+          "ended": "Finished",
+          "closed": "Finished",
+          "postponed": "Postponed",
+          "cancelled": "Cancelled"
+        },
+        "stadium": "Stadium",
+        "date": "Date",
+        "location": "Location",
+        "attendance": "Attendance",
+        "referee": "Referee",
+        "weather": "Weather",
+        "round": "Round"
+      }
+    },
+    "lineup": {
+      "title": "Lineup",
+      "substitutions": "Substitutions",
+      "titles": {
+        "coach": "Coach",
+        "goalkeeper": "Goalkeeper",
+        "defender": "Defender",
+        "midfielder": "Midfielder",
+        "forward": "Forward"
+      }
+    },
+    "standings": {
+      "title": "Standings",
+      "forms": {
+        "default": "Default",
+        "form": "Form"
+      },
+      "formKeys": {
+        "team": "Team",
+        "form": "Form"
+      }
+    },
+    "statistics": {
+      "title": "Statistics",
+      "stats": {
+        "ball_possession": "Ball Possession",
+        "cards_given": "Cards Given",
+        "corner_kicks": "Corner Kicks",
+        "fouls": "Fouls",
+        "free_kicks": "Free Kicks",
+        "goal_kicks": "Goal Kicks",
+        "injuries": "Injuries",
+        "offsides": "Offsides",
+        "shots_blocked": "Shots Blocked",
+        "shots_off_target": "Shots Off Target",
+        "shots_on_target": "Shots On Target",
+        "shots_saved": "Shots Saved",
+        "shots_total": "Shots Total",
+        "substitutions": "Substitutions",
+        "throw_ins": "Throw-ins",
+        "yellow_cards": "Yellow Cards",
+        "red_cards": "Red Cards"
+      }
+    },
+    "commentary": {
+      "title": "Commentary"
+    },
+    "matches": {
+      "title": "Matches",
+      "round": "Round"
+    }
+  },
+  "league": {
+    "details": {
+      "title": "Details",
+      "matches": "Matches",
+      "points": "Points",
+      "pointsPerGoal": "Points / Goals",
+      "bestStrikers": "Best Strikers"
+    },
+    "matches": {
+      "title": "Matches"
+    },
+    "standings": {
+      "title": "Standings"
+    },
+    "statistics": {
+      "players": "Player Statistics",
+      "teams": "Team Statistics",
+      "stats": {
+        "goals": "Goals",
+        "assists": "Assists",
+        "shots": "Shots",
+        "shotsOnTarget": "Shots On Target",
+        "shotsOffTarget": "Shots Off Target",
+        "fouls": "Fouls",
+        "yellowCards": "Yellow Cards",
+        "redCards": "Red Cards",
+        "offsides": "Offsides",
+        "corners": "Corners",
+        "ballPossession": "Ball Possession",
+        "passAccuracy": "Pass Accuracy",
+        "tackles": "Tackles",
+        "interceptions": "Interceptions",
+        "aerialsWon": "Aerials Won",
+        "clearances": "Clearances",
+        "offsidesWon": "Offsides Won",
+        "goalKicks": "Goal Kicks",
+        "throwIns": "Throw-ins",
+        "longBalls": "Long Balls",
+        "throughBalls": "Through Balls",
+        "crosses": "Crosses",
+        "PTS/G": "Points / Goals",
+        "P/G": "P/G",
+        "points": "Points",
+        "pobjeda": "Wins",
+        "gubitaka": "Losses",
+        "razlika_golova": "Goal Difference",
+        "zabijeni_golovi": "Goals Scored",
+        "primljeni_golovi": "Goals Conceded",
+        "nerijeseno": "Draws"
+      }
+    }
+  }
+}

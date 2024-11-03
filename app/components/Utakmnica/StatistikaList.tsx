@@ -17,12 +17,12 @@ export default function StatistikaList({ summaryData }: { summaryData: SummaryDa
   );
 
   if (!summaryData) {
-    return <ErrorComponent message="Error: Couldn't find stats data" />;
+    return <ErrorComponent message="Couldn't find stats data" />;
   }
 
   const statsItems = summaryData.filter((item) => item.visible === true).length;
   if (statsItems === 0) {
-    return <ErrorComponent message="Error: Couldn't find stats data" />;
+    return <ErrorComponent message="Couldn't find stats data" />;
   }
 
   return (

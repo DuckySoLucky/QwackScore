@@ -6,34 +6,36 @@ import { SchedulesMatch, SchedulesResponse } from '@/API/types/schedules';
 import { StatsResponse, StatsResponseStatsPlayer, StatsResponseStatsTeam } from '@/API/types/stats';
 import React from 'react';
 import ErrorComponent from '../global/ErrorComponents';
+import { useTranslation } from 'react-i18next';
 
 function getCombinedData(schedulesData: SchedulesResponse, statsData: StatsResponse) {
+  const { t: translate } = useTranslation();
   const combinedData = [];
 
   if (schedulesData?.firstThreeMatchs && schedulesData.firstThreeMatchs.length > 0) {
     combinedData.push(
-      { type: 'header', title: 'Utakmice' },
+      { type: 'header', title: translate(`league.details.matches`) },
       ...schedulesData.firstThreeMatchs.map((match: SchedulesMatch) => ({ type: 'match', item: match })),
     );
   }
 
   if (statsData?.teams && statsData.teams['points']) {
     combinedData.push(
-      { type: 'header', title: 'Broj bodova' },
+      { type: 'header', title: translate(`league.details.points`) },
       ...statsData.teams['points'].slice(0, 5).map((club: StatsResponseStatsTeam) => ({ type: 'team', item: club })),
     );
   }
 
   if (statsData?.players && statsData.teams['PTS/G']) {
     combinedData.push(
-      { type: 'header', title: 'Points / Goals' },
+      { type: 'header', title: translate(`league.details.pointsPerGoal`) },
       ...statsData.teams['PTS/G'].slice(0, 3).map((club: StatsResponseStatsTeam) => ({ type: 'team', item: club })),
     );
   }
 
   if (statsData?.players && statsData.players['goals']) {
     combinedData.push(
-      { type: 'header', title: 'Najbolji strijelci' },
+      { type: 'header', title: translate(`league.details.bestStrikers`) },
       ...statsData.players['goals'].slice(0, 3).map((club) => ({ type: 'player', item: club })),
     );
   }
@@ -49,7 +51,7 @@ export default function DetaljiList({
   statsData: StatsResponse;
 }) {
   if (!schedulesData || !statsData) {
-    return <ErrorComponent message="Error: Couldn't find data" />;
+    return <ErrorComponent message="Couldn't find data" />;
   }
 
   const combinedData = getCombinedData(schedulesData, statsData);
@@ -105,7 +107,7 @@ export default function DetaljiList({
   );
 
   if (groupedData.length === 0) {
-    return <ErrorComponent message="Error: Couldn't find any data" />;
+    return <ErrorComponent message="Couldn't find any data" />;
   }
 
   return (

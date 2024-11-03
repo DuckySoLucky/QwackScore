@@ -35,11 +35,11 @@ export default function TabTwoScreen() {
   }
 
   if (error) {
-    return <ErrorComponent message={`Error: ${error.message}`} />;
+    return <ErrorComponent message={`${error.message}`} />;
   }
 
   if (!data) {
-    return <ErrorComponent message={`Error: Couldn't find data`} />;
+    return <ErrorComponent message={`Couldn't find data`} />;
   }
 
   const dropdownData = Object.entries(data).map(([key, value]) => ({

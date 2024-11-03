@@ -2,14 +2,21 @@ import { Text, View } from '@/components/Themed';
 import { StyleSheet, Image } from 'react-native';
 import { Timeline } from '@/types/data';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function SubstitutionElement({ item }: { item: Timeline }) {
+  const { t: translate } = useTranslation();
+
   if (item.position === 'right') {
     return (
       <View style={styles.outerContainerRight}>
         <View style={styles.column}>
-          <Text style={styles.mainTextRight}>{`In: ${item.playerIn}`}</Text>
-          <Text style={styles.secondaryTextRight}>{`Out: ${item.playerOut}`}</Text>
+          <Text
+            style={styles.mainTextRight}
+          >{`${translate(`match.details.summary.events.substitution_outcome.in`)}: ${item.playerIn}`}</Text>
+          <Text
+            style={styles.secondaryTextRight}
+          >{`${translate(`match.details.summary.events.substitution_outcome.out`)}: ${item.playerOut}`}</Text>
         </View>
 
         <View style={styles.seperatorRight} />
@@ -32,8 +39,12 @@ export default function SubstitutionElement({ item }: { item: Timeline }) {
       <View style={styles.seperatorLeft} />
 
       <View style={styles.columnLeft}>
-        <Text style={styles.mainTextLeft}>{`In: ${item.playerIn}`}</Text>
-        <Text style={styles.secondaryTextLeft}>{`Out: ${item.playerOut}`}</Text>
+        <Text
+          style={styles.mainTextLeft}
+        >{`${translate(`match.details.summary.events.substitution_outcome.in`)}: ${item.playerIn}`}</Text>
+        <Text
+          style={styles.secondaryTextLeft}
+        >{`${translate(`match.details.summary.events.substitution_outcome.out`)}: ${item.playerOut}`}</Text>
       </View>
     </View>
   );

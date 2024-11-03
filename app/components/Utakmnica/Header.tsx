@@ -4,10 +4,12 @@ import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { Schedule } from '@/types/data';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Header({ item, timelineData }: { item: Schedule; timelineData: TimelineResponse }) {
+  const { t: translate } = useTranslation();
   if (!timelineData) {
-    return <ErrorComponent message="Error: Couldn't find timeline data" />;
+    return <ErrorComponent message="Couldn't find timeline data" />;
   }
 
   const firstTeam = item.competitors[0];
@@ -35,7 +37,9 @@ export default function Header({ item, timelineData }: { item: Schedule; timelin
             : item.startTimeFormatted.split(' ')[1]}
         </Text>
         <Text style={styles.stateText}>
-          {item.status === 'closed' ? 'FINISHED' : item.startTimeFormatted.split(' ')[0]}
+          {item.status === 'not_started'
+            ? item.startTimeFormatted.split(' ')[0]
+            : translate(`match.details.information.statuses.${item.status}`).toUpperCase()}
         </Text>
         {totalScore > 0 ? (
           <View style={styles.scoresContainer}>

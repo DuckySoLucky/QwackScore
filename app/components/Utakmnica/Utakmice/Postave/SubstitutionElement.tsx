@@ -1,6 +1,7 @@
 import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function SubstitutionElement({
   number,
@@ -11,6 +12,7 @@ export default function SubstitutionElement({
   name: string;
   type: string | null;
 }) {
+  const { t: translate } = useTranslation();
   if (!type) {
     return (
       <View style={styles.coachContainer}>
@@ -18,7 +20,7 @@ export default function SubstitutionElement({
 
         <View style={styles.column}>
           <Text style={styles.coachName}>{name}</Text>
-          <Text style={styles.coachProfession}>Coach</Text>
+          <Text style={styles.coachProfession}>{translate(`match.lineup.titles.coach`)}</Text>
         </View>
       </View>
     );
@@ -30,7 +32,7 @@ export default function SubstitutionElement({
 
       <View style={styles.column}>
         <Text style={styles.coachName}>{`${number} ${name}`}</Text>
-        <Text style={styles.coachProfession}>{type}</Text>
+        <Text style={styles.coachProfession}>{translate(`match.lineup.titles.${type.toLowerCase()}`)}</Text>
       </View>
     </View>
   );

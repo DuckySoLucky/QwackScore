@@ -8,6 +8,7 @@ import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['name']; color: string }) {
@@ -16,6 +17,7 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['nam
 
 export default function TabLayout() {
   const colorScheme = useColorScheme() ?? 'light';
+  const { t: translate } = useTranslation();
 
   const router = useRouter();
   const handleNavigation = () => {
@@ -42,7 +44,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Utakmice',
+          title: translate('index.title'),
           tabBarIcon: ({ color }) => <TabBarIcon name="soccer-ball-o" color={color} />,
           headerRight: () => (
             <View style={{ flexDirection: 'row', marginRight: 15 }}>
@@ -108,7 +110,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="three"
         options={{
-          title: 'Settings',
+          title: translate('three.title'),
           tabBarIcon: ({ color }) => <AntDesign name="setting" size={24} color={color} />,
           headerRight: () => (
             <View style={{ flexDirection: 'row', marginRight: 15 }}>

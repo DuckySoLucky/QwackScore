@@ -1,7 +1,8 @@
 import { StyleSheet, Image } from 'react-native';
-import React from 'react';
+import React, { useTransition } from 'react';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
+import { useTranslation } from 'react-i18next';
 
 const images = [
   'https://i.imgur.com/U2qQpQF.png',
@@ -15,10 +16,12 @@ function getRandomImage() {
 }
 
 export default function ShotSavedElement({ item }: { item: Timeline }) {
+  const { t: translate } = useTranslation();
+
   if (item.position === 'right') {
     return (
       <View style={styles.outerContainerRight}>
-        <Text style={styles.mainTextRight}>Goalkeeper Save</Text>
+        <Text style={styles.mainTextRight}>{translate('match.details.summary.events.shot_saved')}</Text>
 
         <View style={styles.seperatorRight} />
 
@@ -39,7 +42,7 @@ export default function ShotSavedElement({ item }: { item: Timeline }) {
 
       <View style={styles.seperatorLeft} />
 
-      <Text style={styles.mainTextLeft}>Goalkeeper Save</Text>
+      <Text style={styles.mainTextLeft}>{translate('match.details.summary.events.shot_saved')}</Text>
     </View>
   );
 }

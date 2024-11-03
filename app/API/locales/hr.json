@@ -1,0 +1,203 @@
+{
+  "index": {
+    "title": "Utakmice",
+    "timeFormat": {
+      "yesterday": "Jučer",
+      "today": "Danas",
+      "tomorrow": "Sutra"
+    }
+  },
+  "three": {
+    "title": "Postavke",
+    "settings": "Postavke",
+    "language": "Jezik",
+    "languages": {
+      "hr": "Hrvatski",
+      "en": "Engleski"
+    },
+    "defaultLeague": "Zadana liga",
+    "theme": "Tema",
+    "themes": {
+      "light": "Svijetla",
+      "dark": "Tamna"
+    },
+    "developerSettings": "Postavke za razvojne programere",
+    "developerMode": "Način za razvojne programere",
+    "localAPIMode": "Lokalni API način",
+    "APIUrl": "API URL",
+    "APIKey": "API ključ",
+    "clearCache": "Očisti predmemoriju",
+    "clearCacheButton": "Očisti",
+    "restartApp": "Ponovno pokreni aplikaciju",
+    "restartAppButton": "Ponovno pokreni",
+    "about": "O aplikaciji",
+    "version": "Verzija"
+  },
+  "modal": {
+    "title": "Pretraži lige",
+    "search": "Pretraži"
+  },
+  "global": {
+    "loading": "Učitavanje...",
+    "error": "Pogreška"
+  },
+  "match": {
+    "details": {
+      "title": "Detalji",
+      "summary": {
+        "default": "Zadano",
+        "all": "Sve",
+        "events": {
+          "announcement": "Obavijest",
+          "throw_in": "Ubacivanje",
+          "free_kick": "Slobodan udarac",
+          "offside": "Zaleđe",
+          "goal_kick": "Udarac od vrata",
+          "injury": "Ozljeda",
+          "shot_saved": "Obrana golmana",
+          "shot_off_target": "Pokušaj izvan okvira",
+          "shot_off_target_outcome": {
+            "blocked": "Blokirano",
+            "wide": "Široko",
+            "high": "Visoko",
+            "miss": "Promašaj",
+            "post": "Stativa",
+            "bar": "Prečka"
+          },
+          "corner_kick": "Udarac iz kuta",
+          "substitution": "Zamjena",
+          "substitution_outcome": {
+            "in": "Unutra",
+            "out": "Vani"
+          },
+          "shot_on_target": "Pokušaj unutar okvira",
+          "yellow_card": "Žuti karton",
+          "red_card": "Crveni karton",
+          "score_change": "Promjena rezultata"
+        }
+      },
+      "information": {
+        "title": "Informacije o utakmici",
+        "status": "Status",
+        "statuses": {
+          "not_started": "Nije započelo",
+          "in_play": "U tijeku",
+          "ended": "Završeno",
+          "closed": "Završeno",
+          "postponed": "Odgođeno",
+          "cancelled": "Otkazano"
+        },
+        "stadium": "Stadion",
+        "date": "Datum",
+        "location": "Lokacija",
+        "attendance": "Posjećenost",
+        "referee": "Sudac",
+        "weather": "Vrijeme",
+        "round": "Kolo"
+      }
+    },
+    "lineup": {
+      "title": "Sastav",
+      "substitutions": "Zamjene",
+      "titles": {
+        "coach": "Trener",
+        "goalkeeper": "Golman",
+        "defender": "Branič",
+        "midfielder": "Vezni igrač",
+        "forward": "Napadač"
+      }
+    },
+    "standings": {
+      "title": "Tablica",
+      "forms": {
+        "default": "Zadano",
+        "form": "Forma"
+      },
+      "formKeys": {
+        "team": "Tim",
+        "form": "Forma"
+      }
+    },
+    "statistics": {
+      "title": "Statistike",
+      "stats": {
+        "ball_possession": "Posjed lopte",
+        "cards_given": "Dodijeljeni kartoni",
+        "corner_kicks": "Udarci iz kuta",
+        "fouls": "Prekršaji",
+        "free_kicks": "Slobodni udarci",
+        "goal_kicks": "Udarci od vrata",
+        "injuries": "Ozljede",
+        "offsides": "Zaleđa",
+        "shots_blocked": "Blokirani udarci",
+        "shots_off_target": "Pokušaji izvan okvira",
+        "shots_on_target": "Pokušaji unutar okvira",
+        "shots_saved": "Obrane",
+        "shots_total": "Ukupni udarci",
+        "substitutions": "Zamjene",
+        "throw_ins": "Ubacivanja",
+        "yellow_cards": "Žuti kartoni",
+        "red_cards": "Crveni kartoni"
+      }
+    },
+    "commentary": {
+      "title": "Komentar"
+    },
+    "matches": {
+      "title": "Utakmice",
+      "round": "Kolo"
+    }
+  },
+  "league": {
+    "details": {
+      "title": "Detalji",
+      "matches": "Utakmice",
+      "points": "Bodovi",
+      "pointsPerGoal": "Bodovi / Golovi",
+      "bestStrikers": "Najbolji strijelci"
+    },
+    "matches": {
+      "title": "Utakmice"
+    },
+    "standings": {
+      "title": "Tablica"
+    },
+    "statistics": {
+      "players": "Statistike igrača",
+      "teams": "Statistike timova",
+      "stats": {
+        "goals": "Golovi",
+        "assists": "Asistencije",
+        "shots": "Udarci",
+        "shotsOnTarget": "Udarci unutar okvira",
+        "shotsOffTarget": "Udarci izvan okvira",
+        "fouls": "Prekršaji",
+        "yellowCards": "Žuti kartoni",
+        "redCards": "Crveni kartoni",
+        "offsides": "Zaleđa",
+        "corners": "Udarci iz kuta",
+        "ballPossession": "Posjed lopte",
+        "passAccuracy": "Točnost dodavanja",
+        "tackles": "Startovi",
+        "interceptions": "Presijecanja",
+        "aerialsWon": "Osvojeni zračni dueli",
+        "clearances": "Izbijanja",
+        "offsidesWon": "Osvojena zaleđa",
+        "goalKicks": "Udarci od vrata",
+        "throwIns": "Ubacivanja",
+        "longBalls": "Duge lopte",
+        "throughBalls": "Proigravanja",
+        "crosses": "Centaršutevi",
+        "PTS/G": "Bodovi / Golovi",
+        "P/G": "B/G",
+        "points": "Bodovi",
+        "pobjeda": "Pobjede",
+        "gubitaka": "Porazi",
+        "razlika_golova": "Razlika golova",
+        "zabijeni_golovi": "Zabijeni golovi",
+        "primljeni_golovi": "Primljeni golovi",
+        "nerijeseno": "Neriješeno"
+      }
+    }
+  }
+}

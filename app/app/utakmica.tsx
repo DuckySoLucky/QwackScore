@@ -18,8 +18,10 @@ import CommentaryList from '@/components/Utakmnica/CommentaryList';
 import LoadingComponent from '@/components/global/LoadingComponent';
 import ErrorComponent from '@/components/global/ErrorComponents';
 import { CONFIG } from '@/API/storage';
+import { useTranslation } from 'react-i18next';
 
 export default function TabTwoScreen() {
+  const { t: translate } = useTranslation();
   const navigation = useNavigation();
   const route = useRoute();
   const params = route.params as { item: string };
@@ -68,11 +70,11 @@ export default function TabTwoScreen() {
   }
 
   if (error) {
-    return <ErrorComponent message={`Error: ${error.message}`} />;
+    return <ErrorComponent message={`${error.message}`} />;
   }
 
   if (!data) {
-    return <ErrorComponent message={`Error: Couldn't find data`} />;
+    return <ErrorComponent message={`Couldn't find data`} />;
   }
 
   const { timelineData, schedulesData, lineupData, standingsData, summaryData } = data;
@@ -97,27 +99,39 @@ export default function TabTwoScreen() {
       <View style={styles.scrollContainer}>
         <ScrollView horizontal style={styles.scroll}>
           <Pressable onPress={() => setSelectedView('details')}>
-            <Text style={selectedView === 'details' ? styles.selectedTitle : styles.title}>Detalji</Text>
+            <Text style={selectedView === 'details' ? styles.selectedTitle : styles.title}>
+              {translate('match.details.title')}
+            </Text>
           </Pressable>
 
           <Pressable onPress={() => setSelectedView('postave')}>
-            <Text style={selectedView === 'postave' ? styles.selectedTitle : styles.title}>Postave</Text>
+            <Text style={selectedView === 'postave' ? styles.selectedTitle : styles.title}>
+              {translate('match.lineup.title')}
+            </Text>
           </Pressable>
 
           <Pressable onPress={() => setSelectedView('poredak')}>
-            <Text style={selectedView === 'poredak' ? styles.selectedTitle : styles.title}>Poredak</Text>
+            <Text style={selectedView === 'poredak' ? styles.selectedTitle : styles.title}>
+              {translate('match.standings.title')}
+            </Text>
           </Pressable>
 
           <Pressable onPress={() => setSelectedView('stats')}>
-            <Text style={selectedView === 'stats' ? styles.selectedTitle : styles.title}>Statistika</Text>
+            <Text style={selectedView === 'stats' ? styles.selectedTitle : styles.title}>
+              {translate('match.statistics.title')}
+            </Text>
           </Pressable>
 
           <Pressable onPress={() => setSelectedView('commentary')}>
-            <Text style={selectedView === 'commentary' ? styles.selectedTitle : styles.title}>Commentary</Text>
+            <Text style={selectedView === 'commentary' ? styles.selectedTitle : styles.title}>
+              {translate('match.commentary.title')}
+            </Text>
           </Pressable>
 
           <Pressable onPress={() => setSelectedView('utakmice')}>
-            <Text style={selectedView === 'utakmice' ? styles.selectedTitle : styles.title}>Utakmice</Text>
+            <Text style={selectedView === 'utakmice' ? styles.selectedTitle : styles.title}>
+              {translate('match.matches.title')}
+            </Text>
           </Pressable>
         </ScrollView>
       </View>

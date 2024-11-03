@@ -1,12 +1,15 @@
 import { Text, View } from '@/components/Themed';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const LoadingComponent = () => {
+  const { t: translate } = useTranslation();
+
   return (
     <View style={styles.loadingContainer}>
       <ActivityIndicator size="large" color="#CA5509" />
-      <Text style={styles.loadingMessage}>{`Loading...`}</Text>
+      <Text style={styles.loadingMessage}>{translate('global.loading')}</Text>
     </View>
   );
 };

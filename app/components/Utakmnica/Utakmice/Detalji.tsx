@@ -16,6 +16,7 @@ import ShotOnTargetElement from './DetaljiElements/ShotOnTargetElement';
 import YellowCardElement from './DetaljiElements/YellowCardElement';
 import ScoreChangeElement from './DetaljiElements/ScoreChangeElement';
 import RedCardElement from './DetaljiElements/RedCardElement';
+import { useTranslation } from 'react-i18next';
 
 function titleCase(str: string) {
   return str
@@ -34,6 +35,8 @@ function formatName(name: string) {
 }
 
 export default function DetaljiList({ timelineData }: { timelineData: TimelineDataResponse }) {
+  const { t: translate } = useTranslation();
+
   const [selectedForm, setSelectedForm] = useState('default');
   function renderItem({ item, selectedForm }: { item: Timeline; selectedForm: string }) {
     switch (item.type) {
@@ -80,7 +83,6 @@ export default function DetaljiList({ timelineData }: { timelineData: TimelineDa
         return <ScoreChangeElement item={item} />;
 
       default:
-        console.log(item.type);
         return null;
     }
   }
@@ -94,14 +96,18 @@ export default function DetaljiList({ timelineData }: { timelineData: TimelineDa
               style={selectedForm === 'default' ? styles.selectedButtonElement : styles.buttonElement}
               onPress={() => setSelectedForm('default')}
             >
-              <Text style={selectedForm === 'default' ? styles.selectedButtonText : styles.buttonText}>Default</Text>
+              <Text style={selectedForm === 'default' ? styles.selectedButtonText : styles.buttonText}>
+                {translate('match.details.summary.default')}
+              </Text>
             </Pressable>
 
             <Pressable
               style={selectedForm === 'all' ? styles.selectedButtonElement : styles.buttonElement}
               onPress={() => setSelectedForm('all')}
             >
-              <Text style={selectedForm === 'all' ? styles.selectedButtonText : styles.buttonText}>All</Text>
+              <Text style={selectedForm === 'all' ? styles.selectedButtonText : styles.buttonText}>
+                {translate('match.details.summary.all')}
+              </Text>
             </Pressable>
           </View>
           <View style={styles.container}>
@@ -116,7 +122,7 @@ export default function DetaljiList({ timelineData }: { timelineData: TimelineDa
       ) : null}
 
       <View style={styles.matchStatsContainer}>
-        <Text style={styles.matchStatsHeader}>Match Information</Text>
+        <Text style={styles.matchStatsHeader}>{translate('match.details.information.title')}</Text>
 
         <View style={styles.matchStatsContainerv2}>
           <ScrollView>
@@ -138,9 +144,16 @@ export default function DetaljiList({ timelineData }: { timelineData: TimelineDa
                 formattedValue = `${formattedValue} / ${timelineData.information.capacity.toLocaleString()}`;
               }
 
+              if (key === 'status') {
+                formattedValue = translate(`match.details.information.statuses.${value}`);
+              }
+
               return (
                 <View style={{ flexDirection: 'row' }} key={key}>
-                  <Text style={styles.matchStatsText} key={key}>{`${titleCase(key)}`}</Text>
+                  <Text
+                    style={styles.matchStatsText}
+                    key={key}
+                  >{`${translate(`match.details.information.${key}`)}`}</Text>
                   <Text style={styles.matchStatsValue}>{formattedValue}</Text>
                 </View>
               );

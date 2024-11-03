@@ -4,18 +4,13 @@ import { StatsResponseStatsPlayer } from '@/API/types/stats';
 import ErrorComponent from '../global/ErrorComponents';
 import { StatsDataReponse } from '@/types/data';
 import React from 'react';
-
-function titleCase(str: string) {
-  return str
-    .toLowerCase()
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
+import { useTranslation } from 'react-i18next';
 
 const StatistikaIgraca = ({ statsData }: { statsData: StatsDataReponse }) => {
+  const { t: translate } = useTranslation();
+
   if (!statsData?.players || Object.keys(statsData?.players ?? {}).length === 0) {
-    return <ErrorComponent message="Error: Couldn't find player stats data" />;
+    return <ErrorComponent message="Couldn't find player stats data" />;
   }
 
   const renderPlayerStats = ({ item }: { item: [string, StatsResponseStatsPlayer[]] }) => {
@@ -26,7 +21,7 @@ const StatistikaIgraca = ({ statsData }: { statsData: StatsDataReponse }) => {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.roundText}>{titleCase(key)}</Text>
+        <Text style={styles.roundText}>{translate(`league.statistics.stats.${key}`)}</Text>
         {data.slice(0, 5).map((item, index) => (
           <PlayerStatisticColumnElement key={index} item={item} />
         ))}

@@ -38,11 +38,11 @@ export default function TabOneScreen() {
   }
 
   if (error) {
-    return <ErrorComponent message={`Error: ${error.message}`} />;
+    return <ErrorComponent message={`${error.message}`} />;
   }
 
   if (!schedulesData) {
-    return <ErrorComponent message={`Error: Couldn't find data`} />;
+    return <ErrorComponent message={`Couldn't find data`} />;
   }
 
   return (

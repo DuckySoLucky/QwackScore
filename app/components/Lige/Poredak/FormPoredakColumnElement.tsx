@@ -2,10 +2,12 @@ import ErrorComponent from '@/components/global/ErrorComponents';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { StandignsResponse } from '@/API/types/standings';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function FormPoredakColumnElement({ standingsData }: { standingsData: StandignsResponse }) {
+  const { t: translate } = useTranslation();
   if (!standingsData) {
-    return <ErrorComponent message="Error: Couldn't find standings data" />;
+    return <ErrorComponent message="Couldn't find standings data" />;
   }
 
   return (
@@ -13,10 +15,10 @@ export default function FormPoredakColumnElement({ standingsData }: { standingsD
       <View style={styles.row}>
         <View style={styles.leftContainer}>
           <Text style={styles.topText}>#</Text>
-          <Text style={styles.teamNameText}>Tim</Text>
+          <Text style={styles.teamNameText}>{translate(`match.standings.formKeys.team`)}</Text>
         </View>
         <View style={styles.rightContainer}>
-          <Text style={styles.topText}>FORM</Text>
+          <Text style={styles.topText}>{translate(`match.standings.formKeys.form`)}</Text>
         </View>
       </View>
 

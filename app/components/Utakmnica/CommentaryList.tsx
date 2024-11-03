@@ -8,7 +8,7 @@ export default function CommentaryList({ timelineData }: { timelineData: Timelin
   const renderItem = useCallback(
     ({ item }: { item: TimelineResponseCommentary }) => {
       if (!timelineData) {
-        return <ErrorComponent message="Error: Couldn't find commentary data" />;
+        return <ErrorComponent message="Couldn't find commentary data" />;
       }
 
       const index = timelineData.commentary.indexOf(item);
@@ -39,7 +39,7 @@ export default function CommentaryList({ timelineData }: { timelineData: Timelin
   const memoizedRenderItem = useMemo(() => renderItem, [renderItem]);
 
   if (!timelineData || !timelineData?.commentary || !timelineData?.commentary?.length) {
-    return <ErrorComponent message="Error: Couldn't find commentary data" />;
+    return <ErrorComponent message="Couldn't find commentary data" />;
   }
 
   return (

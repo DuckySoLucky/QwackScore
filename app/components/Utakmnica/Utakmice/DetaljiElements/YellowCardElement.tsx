@@ -2,13 +2,17 @@ import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function YellowCardElement({ item }: { item: Timeline }) {
+  const { t: translate } = useTranslation();
+
+  
   if (item.position === 'right') {
     return (
       <View style={styles.outerContainerRight}>
         <View style={styles.column}>
-          <Text style={styles.mainTextRight}>Yellow Card</Text>
+          <Text style={styles.mainTextRight}>{translate(`match.details.summary.events.${item.type}`)}</Text>
           <Text style={styles.secondaryTextRight}>{item.player}</Text>
         </View>
 
@@ -32,7 +36,7 @@ export default function YellowCardElement({ item }: { item: Timeline }) {
       <View style={styles.seperatorLeft} />
 
       <View style={styles.columnLeft}>
-        <Text style={styles.mainTextLeft}>Yellow Card</Text>
+        <Text style={styles.mainTextLeft}>{translate(`match.details.summary.events.${item.type}`)}</Text>
         <Text style={styles.secondaryTextLeft}>{item.player}</Text>
       </View>
     </View>

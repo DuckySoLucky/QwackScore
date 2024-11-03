@@ -1,9 +1,15 @@
 import { SchedulesMatch } from '@/API/types/schedules';
 import { Link } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 
 export default function UtakmiceColumnElement({ item }: { item: SchedulesMatch }) {
+  const { t: translate } = useTranslation();
+
+  const replacePlaceholders = (text: string) => {
+    return text.replace(/{(.*?)}/g, (_, key) => translate(`index.timeFormat.${key}`));
+  };
   const getClubStyle = (clubName: string) =>
     item.winner === clubName ? { ...styles.clubName, color: '#C0C0C0' } : styles.clubName;
 
@@ -11,7 +17,7 @@ export default function UtakmiceColumnElement({ item }: { item: SchedulesMatch }
     <Link href={{ pathname: '/utakmica', params: { item: JSON.stringify(item) } }} asChild>
       <Pressable>
         <View style={styles.gameDetailsContainer}>
-          <Text style={styles.dateText}>{item.startTimeFormatted}</Text>
+          <Text style={styles.dateText}>{replacePlaceholders(item.startTimeFormatted)}</Text>
           <View style={styles.seperator} />
 
           <View>

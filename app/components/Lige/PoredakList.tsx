@@ -4,11 +4,13 @@ import FormPoredakColumnElement from './Poredak/FormPoredakColumnElement';
 import { StandignsResponse } from '@/API/types/standings';
 import ErrorComponent from '../global/ErrorComponents';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function PoredakList({ standingsData }: { standingsData: StandignsResponse }) {
   const [selectedForm, setSelectedForm] = useState('default');
+  const { t: translate } = useTranslation();
   if (!standingsData) {
-    return <ErrorComponent message="Error: Couldn't find standings data" />;
+    return <ErrorComponent message="Couldn't find standings data" />;
   }
 
   return (
@@ -18,14 +20,18 @@ export default function PoredakList({ standingsData }: { standingsData: Standign
           style={selectedForm === 'default' ? styles.selectedButtonElement : styles.buttonElement}
           onPress={() => setSelectedForm('default')}
         >
-          <Text style={selectedForm === 'default' ? styles.selectedButtonText : styles.buttonText}>Default</Text>
+          <Text style={selectedForm === 'default' ? styles.selectedButtonText : styles.buttonText}>
+            {translate(`match.standings.forms.default`)}
+          </Text>
         </Pressable>
 
         <Pressable
           style={selectedForm === 'forma' ? styles.selectedButtonElement : styles.buttonElement}
           onPress={() => setSelectedForm('forma')}
         >
-          <Text style={selectedForm === 'forma' ? styles.selectedButtonText : styles.buttonText}>Forma</Text>
+          <Text style={selectedForm === 'forma' ? styles.selectedButtonText : styles.buttonText}>
+            {translate(`match.standings.forms.form`)}
+          </Text>
         </Pressable>
       </View>
 

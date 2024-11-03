@@ -8,8 +8,10 @@ import LoadingComponent from '@/components/global/LoadingComponent';
 import ErrorComponent from '@/components/global/ErrorComponents';
 import { CONFIG } from '@/API/storage';
 import { getBackgroundColorAsync } from 'expo-system-ui';
+import { useTranslation } from 'react-i18next';
 
 export default function ModalScreen() {
+  const { t: translate } = useTranslation();
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState<null | SeasonsResponse>(null);
@@ -29,7 +31,7 @@ export default function ModalScreen() {
     };
 
     navigation.setOptions({
-      headerTitle: 'Search for Leagues',
+      headerTitle: translate('modal.title'),
       headerStyle: { display: 'none', height: 0, backgroundColor: '#10181E' },
     });
 
@@ -41,11 +43,11 @@ export default function ModalScreen() {
   }
 
   if (error) {
-    return <ErrorComponent message={`Error: ${error.message}`} />;
+    return <ErrorComponent message={`${error.message}`} />;
   }
 
   if (!data) {
-    return <ErrorComponent message={`Error: Couldn't find data`} />;
+    return <ErrorComponent message={`Couldn't find data`} />;
   }
 
   const seasons = data.seasons;
@@ -58,7 +60,7 @@ export default function ModalScreen() {
       <View style={styles.container}>
         <TextInput
           style={styles.searchBar}
-          placeholder="Search leagues..."
+          placeholder={translate('modal.search')}
           placeholderTextColor={'#ccc'}
           value={searchQuery}
           onChangeText={setSearchQuery}

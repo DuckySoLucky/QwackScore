@@ -56,6 +56,12 @@ importers:
       expo-web-browser:
         specifier: ~13.0.3
         version: 13.0.3(expo@51.0.38(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0)))
+      i18next:
+        specifier: ^23.16.4
+        version: 23.16.4
+      intl-pluralrules:
+        specifier: ^2.0.1
+        version: 2.0.1
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -65,6 +71,9 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      react-i18next:
+        specifier: ^15.1.0
+        version: 15.1.0(i18next@23.16.4)(react-dom@18.2.0(react@18.2.0))(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
       react-native:
         specifier: 0.74.5
         version: 0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0)
@@ -108,6 +117,9 @@ importers:
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.1)
+      eslint-import-resolver-alias:
+        specifier: ^1.1.2
+        version: 1.1.2(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1))
       eslint-plugin-prettier:
         specifier: ^5.2.1
         version: 5.2.1(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)
@@ -2454,6 +2466,12 @@ packages:
     peerDependencies:
       eslint: ^6.0.0
 
+  eslint-import-resolver-alias@1.1.2:
+    resolution: {integrity: sha512-WdviM1Eu834zsfjHtcGHtGfcu+F30Od3V7I9Fi57uhBEwPkjDcii7/yW8jAT+gOhn4P/vOxxNAXbFAKsrrc15w==}
+    engines: {node: '>= 4'}
+    peerDependencies:
+      eslint-plugin-import: '>=1.4.0'
+
   eslint-import-resolver-node@0.3.9:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
 
@@ -3047,6 +3065,9 @@ packages:
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
 
+  html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+
   http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
     engines: {node: '>= 0.8'}
@@ -3065,6 +3086,9 @@ packages:
 
   hyphenate-style-name@1.1.0:
     resolution: {integrity: sha512-WDC/ui2VVRrz3jOVi+XtjqkDjiVjTtFaAGiW37k6b+ohyQ5wYDOGkvCZa8+H0nx3gyvv0+BST9xuOgIyGQ00gw==}
+
+  i18next@23.16.4:
+    resolution: {integrity: sha512-9NIYBVy9cs4wIqzurf7nLXPyf3R78xYbxExVqHLK9od3038rjpyOEzW+XB130kZ1N4PZ9inTtJ471CRJ4Ituyg==}
 
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
@@ -3123,6 +3147,9 @@ packages:
   internal-slot@1.0.7:
     resolution: {integrity: sha512-NGnrKwXzSms2qUUih/ILZ5JBqNTSa1+ZmP6flaIp6KmSElgE9qdndzS3cqjrDovwFdmwsGsLdeFgB6suw+1e9g==}
     engines: {node: '>= 0.4'}
+
+  intl-pluralrules@2.0.1:
+    resolution: {integrity: sha512-astxTLzIdXPeN0K9Rumi6LfMpm3rvNO0iJE+h/k8Kr/is+wPbRe4ikyDjlLr6VTh/mEfNv8RjN+gu3KwDiuhqg==}
 
   invariant@2.2.4:
     resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
@@ -4367,6 +4394,19 @@ packages:
     peerDependencies:
       react: '>=17.0.0'
 
+  react-i18next@15.1.0:
+    resolution: {integrity: sha512-zj3nJynMnZsy2gPZiOTC7XctCY5eQGqT3tcKMmfJWC9FMvgd+960w/adq61j8iPzpwmsXejqID9qC3Mqu1Xu2Q==}
+    peerDependencies:
+      i18next: '>= 23.2.3'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -5212,6 +5252,10 @@ packages:
 
   vlq@1.0.1:
     resolution: {integrity: sha512-gQpnTgkubC6hQgdIcRdYGDSDc+SaujOdyesZQMv6JlfQee/9Mp0Qhnys6WxDWvQnL5WZdT7o2Ul187aSt0Rq+w==}
+
+  void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
 
   w3c-xmlserializer@4.0.0:
     resolution: {integrity: sha512-d+BFHzbiCx6zGfz0HyQ6Rg69w9k19nviJspaj4yNscGjrHu94sVP+aRm75yEbCh+r2/yR+7q6hux9LVtbuTGBw==}
@@ -8719,6 +8763,10 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
+  eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)):
+    dependencies:
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+
   eslint-import-resolver-node@0.3.9:
     dependencies:
       debug: 3.2.7
@@ -9479,6 +9527,10 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
+  html-parse-stringify@3.0.1:
+    dependencies:
+      void-elements: 3.1.0
+
   http-errors@2.0.0:
     dependencies:
       depd: 2.0.0
@@ -9505,6 +9557,10 @@ snapshots:
   human-signals@2.1.0: {}
 
   hyphenate-style-name@1.1.0: {}
+
+  i18next@23.16.4:
+    dependencies:
+      '@babel/runtime': 7.26.0
 
   iconv-lite@0.6.3:
     dependencies:
@@ -9561,6 +9617,8 @@ snapshots:
       es-errors: 1.3.0
       hasown: 2.0.2
       side-channel: 1.0.6
+
+  intl-pluralrules@2.0.1: {}
 
   invariant@2.2.4:
     dependencies:
@@ -11099,6 +11157,16 @@ snapshots:
     dependencies:
       react: 18.2.0
 
+  react-i18next@15.1.0(i18next@23.16.4)(react-dom@18.2.0(react@18.2.0))(react-native@0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0):
+    dependencies:
+      '@babel/runtime': 7.26.0
+      html-parse-stringify: 3.0.1
+      i18next: 23.16.4
+      react: 18.2.0
+    optionalDependencies:
+      react-dom: 18.2.0(react@18.2.0)
+      react-native: 0.74.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.2.79)(react@18.2.0)
+
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
@@ -12043,6 +12111,8 @@ snapshots:
   vary@1.1.2: {}
 
   vlq@1.0.1: {}
+
+  void-elements@3.1.0: {}
 
   w3c-xmlserializer@4.0.0:
     dependencies:

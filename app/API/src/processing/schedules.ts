@@ -5,10 +5,10 @@ import moment from 'moment';
 
 function formatTime(time) {
   return moment(time).calendar(null, {
-    sameDay: '[Danas] HH:mm',
-    nextDay: '[Sutra] HH:mm',
+    sameDay: `[{today}] HH:mm`,
+    nextDay: '[{tomorrow}] HH:mm',
     nextWeek: 'DD.MM.YY HH:mm',
-    lastDay: '[Jucer] HH:mm',
+    lastDay: '[{yesterday}] HH:mm',
     lastWeek: 'DD.MM.YY HH:mm',
     sameElse: 'DD.MM.YY HH:mm',
   });

@@ -11,11 +11,15 @@ import { fetchSeasons } from '@/API/src/routes/seasons';
 import { SeasonsResponse } from '@/API/types/seasons';
 import { clearCache } from '@/API/src/handler';
 import { CONFIG } from '@/API/storage';
+import { useTranslation } from 'react-i18next';
+import i18n from '@/API/translation';
 
 export default function TabTwoScreen() {
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
-  const [selectedLeague, setSelectedLeague] = useState<string | null>(null);
-  const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
+  const { t: translate } = useTranslation();
+
+  const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>(undefined);
+  const [selectedLeague, setSelectedLeague] = useState<string | undefined>(undefined);
+  const [selectedTheme, setSelectedTheme] = useState<string | undefined>(undefined);
   const [isDeveloperMode, setIsDeveloperMode] = useState<boolean>(false);
   const [useLocalAPI, setUseLocalAPI] = useState<boolean>(false);
   const [localAPI, setLocalAPI] = useState('');
@@ -67,6 +71,7 @@ export default function TabTwoScreen() {
     setSelectedLanguage(language);
     CONFIG.set('language', language);
     ToastAndroid.show('Language changed', ToastAndroid.SHORT);
+    i18n.changeLanguage(language);
   };
 
   const changeSelectedLeague = (league: string) => {
@@ -123,33 +128,33 @@ export default function TabTwoScreen() {
   }
 
   if (error) {
-    return <ErrorComponent message={`Error: ${error.message}`} />;
+    return <ErrorComponent message={`${error.message}`} />;
   }
 
   if (!data) {
-    return <ErrorComponent message={`Error: Couldn't find data`} />;
+    return <ErrorComponent message={`Couldn't find data`} />;
   }
 
   const seasons = data.seasons;
   return (
     <View style={{ backgroundColor: '#161e28', flex: 1 }}>
       <View style={styles.container}>
-        <Text style={styles.defaultTitle}>Settings</Text>
+        <Text style={styles.defaultTitle}>{translate('three.settings')}</Text>
 
         <View style={styles.row}>
-          <Text style={styles.title}>Language:</Text>
+          <Text style={styles.title}>{translate('three.language')}:</Text>
           <Picker
             selectedValue={selectedLanguage}
             style={styles.picker}
             onValueChange={(itemValue: string) => changeSelectedLanguage(itemValue)}
           >
-            <Picker.Item label="English" value="en" />
-            <Picker.Item label="Croatian" value="hr" />
+            <Picker.Item label={translate('three.languages.en')} value="en" />
+            <Picker.Item label={translate('three.languages.hr')} value="hr" />
           </Picker>
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.title}>Default League:</Text>
+          <Text style={styles.title}>{translate('three.defaultLeague')}:</Text>
           <Picker
             selectedValue={selectedLeague}
             style={styles.picker}
@@ -162,22 +167,22 @@ export default function TabTwoScreen() {
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.title}>Theme:</Text>
+          <Text style={styles.title}>{translate('three.theme')}:</Text>
           <Picker
             selectedValue={selectedTheme}
             style={styles.picker}
             onValueChange={(itemValue: string) => changeSelectedTheme(itemValue)}
           >
-            <Picker.Item label="Dark" value="dark" />
-            <Picker.Item label="Light" value="light" />
+            <Picker.Item label={translate('three.themes.dark')} value="dark" />
+            <Picker.Item label={translate('three.themes.light')} value="light" />
           </Picker>
         </View>
       </View>
 
       <View style={styles.container}>
-        <Text style={styles.defaultTitle}>Developer Settings</Text>
+        <Text style={styles.defaultTitle}>{translate('three.developerSettings')}</Text>
         <View style={styles.row}>
-          <Text style={styles.title}>Developer Mode:</Text>
+          <Text style={styles.title}>{translate('three.developerMode')}e:</Text>
           <Switch
             value={isDeveloperMode}
             onValueChange={toggleDeveloperMode}
@@ -187,7 +192,7 @@ export default function TabTwoScreen() {
           />
         </View>
         <View style={styles.row}>
-          <Text style={styles.title}>Local API Mode:</Text>
+          <Text style={styles.title}>{translate('three.localAPIMode')}:</Text>
           <Switch
             value={useLocalAPI}
             onValueChange={switchAPIMode}
@@ -198,33 +203,33 @@ export default function TabTwoScreen() {
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.title}>API URL:</Text>
+          <Text style={styles.title}>{translate('three.APIUrl')}:</Text>
           <TextInput value={localAPI} onChangeText={changeLocalAPI} style={styles.input} />
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.title}>API Key:</Text>
+          <Text style={styles.title}>{translate('three.APIKey')}:</Text>
           <TextInput value={apiKey} onChangeText={changeApiKey} secureTextEntry={true} style={styles.input} />
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.title}>Clear Cache:</Text>
+          <Text style={styles.title}>{translate('three.clearCache')}:</Text>
           <Pressable onPress={clearCacheButton} style={styles.clearCacheButton}>
-            <Text style={styles.cacheText}>Clear Cache</Text>
+            <Text style={styles.cacheText}>{translate('three.clearCacheButton')}</Text>
           </Pressable>
         </View>
 
         <View style={styles.row}>
-          <Text style={styles.title}>Restart App:</Text>
+          <Text style={styles.title}>{translate('three.restartApp')}:</Text>
           <Pressable onPress={() => reloadApp()} style={styles.clearCacheButton}>
-            <Text style={styles.cacheText}>Restart App</Text>
+            <Text style={styles.cacheText}>{translate('three.restartAppButton')}</Text>
           </Pressable>
         </View>
       </View>
 
       <View style={styles.container}>
-        <Text style={styles.defaultTitle}>About</Text>
-        <Text style={styles.aboutText}>Version: 1.0.0</Text>
+        <Text style={styles.defaultTitle}>{translate('three.about')}</Text>
+        <Text style={styles.aboutText}>{translate('three.version')}: 1.0.0</Text>
       </View>
     </View>
   );

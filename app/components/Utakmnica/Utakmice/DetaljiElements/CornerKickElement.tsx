@@ -1,13 +1,16 @@
 import { StyleSheet, Image } from 'react-native';
-import React from 'react';
+import React, { useTransition } from 'react';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
+import { useTranslation } from 'react-i18next';
 
 export default function CornerKickElement({ item }: { item: Timeline }) {
+  const { t: translate } = useTranslation();
+
   if (item.position === 'right') {
     return (
       <View style={styles.outerContainerRight}>
-        <Text style={styles.mainTextRight}>Corner Kick</Text>
+        <Text style={styles.mainTextRight}>{translate(`match.details.summary.events.${item.type}`)}</Text>
 
         <View style={styles.seperatorRight} />
 
@@ -28,7 +31,7 @@ export default function CornerKickElement({ item }: { item: Timeline }) {
 
       <View style={styles.seperatorLeft} />
 
-      <Text style={styles.mainTextLeft}>Corner Kick</Text>
+      <Text style={styles.mainTextLeft}>{translate(`match.details.summary.events.${item.type}`)}</Text>
     </View>
   );
 }

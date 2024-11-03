@@ -2,8 +2,11 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { Summary } from '@/types/data';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function ProgressBarElement({ item, percentage }: { item: Summary; percentage: boolean }) {
+  const { t: translate } = useTranslation();
+
   const total = item.home + item.away;
   const leftProgress = item.home / total;
   const rightProgress = item.away / total;
@@ -13,7 +16,7 @@ export default function ProgressBarElement({ item, percentage }: { item: Summary
     <View style={styles.bottomContainer}>
       <View style={styles.row}>
         <Text style={styles.statValue}>{percentage ? `${item.home}%` : item.home}</Text>
-        <Text style={styles.statName}>{item.name}</Text>
+        <Text style={styles.statName}>{translate(`match.statistics.stats.${item.id}`)}</Text>
         <Text style={styles.statValue}>{percentage ? `${item.away}%` : item.away}</Text>
       </View>
 

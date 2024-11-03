@@ -16,8 +16,10 @@ import ErrorComponent from '@/components/global/ErrorComponents';
 import { fetchLigeDataResponse } from '@/API/types';
 import { fetchLigeData } from '@/API';
 import { CONFIG } from '@/API/storage';
+import { useTranslation } from 'react-i18next';
 
 export default function TabTwoScreen() {
+  const { t: translate } = useTranslation();
   const route = useRoute();
   const navigation = useNavigation();
   const [selectedView, setSelectedView] = useState('details');
@@ -50,7 +52,7 @@ export default function TabTwoScreen() {
   }, [params.id]);
 
   if (!params?.id || !params?.title) {
-    return <ErrorComponent message="Error: Couldn't find parameters" />;
+    return <ErrorComponent message="Couldn't find parameters" />;
   }
 
   if (isLoading) {
@@ -58,11 +60,11 @@ export default function TabTwoScreen() {
   }
 
   if (error) {
-    return <ErrorComponent message={`Error: ${error.message}`} />;
+    return <ErrorComponent message={`${error.message}`} />;
   }
 
   if (!data) {
-    return <ErrorComponent message={`Error: Couldn't find data`} />;
+    return <ErrorComponent message={`Couldn't find data`} />;
   }
 
   const { schedulesData, statsData, seasonData, standingsData } = data;
@@ -73,23 +75,33 @@ export default function TabTwoScreen() {
       <View style={styles.container}>
         <ScrollView horizontal style={styles.scroll}>
           <Pressable onPress={() => setSelectedView('details')}>
-            <Text style={selectedView === 'details' ? styles.selectedTitle : styles.title}>Detalji</Text>
+            <Text style={selectedView === 'details' ? styles.selectedTitle : styles.title}>
+              {translate('league.details.title')}
+            </Text>
           </Pressable>
 
           <Pressable onPress={() => setSelectedView('utakmice')}>
-            <Text style={selectedView === 'utakmice' ? styles.selectedTitle : styles.title}>Utakmice</Text>
+            <Text style={selectedView === 'utakmice' ? styles.selectedTitle : styles.title}>
+              {translate('league.matches.title')}
+            </Text>
           </Pressable>
 
           <Pressable onPress={() => setSelectedView('poredak')}>
-            <Text style={selectedView === 'poredak' ? styles.selectedTitle : styles.title}>Poredak</Text>
+            <Text style={selectedView === 'poredak' ? styles.selectedTitle : styles.title}>
+              {translate('league.standings.title')}
+            </Text>
           </Pressable>
 
           <Pressable onPress={() => setSelectedView('player_stats')}>
-            <Text style={selectedView === 'player_stats' ? styles.selectedTitle : styles.title}>Statistika Igraca</Text>
+            <Text style={selectedView === 'player_stats' ? styles.selectedTitle : styles.title}>
+              {translate('league.statistics.players')}
+            </Text>
           </Pressable>
 
           <Pressable onPress={() => setSelectedView('team_stats')}>
-            <Text style={selectedView === 'team_stats' ? styles.selectedTitle : styles.title}>Statistika Timova</Text>
+            <Text style={selectedView === 'team_stats' ? styles.selectedTitle : styles.title}>
+              {translate('league.statistics.teams')}
+            </Text>
           </Pressable>
         </ScrollView>
       </View>
@@ -107,8 +119,8 @@ export default function TabTwoScreen() {
 }
 
 const VIEW_COMPONENTS = {
-  utakmice: UtakmiceList,
   details: DetaljiList,
+  utakmice: UtakmiceList,
   poredak: PoredakList,
   player_stats: StatistikaIgraca,
   team_stats: StatistikaTimova,

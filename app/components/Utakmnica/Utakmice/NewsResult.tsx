@@ -3,17 +3,24 @@ import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { Link } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 function NewsResult({ data }: { data: SchedulesMatch }) {
+  const { t: translate } = useTranslation();
+
   if (!data || !data.competitors || data.competitors.length !== 2) {
     return null;
   }
+
+  const replacePlaceholders = (text: string) => {
+    return text.replace(/{(.*?)}/g, (_, key) => translate(`index.timeFormat.${key}`));
+  };
 
   const firstImage = data.competitors[0].image;
   const secondImage = data.competitors[1].image;
 
   const text = ['not_started', 'postponed'].includes(data.status)
-    ? data.startTimeFormatted.split(' ').join('\n')
+    ? replacePlaceholders(data.startTimeFormatted.split(' ').join('\n'))
     : `${data.competitors[0].score} - ${data.competitors[1].score}`;
 
   return (

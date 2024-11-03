@@ -2,12 +2,15 @@ import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function ThrowInElement({ item }: { item: Timeline }) {
+  const { t: translate } = useTranslation();
+
   if (item.position === 'right') {
     return (
       <View style={styles.outerContainerRight}>
-        <Text style={styles.mainTextRight}>Throw In</Text>
+        <Text style={styles.mainTextRight}>{translate(`match.details.summary.events.${item.type}`)}</Text>
 
         <View style={styles.seperatorRight} />
 
@@ -28,7 +31,7 @@ export default function ThrowInElement({ item }: { item: Timeline }) {
 
       <View style={styles.seperatorLeft} />
 
-      <Text style={styles.mainTextLeft}>Throw In</Text>
+      <Text style={styles.mainTextLeft}>{translate(`match.details.summary.events.${item.type}`)}</Text>
     </View>
   );
 }

@@ -4,8 +4,10 @@ import { SchedulesResponse } from '@/API/types/schedules';
 import ErrorComponent from '../global/ErrorComponents';
 import React, { useCallback } from 'react';
 import { Schedule } from '@/types/data';
+import { useTranslation } from 'react-i18next';
 
 export default function UtakmiceList({ schedulesData }: { schedulesData: SchedulesResponse }) {
+  const { t: translate } = useTranslation();
   const renderItem = useCallback((item: Schedule) => {
     return <UtakmiceColumnElement item={item} key={`${item.id}-${Math.random()}`} />;
   }, []);
@@ -25,7 +27,7 @@ export default function UtakmiceList({ schedulesData }: { schedulesData: Schedul
         keyExtractor={(item) => item}
         renderItem={({ item }) => (
           <View>
-            <Text style={styles.roundText}>Runda {item}</Text>
+            <Text style={styles.roundText}>{`${translate(`match.matches.round`)} ${item}`}</Text>
             {Object.values(schedulesData.schedules[item]).map((value) => renderItem(value))}
           </View>
         )}

@@ -4,11 +4,13 @@ import SubstitutionElement from './Postave/SubstitutionElement';
 import SoccerFieldElement from './Postave/SoccerFieldElement';
 import { LineupsDataResponse } from '@/types/data';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function PostaveList({ lineupsData }: { lineupsData: LineupsDataResponse }) {
   const [selectedForm, setSelectedForm] = useState<'default' | 'all'>('default');
+  const { t: translate } = useTranslation();
   if (!lineupsData) {
-    return <ErrorComponent message="Error: Couldn't find lineup data" />;
+    return <ErrorComponent message="Couldn't find lineup data" />;
   }
 
   const totalPlayers =
@@ -16,7 +18,7 @@ export default function PostaveList({ lineupsData }: { lineupsData: LineupsDataR
     Object.values(lineupsData.home).reduce((acc, curr) => acc + curr.length, 0);
 
   if (totalPlayers === 0) {
-    return <ErrorComponent message="Error: Couldn't find lineup data" />;
+    return <ErrorComponent message="Couldn't find lineup data" />;
   }
 
   return (
@@ -59,7 +61,7 @@ export default function PostaveList({ lineupsData }: { lineupsData: LineupsDataR
         />
 
         <View style={styles.substitutionContainer}>
-          <Text style={styles.substitutionText}>Substitutions</Text>
+          <Text style={styles.substitutionText}>{translate(`match.lineup.substitutions`)}</Text>
 
           {(selectedForm === 'default' ? lineupsData.away.substitutions : lineupsData.home.substitutions).map(
             (player) => {
