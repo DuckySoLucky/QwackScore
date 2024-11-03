@@ -84,7 +84,7 @@ export default function PostaveList({ lineupsData }: { lineupsData: LineupsDataR
 const styles = StyleSheet.create({
   outerContainer: {
     backgroundColor: '#161e28',
-    height: '100%',
+    marginBottom: 60,
   },
   buttonContainer: {
     flexDirection: 'row',
