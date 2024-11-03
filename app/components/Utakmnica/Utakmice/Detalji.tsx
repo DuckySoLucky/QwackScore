@@ -34,6 +34,27 @@ function formatName(name: string) {
     .join(' ');
 }
 
+function formatValue(timelineData: TimelineDataResponse, key: string, translate: (key: string) => string) {
+  const value = timelineData.information[key];
+
+  let formattedValue = typeof value === 'string' ? titleCase(value) : value;
+  if (typeof value === 'number') {
+    formattedValue = value.toLocaleString();
+  } else if (typeof value === 'object') {
+    formattedValue = (value as { name: string }[]).map((v: { name: string }) => formatName(v.name)).join(', ');
+  }
+
+  if (key === 'attendance') {
+    formattedValue = `${formattedValue} / ${timelineData.information.capacity.toLocaleString()}`;
+  }
+
+  if (key === 'status') {
+    formattedValue = translate(`match.details.information.statuses.${value}`);
+  }
+
+  return formattedValue;
+}
+
 export default function DetaljiList({ timelineData }: { timelineData: TimelineDataResponse }) {
   const { t: translate } = useTranslation();
 
@@ -91,6 +112,9 @@ export default function DetaljiList({ timelineData }: { timelineData: TimelineDa
     <View style={styles.outerContainer}>
       {timelineData.timeline.length ? (
         <>
+          {
+            // ? top buttons
+          }
           <View style={styles.buttonContainer}>
             <Pressable
               style={selectedForm === 'default' ? styles.selectedButtonElement : styles.buttonElement}
@@ -110,57 +134,45 @@ export default function DetaljiList({ timelineData }: { timelineData: TimelineDa
               </Text>
             </Pressable>
           </View>
-          <View style={styles.container}>
-            <FlatList
-              data={timelineData.timeline}
-              keyExtractor={(item) => `${item.type}-${Math.random()}`}
-              renderItem={({ item }) => renderItem({ item, selectedForm })}
-              style={styles.flatList}
-            />
+
+          {
+            // ? timeline
+          }
+          <View style={styles.flexContainer}>
+            <View style={styles.container}>
+              <FlatList
+                data={timelineData.timeline}
+                keyExtractor={(item) => `${item.type}-${Math.random()}`}
+                renderItem={({ item }) => renderItem({ item, selectedForm })}
+              />
+            </View>
+
+            <ScrollView contentContainerStyle={styles.scrollViewContent}>
+              <View style={styles.matchStatsContainer}>
+                <Text style={styles.matchStatsHeader}>{translate('match.details.information.title')}</Text>
+                <View style={styles.matchStatsContainerv2}>
+                  {Object.keys(timelineData.information).map((key) => {
+                    if (['dateTop', 'timeTop'].includes(key) || key === 'capacity') {
+                      return null;
+                    }
+
+                    const formattedValue = formatValue(timelineData, key, translate) as string;
+                    return (
+                      <View style={{ flexDirection: 'row' }} key={key}>
+                        <Text
+                          style={styles.matchStatsText}
+                          key={key}
+                        >{`${translate(`match.details.information.${key}`)}`}</Text>
+                        <Text style={styles.matchStatsValue}>{formattedValue}</Text>
+                      </View>
+                    );
+                  })}
+                </View>
+              </View>
+            </ScrollView>
           </View>
         </>
       ) : null}
-
-      <View style={styles.matchStatsContainer}>
-        <Text style={styles.matchStatsHeader}>{translate('match.details.information.title')}</Text>
-
-        <View style={styles.matchStatsContainerv2}>
-          <ScrollView>
-            {Object.keys(timelineData.information).map((key) => {
-              if (['dateTop', 'timeTop'].includes(key) || key === 'capacity') {
-                return null;
-              }
-
-              const value = timelineData.information[key];
-
-              let formattedValue = typeof value === 'string' ? titleCase(value) : value;
-              if (typeof value === 'number') {
-                formattedValue = value.toLocaleString();
-              } else if (typeof value === 'object') {
-                formattedValue = value.map((v: { name: string }) => formatName(v.name)).join(', ');
-              }
-
-              if (key === 'attendance') {
-                formattedValue = `${formattedValue} / ${timelineData.information.capacity.toLocaleString()}`;
-              }
-
-              if (key === 'status') {
-                formattedValue = translate(`match.details.information.statuses.${value}`);
-              }
-
-              return (
-                <View style={{ flexDirection: 'row' }} key={key}>
-                  <Text
-                    style={styles.matchStatsText}
-                    key={key}
-                  >{`${translate(`match.details.information.${key}`)}`}</Text>
-                  <Text style={styles.matchStatsValue}>{formattedValue}</Text>
-                </View>
-              );
-            })}
-          </ScrollView>
-        </View>
-      </View>
     </View>
   );
 }
@@ -173,6 +185,10 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     marginBottom: 16,
   },
+  flexContainer: {
+    flexDirection: 'column',
+    flex: 1,
+  },
   container: {
     backgroundColor: '#10181E',
     marginLeft: 6,
@@ -182,9 +198,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#00000',
+    flex: 3,
   },
-  flatList: {
-    height: 400,
+  scrollViewContent: {
+    flexGrow: 1,
+    flexDirection: 'column',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -251,12 +269,10 @@ const styles = StyleSheet.create({
     color: '#686868',
     fontSize: 14,
     marginRight: 6,
-    marginBottom: 6,
     flex: 1,
     textAlign: 'right',
   },
   matchStatsContainerv2: {
-    height: 160,
-    paddingBottom: 12,
+    paddingBottom: 6,
   },
 });
