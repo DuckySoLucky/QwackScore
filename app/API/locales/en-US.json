@@ -7,6 +7,9 @@
       "tomorrow": "Tomorrow"
     }
   },
+  "two": {
+    "title": "Leagues"
+  },
   "three": {
     "title": "Settings",
     "settings": "Settings",
@@ -137,7 +140,8 @@
         "substitutions": "Substitutions",
         "throw_ins": "Throw-ins",
         "yellow_cards": "Yellow Cards",
-        "red_cards": "Red Cards"
+        "red_cards": "Red Cards",
+        "penalties_missed": "Penalties Missed"
       }
     },
     "commentary": {

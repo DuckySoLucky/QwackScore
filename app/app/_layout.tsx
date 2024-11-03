@@ -46,14 +46,6 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-  /*
-  <Stack.Screen
-    name="lige/poredak"
-    options={({ route }) => ({
-      title: route.params && route.params.title ? route.params.title : "Lige",
-    })}
-  />
-  */
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>

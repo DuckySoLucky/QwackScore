@@ -7,6 +7,9 @@
       "tomorrow": "Sutra"
     }
   },
+  "two": {
+    "title": "Lige"
+  },
   "three": {
     "title": "Postavke",
     "settings": "Postavke",
@@ -137,7 +140,8 @@
         "substitutions": "Zamjene",
         "throw_ins": "Ubacivanja",
         "yellow_cards": "Žuti kartoni",
-        "red_cards": "Crveni kartoni"
+        "red_cards": "Crveni kartoni",
+        "penalties_missed": "Promašeni penali"
       }
     },
     "commentary": {

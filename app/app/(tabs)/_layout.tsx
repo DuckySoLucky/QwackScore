@@ -78,7 +78,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="two"
         options={{
-          title: 'Lige',
+          title: translate('two.title'),
           tabBarIcon: ({ color }) => <AntDesign name="search1" size={24} color={color} />,
           headerRight: () => (
             <View style={{ flexDirection: 'row', marginRight: 15 }}>

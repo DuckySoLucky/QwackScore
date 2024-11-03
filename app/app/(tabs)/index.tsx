@@ -10,6 +10,7 @@ import ErrorComponent from '@/components/global/ErrorComponents';
 import { fetchSchedules } from '@/API/src/routes/schedules';
 import { SchedulesMatch, SchedulesResponse } from '@/API/types/schedules';
 import { CONFIG } from '@/API/storage';
+import('../../API/translation');
 
 export default function TabOneScreen() {
   const seasonId = CONFIG.getCached('defaultLeague') as string;
