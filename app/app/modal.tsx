@@ -7,7 +7,6 @@ import { SeasonsResponse } from '@/API/types/seasons';
 import LoadingComponent from '@/components/global/LoadingComponent';
 import ErrorComponent from '@/components/global/ErrorComponents';
 import { CONFIG } from '@/API/storage';
-import { getBackgroundColorAsync } from 'expo-system-ui';
 import { useTranslation } from 'react-i18next';
 
 export default function ModalScreen() {
@@ -36,7 +35,7 @@ export default function ModalScreen() {
     });
 
     loadData();
-  }, [navigation]);
+  }, [navigation, translate]);
 
   if (isLoading) {
     return <LoadingComponent />;

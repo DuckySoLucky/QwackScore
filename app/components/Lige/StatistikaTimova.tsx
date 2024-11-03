@@ -5,14 +5,6 @@ import { StatsResponse, StatsResponseStatsTeam } from '@/API/types/stats';
 import ErrorComponent from '../global/ErrorComponents';
 import { useTranslation } from 'react-i18next';
 
-function titleCase(str: string) {
-  return str
-    .toLowerCase()
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
 const StatistikaTimova = ({ statsData }: { statsData: StatsResponse }) => {
   const { t: translate } = useTranslation();
   if (!statsData?.teams || Object.keys(statsData?.teams ?? {}).length === 0) {

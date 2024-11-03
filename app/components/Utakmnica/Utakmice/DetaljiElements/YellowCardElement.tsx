@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 export default function YellowCardElement({ item }: { item: Timeline }) {
   const { t: translate } = useTranslation();
 
-  
   if (item.position === 'right') {
     return (
       <View style={styles.outerContainerRight}>

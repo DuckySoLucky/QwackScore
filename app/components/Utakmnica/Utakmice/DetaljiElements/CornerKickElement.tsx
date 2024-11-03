@@ -1,5 +1,5 @@
 import { StyleSheet, Image } from 'react-native';
-import React, { useTransition } from 'react';
+import React from 'react';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 import { useTranslation } from 'react-i18next';

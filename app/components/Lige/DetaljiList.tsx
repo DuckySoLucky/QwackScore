@@ -8,8 +8,11 @@ import React from 'react';
 import ErrorComponent from '../global/ErrorComponents';
 import { useTranslation } from 'react-i18next';
 
-function getCombinedData(schedulesData: SchedulesResponse, statsData: StatsResponse) {
-  const { t: translate } = useTranslation();
+function getCombinedData(
+  schedulesData: SchedulesResponse,
+  statsData: StatsResponse,
+  translate: (key: string) => string,
+) {
   const combinedData = [];
 
   if (schedulesData?.firstThreeMatchs && schedulesData.firstThreeMatchs.length > 0) {
@@ -50,11 +53,12 @@ export default function DetaljiList({
   schedulesData: SchedulesResponse;
   statsData: StatsResponse;
 }) {
+  const { t: translate } = useTranslation();
   if (!schedulesData || !statsData) {
     return <ErrorComponent message="Couldn't find data" />;
   }
 
-  const combinedData = getCombinedData(schedulesData, statsData);
+  const combinedData = getCombinedData(schedulesData, statsData, translate);
 
   const groupedData = [];
   let currentGroup = [] as {

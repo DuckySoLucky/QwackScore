@@ -1,7 +1,7 @@
 import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
-import React, { useTransition } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function ShotOnTargetElement({ item }: { item: Timeline }) {

@@ -49,7 +49,7 @@ export default function TabTwoScreen() {
     };
 
     loadData();
-  }, [params.id]);
+  }, [params.id, params.title]);
 
   if (!params?.id || !params?.title) {
     return <ErrorComponent message="Couldn't find parameters" />;
