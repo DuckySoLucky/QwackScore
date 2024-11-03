@@ -9,6 +9,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import('../../API/translation');
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['name']; color: string }) {
