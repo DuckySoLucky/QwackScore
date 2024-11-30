@@ -1,5 +1,4 @@
 import { StyleSheet, TextInput, FlatList, Text } from 'react-native';
-import { View } from '@/components/Themed';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigation } from 'expo-router';
 import { fetchSeasons } from '@/API/src/routes/seasons';
@@ -8,8 +7,8 @@ import LoadingComponent from '@/components/global/LoadingComponent';
 import ErrorComponent from '@/components/global/ErrorComponents';
 import { CONFIG } from '@/API/storage';
 import { useTranslation } from 'react-i18next';
-import { getTheme, getThemeElement } from '@/API/theme';
-import { Container, InnerContainer } from '@/components/theme/Container';
+import { getThemeElement } from '@/API/theme';
+import { Container } from '@/components/theme/Container';
 
 export default function ModalScreen() {
   const { t: translate } = useTranslation();

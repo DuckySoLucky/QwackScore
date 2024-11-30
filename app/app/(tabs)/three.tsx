@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
-import { Text, View } from '@/components/Themed';
+import { View } from '@/components/Themed';
 import * as Updates from 'expo-updates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -24,9 +24,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from '@/API/translation';
 import { Container } from '@/components/theme/Container';
 import { MainText } from '@/components/theme/Text';
-import { getTheme, getThemeElement } from '@/API/theme';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import { ThemeProvider } from '@react-navigation/native';
+import { getThemeElement } from '@/API/theme';
 
 export default function TabTwoScreen() {
   const { t: translate } = useTranslation();

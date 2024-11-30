@@ -17,7 +17,7 @@ import YellowCardElement from './DetaljiElements/YellowCardElement';
 import ScoreChangeElement from './DetaljiElements/ScoreChangeElement';
 import RedCardElement from './DetaljiElements/RedCardElement';
 import { useTranslation } from 'react-i18next';
-import { Container, InnerContainer } from '@/components/theme/Container';
+import { Container } from '@/components/theme/Container';
 import { getThemeElement } from '@/API/theme';
 
 function titleCase(str: string) {

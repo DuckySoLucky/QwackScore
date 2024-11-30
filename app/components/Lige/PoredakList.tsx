@@ -5,7 +5,7 @@ import { StandignsResponse } from '@/API/types/standings';
 import ErrorComponent from '../global/ErrorComponents';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Container, InnerContainer } from '../theme/Container';
+import { Container } from '../theme/Container';
 import { getThemeElement } from '@/API/theme';
 
 export default function PoredakList({ standingsData }: { standingsData: StandignsResponse }) {

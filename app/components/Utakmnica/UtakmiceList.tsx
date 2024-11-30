@@ -5,7 +5,7 @@ import ErrorComponent from '../global/ErrorComponents';
 import React, { useCallback } from 'react';
 import { Schedule } from '@/types/data';
 import { useTranslation } from 'react-i18next';
-import { getTheme, getThemeElement, getThemeName } from '@/API/theme';
+import { getThemeElement } from '@/API/theme';
 import { Container } from '../theme/Container';
 
 export default function UtakmiceList({ schedulesData }: { schedulesData: SchedulesResponse }) {

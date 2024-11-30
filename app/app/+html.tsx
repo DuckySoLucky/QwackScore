@@ -1,5 +1,8 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
+import { CONFIG } from '@/API/storage';
+import i18n from '@/API/translation';
 import('../API/translation');
+i18n.changeLanguage(CONFIG.getCached('language') as string);
 
 // This file is web-only and used to configure the root HTML for every
 // web page during static rendering.

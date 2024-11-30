@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18n from '@/API/translation';
 import { config } from './config';
 import('./translation');
 
@@ -45,6 +46,8 @@ export const bumpCache = async () => {
 
     cache.set(key as cacheKey, JSON.parse(value as string));
   }
+
+  i18n.changeLanguage(CONFIG.getCached('language') as string);
 };
 
 const getAllSettings = async () => {

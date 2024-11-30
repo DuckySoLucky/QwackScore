@@ -1,11 +1,14 @@
+import { CONFIG } from '@/API/storage';
 import { getThemeElement } from '@/API/theme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
+import { ThemeProvider } from '@react-navigation/native';
+import i18n from '@/API/translation';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 import('../API/translation');
+i18n.changeLanguage(CONFIG.getCached('language') as string);
 
 export { ErrorBoundary } from 'expo-router';
 export const unstable_settings = { initialRouteName: '(tabs)' };

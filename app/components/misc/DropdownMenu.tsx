@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Text, View } from '@/components/Themed';
 import { Link } from 'expo-router';
 import { InnerContainer } from '../theme/Container';
-import { getTheme, getThemeElement } from '@/API/theme';
+import { getThemeElement } from '@/API/theme';
 
 const DropdownMenu = ({
   title,

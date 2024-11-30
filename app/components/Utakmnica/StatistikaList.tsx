@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 6,
     marginBottom: 70,
-    height: '100%',
     marginTop: 10,
   },
 });
