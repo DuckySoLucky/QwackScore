@@ -20,7 +20,7 @@ export const fetchLineup = async (id: string, options = { useLocalAPI: false }):
       return seasonData;
     }
 
-    const url = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/sport_events/${id}/lineups.json?api_key=${config.sportRadarAPIKey}`;
+    const url = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/sport_events/${id}/lineups.json?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
     const repsonse = await fetchJson(url);
 
     broadcastMessage(`fetchLineup(${id}) returned. (${Date.now() - timeNow}ms)`, 'api');

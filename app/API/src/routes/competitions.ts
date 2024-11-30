@@ -19,7 +19,7 @@ export const fetchCompetitions = async (options = { useLocalAPI: false }): Promi
       return competitionsData;
     }
 
-    const url = `https://api.sportradar.com/soccer-extended/trial/v4/${CONFIG.getCached('language')}/competitions?api_key=${config.sportRadarAPIKey}`;
+    const url = `https://api.sportradar.com/soccer-extended/trial/v4/${CONFIG.getCached('language')}/competitions?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
     const response = await fetchJson(url);
 
     broadcastMessage(`fetchCompetitions() returned. (${Date.now() - timeNow}ms)`, 'api');

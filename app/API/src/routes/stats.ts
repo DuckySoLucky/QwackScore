@@ -20,8 +20,8 @@ export const fetchStats = async (id: string, options = { useLocalAPI: false }): 
       return statsData;
     }
 
-    const standingsUrl = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/seasons/${id}/standings.json?api_key=${config.sportRadarAPIKey}`;
-    const playerStatsUrl = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/seasons/${id}/leaders.json?api_key=${config.sportRadarAPIKey}`;
+    const standingsUrl = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/seasons/${id}/standings.json?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
+    const playerStatsUrl = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/seasons/${id}/leaders.json?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
     const response = await fetchJson(standingsUrl);
     const playerStatsResponse = await fetchJson(playerStatsUrl);
 

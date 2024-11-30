@@ -34,7 +34,10 @@
     "restartApp": "Restart App",
     "restartAppButton": "Restart",
     "about": "About",
-    "version": "Version"
+    "version": "Version",
+    "invalidAPIKey": "Invalid API Key",
+    "invalidAPIKeyHeaderMessage": "Update Required",
+    "invalidAPIKeyMessage": "Please update your API key."
   },
   "modal": {
     "title": "Search for Leagues",

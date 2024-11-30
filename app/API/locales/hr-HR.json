@@ -34,7 +34,10 @@
     "restartApp": "Ponovno pokreni aplikaciju",
     "restartAppButton": "Ponovno pokreni",
     "about": "O aplikaciji",
-    "version": "Verzija"
+    "version": "Verzija",
+    "invalidAPIKey": "Neispravan API ključ",
+    "invalidAPIKeyHeaderMessage": "Potrebno ažuriranje",
+    "invalidAPIKeyMessage": "Molimo ažurirajte svoj API ključ."
   },
   "modal": {
     "title": "Pretraži lige",

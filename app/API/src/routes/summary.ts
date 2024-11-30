@@ -20,7 +20,7 @@ export const fetchSummary = async (id: string, options = { useLocalAPI: false })
       return summaryData;
     }
 
-    const url = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/sport_events/${id}/summary.json?api_key=${config.sportRadarAPIKey}`;
+    const url = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/sport_events/${id}/summary.json?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
     const response = await fetchJson(url);
 
     broadcastMessage(`fetchSummary(${id}) returned. (${Date.now() - timeNow}ms)`, 'api');

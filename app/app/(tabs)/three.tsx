@@ -1,10 +1,9 @@
-import { Dimensions, Pressable, StyleSheet, Switch, TextInput, ToastAndroid } from 'react-native';
+import { Alert, Dimensions, Pressable, StyleSheet, Switch, TextInput, ToastAndroid } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from '@/components/Themed';
 import * as Updates from 'expo-updates';
 
-import ErrorComponent from '@/components/global/ErrorComponents';
 import LoadingComponent from '@/components/global/LoadingComponent';
 
 import { fetchSeasons } from '@/API/src/routes/seasons';
@@ -22,6 +21,7 @@ export default function TabTwoScreen() {
   const [selectedTheme, setSelectedTheme] = useState<string | undefined>(undefined);
   const [isDeveloperMode, setIsDeveloperMode] = useState<boolean>(false);
   const [useLocalAPI, setUseLocalAPI] = useState<boolean>(false);
+  const [isEditingApiKey, setIsEditingApiKey] = useState(false);
   const [localAPI, setLocalAPI] = useState('');
   const [apiKey, setApiKey] = useState('');
 
@@ -75,6 +75,10 @@ export default function TabTwoScreen() {
   };
 
   const changeSelectedLeague = (league: string) => {
+    if (league === translate('three.invalidAPIKey')) {
+      return;
+    }
+
     setSelectedLeague(league);
     CONFIG.set('defaultLeague', league);
     ToastAndroid.show('Default league changed', ToastAndroid.SHORT);
@@ -98,6 +102,14 @@ export default function TabTwoScreen() {
     ToastAndroid.show('API Key changed', ToastAndroid.SHORT);
   };
 
+  const handleApiKeyFocus = () => {
+    setIsEditingApiKey(true);
+  };
+
+  const handleApiKeyBlur = () => {
+    setIsEditingApiKey(false);
+  };
+
   const clearCacheButton = () => {
     console.log('Clearing cache');
     clearCache();
@@ -113,6 +125,10 @@ export default function TabTwoScreen() {
       try {
         const result = await fetchSeasons({ useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean });
         setData(result);
+
+        if (!result) {
+          setError(new Error('No data'));
+        }
       } catch (err) {
         setError(err as Error);
       } finally {
@@ -127,15 +143,12 @@ export default function TabTwoScreen() {
     return <LoadingComponent />;
   }
 
-  if (error) {
-    return <ErrorComponent message={`${error.message}`} />;
+  if (error && isEditingApiKey === false) {
+    Alert.alert(translate('three.invalidAPIKeyHeaderMessage'), translate('three.invalidAPIKeyMessage'), [
+      { text: 'OK' },
+    ]);
   }
 
-  if (!data) {
-    return <ErrorComponent message={`Couldn't find data`} />;
-  }
-
-  const seasons = data.seasons;
   return (
     <View style={{ backgroundColor: '#161e28', flex: 1 }}>
       <View style={styles.container}>
@@ -156,11 +169,14 @@ export default function TabTwoScreen() {
         <View style={styles.row}>
           <Text style={styles.title}>{translate('three.defaultLeague')}:</Text>
           <Picker
-            selectedValue={selectedLeague}
+            selectedValue={error ? translate('three.invalidAPIKey') : selectedLeague}
             style={styles.picker}
             onValueChange={(itemValue: string) => changeSelectedLeague(itemValue)}
           >
-            {seasons.map((season: { id: string; name: string }) => (
+            {(data && data.seasons
+              ? data.seasons
+              : [{ id: translate('three.invalidAPIKey'), name: translate('three.invalidAPIKey') }]
+            ).map((season: { id: string; name: string }) => (
               <Picker.Item key={season.id} label={season.name} value={season.id} />
             ))}
           </Picker>
@@ -209,7 +225,14 @@ export default function TabTwoScreen() {
 
         <View style={styles.row}>
           <Text style={styles.title}>{translate('three.APIKey')}:</Text>
-          <TextInput value={apiKey} onChangeText={changeApiKey} secureTextEntry={true} style={styles.input} />
+          <TextInput
+            value={apiKey}
+            onChangeText={changeApiKey}
+            onFocus={handleApiKeyFocus}
+            onBlur={handleApiKeyBlur}
+            secureTextEntry={true}
+            style={styles.input}
+          />
         </View>
 
         <View style={styles.row}>
@@ -288,6 +311,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   cacheText: {
+    color: '#C0C0C0',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  invalidAPIKeyText: {
     color: '#C0C0C0',
     fontSize: 12,
     fontWeight: 'bold',

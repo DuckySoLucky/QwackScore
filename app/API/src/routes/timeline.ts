@@ -20,7 +20,7 @@ export const fetchTimeline = async (id: string, options = { useLocalAPI: false }
       return timelineData;
     }
 
-    const url = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/sport_events/${id}/timeline.json?api_key=${config.sportRadarAPIKey}`;
+    const url = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/sport_events/${id}/timeline.json?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
     const response = await fetchJson(url);
 
     broadcastMessage(`fetchTimeline(${id}) returned. (${Date.now() - timeNow}ms)`, 'api');

@@ -22,7 +22,7 @@ export const fetchSeason = async (
       return seasonData;
     }
 
-    const url = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/competitions/${id}/seasons.json?api_key=${config.sportRadarAPIKey}`;
+    const url = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/competitions/${id}/seasons.json?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
     const response = await fetchJson(url);
 
     broadcastMessage(`fetchSeason(${id}) returned. (${Date.now() - timeNow}ms)`, 'api');

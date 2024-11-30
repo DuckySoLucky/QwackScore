@@ -2,8 +2,11 @@
 // @ts-nocheck
 
 export function formatSeasons(seasons) {
-  const ouput = [];
+  if (!seasons || !seasons.seasons) {
+    return null;
+  }
 
+  const ouput = [];
   const year = '2025';
   for (const season of seasons.seasons) {
     if (

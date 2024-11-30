@@ -20,7 +20,7 @@ export const fetchSeasons = async (options = { useLocalAPI: false }): Promise<Se
       return seasonData;
     }
 
-    const url = `https://api.sportradar.com/soccer-extended/trial/v4/${CONFIG.getCached('language')}/seasons?api_key=${config.sportRadarAPIKey}`;
+    const url = `https://api.sportradar.com/soccer-extended/trial/v4/${CONFIG.getCached('language')}/seasons?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
     const response = await fetchJson(url);
 
     broadcastMessage(`fetchSeasons() returned. (${Date.now() - timeNow}ms)`, 'api');

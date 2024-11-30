@@ -23,7 +23,7 @@ export const fetchSchedules = async (
       return schedulesData;
     }
 
-    const url = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/seasons/${id}/schedules.json?api_key=${config.sportRadarAPIKey}`;
+    const url = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/seasons/${id}/schedules.json?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
     const response = await fetchJson(url);
 
     broadcastMessage(`fetchSchedules(${id}) returned. (${Date.now() - timeNow}ms)`, 'api');

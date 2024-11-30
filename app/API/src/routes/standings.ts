@@ -23,8 +23,8 @@ export const fetchStandings = async (
       return standingsData;
     }
 
-    const standingsUrl = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/seasons/${id}/standings.json?api_key=${config.sportRadarAPIKey}`;
-    const formStandingsUrl = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/seasons/${id}/form_standings.json?api_key=${config.sportRadarAPIKey}`;
+    const standingsUrl = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/seasons/${id}/standings.json?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
+    const formStandingsUrl = `https://api.sportradar.com/soccer/trial/v4/${CONFIG.getCached('language')}/seasons/${id}/form_standings.json?api_key=${CONFIG.getCached('sportRadarAPIKey')}`;
     const response = await fetchJson(standingsUrl);
     const formResponse = await fetchJson(formStandingsUrl);
 
