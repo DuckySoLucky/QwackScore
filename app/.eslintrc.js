@@ -8,7 +8,12 @@ module.exports = {
     'react-native/split-platform-components': 2,
     // 'react-native/no-inline-styles': 2,
     // 'react-native/no-color-literals': 2,
-    'react-native/no-raw-text': 2,
+    'react-native/no-raw-text': [
+      'error',
+      {
+        skip: ['MainText'],
+      },
+    ],
     // 'react-native/no-single-element-style-arrays': 2,
     'react/jsx-key': 2,
   },

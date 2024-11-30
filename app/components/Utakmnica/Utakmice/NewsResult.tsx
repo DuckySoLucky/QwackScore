@@ -4,6 +4,14 @@ import { Text, View } from '@/components/Themed';
 import { Link } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Container } from '@/components/theme/Container';
+import { getThemeElement } from '@/API/theme';
+import { CONFIG } from '@/API/storage';
+
+const BALL_IMAGE = {
+  dark: 'https://i.imgur.com/Q6nxcJk.png',
+  light: 'https://i.imgur.com/D59VVme.png',
+} as Record<string, string>;
 
 function NewsResult({ data }: { data: SchedulesMatch }) {
   const { t: translate } = useTranslation();
@@ -25,10 +33,14 @@ function NewsResult({ data }: { data: SchedulesMatch }) {
 
   return (
     <Link href={{ pathname: '/utakmica', params: { item: JSON.stringify(data) } }} style={{ marginRight: 6 }}>
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <Image source={{ uri: firstImage }} style={styles.leftImage} resizeMode="contain" />
 
-        <Image source={{ uri: 'https://i.imgur.com/Q6nxcJk.png' }} style={styles.middleImage} resizeMode="contain" />
+        <Image
+          source={{ uri: BALL_IMAGE[CONFIG.getCached('theme') as string] }}
+          style={styles.middleImage}
+          resizeMode="contain"
+        />
 
         <Image source={{ uri: secondImage }} style={styles.rightImage} resizeMode="contain" />
 
@@ -47,16 +59,13 @@ function NewsResult({ data }: { data: SchedulesMatch }) {
             {text}
           </Text>
         </View>
-      </View>
+      </Container>
     </Link>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#10181E',
-    borderColor: '#000000',
-    borderWidth: 1,
     height: 96,
     width: 96,
     marginRight: 6,
@@ -87,7 +96,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#10181E',
+    backgroundColor: 'transparent',
     marginBottom: 5,
   },
   textPositionScore: {
@@ -95,18 +104,20 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#10181E',
+    backgroundColor: 'transparent',
     marginBottom: 5,
   },
   textStyleNotStarted: {
     fontSize: 12,
     fontWeight: 'bold',
     textAlign: 'center',
+    color: getThemeElement('mainText') as string,
   },
   textStyleScore: {
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+    color: getThemeElement('mainText') as string,
   },
 });
 

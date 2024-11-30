@@ -1,4 +1,6 @@
+import { getThemeElement } from '@/API/theme';
 import { SchedulesMatch } from '@/API/types/schedules';
+import { InnerContainer } from '@/components/theme/Container';
 import { Link } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,9 +18,9 @@ export default function UtakmiceColumnElement({ item }: { item: SchedulesMatch }
   return (
     <Link href={{ pathname: '/utakmica', params: { item: JSON.stringify(item) } }} asChild>
       <Pressable>
-        <View style={styles.gameDetailsContainer}>
+        <InnerContainer style={styles.gameDetailsContainer}>
           <Text style={styles.dateText}>{replacePlaceholders(item.startTimeFormatted)}</Text>
-          <View style={styles.seperator} />
+          <View style={styles.separator} />
 
           <View>
             <Image source={{ uri: item.competitors[0].image }} style={styles.clubImage} resizeMode="contain" />
@@ -39,14 +41,14 @@ export default function UtakmiceColumnElement({ item }: { item: SchedulesMatch }
             <></>
           )}
 
-          <View style={{ ...styles.seperator, position: 'absolute', right: 48 }} />
+          <View style={{ ...styles.separator, position: 'absolute', right: 48 }} />
 
           <Image
             source={{ uri: 'https://i.imgur.com/NtmU9NV.png' }}
             style={styles.notificationIcon}
             resizeMode="contain"
           />
-        </View>
+        </InnerContainer>
       </Pressable>
     </Link>
   );
@@ -54,10 +56,7 @@ export default function UtakmiceColumnElement({ item }: { item: SchedulesMatch }
 
 const styles = StyleSheet.create({
   gameDetailsContainer: {
-    backgroundColor: '#0C1216',
-    borderColor: '#000000',
     borderRadius: 5,
-    borderWidth: 1,
     marginHorizontal: 6,
     marginTop: 6,
     height: 50,
@@ -66,16 +65,16 @@ const styles = StyleSheet.create({
   },
   dateText: {
     marginLeft: 6,
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 9,
     width: 40,
   },
-  seperator: {
+  separator: {
     height: '80%',
     width: 1,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('separator') as string,
     marginLeft: 10,
   },
   clubImage: {
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
   clubName: {
     marginLeft: 10,
     fontSize: 12,
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontWeight: 'bold',
   },
   notificationIcon: {

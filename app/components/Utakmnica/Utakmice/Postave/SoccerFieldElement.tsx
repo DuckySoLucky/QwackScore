@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
   outerContainer: {
     height: 600,
     marginHorizontal: 6,
-    backgroundColor: '#161e28',
   },
   fieldIcon: {
     height: 600,

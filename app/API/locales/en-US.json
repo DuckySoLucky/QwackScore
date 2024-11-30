@@ -21,6 +21,7 @@
     "defaultLeague": "Default League",
     "theme": "Theme",
     "themes": {
+      "system": "System",
       "light": "Light",
       "dark": "Dark"
     },
@@ -144,7 +145,8 @@
         "throw_ins": "Throw-ins",
         "yellow_cards": "Yellow Cards",
         "red_cards": "Red Cards",
-        "penalties_missed": "Penalties Missed"
+        "penalties_missed": "Penalties Missed",
+        "yellow_red_cards": "Yellow Red Cards"
       }
     },
     "commentary": {

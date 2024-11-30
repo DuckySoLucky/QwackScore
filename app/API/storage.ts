@@ -34,11 +34,14 @@ const getSetting = async (key: string) => {
   }
 };
 
-const bumpCache = async () => {
+export const bumpCache = async () => {
   const keys = await AsyncStorage.getAllKeys();
 
   for (const key of keys) {
     const value = await AsyncStorage.getItem(key);
+    if (CONFIG.getCached(key as cacheKey) !== JSON.parse(value as string)) {
+      console.log('Bumping cache:', key, value?.toString());
+    }
 
     cache.set(key as cacheKey, JSON.parse(value as string));
   }

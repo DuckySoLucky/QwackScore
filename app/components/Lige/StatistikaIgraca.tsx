@@ -5,6 +5,18 @@ import ErrorComponent from '../global/ErrorComponents';
 import { StatsDataReponse } from '@/types/data';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
+
+function titleCase(str: string) {
+  return str
+    .toLowerCase()
+    .replaceAll('_', ' ')
+    .split(' ')
+    .map(function (word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(' ');
+}
 
 const StatistikaIgraca = ({ statsData }: { statsData: StatsDataReponse }) => {
   const { t: translate } = useTranslation();
@@ -21,7 +33,11 @@ const StatistikaIgraca = ({ statsData }: { statsData: StatsDataReponse }) => {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.roundText}>{translate(`league.statistics.stats.${key}`)}</Text>
+        <Text style={styles.roundText}>
+          {translate(`league.statistics.stats.${key}`.trim()).includes('league.statistics.stats.')
+            ? titleCase(key)
+            : translate(`league.statistics.stats.${key}`)}
+        </Text>
         {data.slice(0, 5).map((item, index) => (
           <PlayerStatisticColumnElement key={index} item={item} />
         ))}
@@ -47,10 +63,8 @@ const styles = StyleSheet.create({
     paddingBottom: 90,
   },
   container: {
-    backgroundColor: '#10181E',
-    borderColor: '#000000',
+    ...(getThemeElement('containerElement') as object),
     borderRadius: 5,
-    borderWidth: 1,
     marginHorizontal: 6,
     marginBottom: 6,
     paddingBottom: 6,

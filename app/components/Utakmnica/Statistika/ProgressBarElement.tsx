@@ -3,6 +3,7 @@ import { Text, View } from '@/components/Themed';
 import { Summary } from '@/types/data';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 
 export default function ProgressBarElement({ item, percentage }: { item: Summary; percentage: boolean }) {
   const { t: translate } = useTranslation();
@@ -57,38 +58,46 @@ const styles = StyleSheet.create({
   },
   statValue: {
     fontSize: 16,
-    color: '#686868',
     fontWeight: 'bold',
+    color: getThemeElement('text') as string,
   },
   statName: {
     fontSize: 16,
-    color: '#686868',
     fontWeight: 'bold',
+    color: getThemeElement('mainText') as string,
   },
   rightBar: {
     marginLeft: 36,
     width: '45%',
     height: 12,
     borderRadius: 16,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('background') as string,
+    borderColor: getThemeElement('borderColor') as string,
+    borderWidth: 1,
   },
   leftBar: {
     width: '45%',
     height: 12,
     borderRadius: 16,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('background') as string,
+    borderColor: getThemeElement('borderColor') as string,
+    borderWidth: 1,
   },
   rightBarFilled: {
     marginLeft: '-45%',
     height: 12,
     borderRadius: 16,
-    backgroundColor: '#CA5509',
+    backgroundColor: getThemeElement('selectedUtakmicaElement') as string,
     maxWidth: '45%',
+    borderColor: getThemeElement('borderColor') as string,
+    borderWidth: 1,
   },
   leftBarFilled: {
     height: 12,
     borderRadius: 16,
-    backgroundColor: '#CA5509',
+    backgroundColor: getThemeElement('selectedUtakmicaElement') as string,
+    borderColor: getThemeElement('borderColor') as string,
+    borderWidth: 1,
   },
   progressRow: {
     flexDirection: 'row',
@@ -101,6 +110,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     backgroundColor: 'transparent',
     borderBottomWidth: 1,
-    borderBottomColor: '#000000',
+    borderBottomColor: getThemeElement('separator') as string,
+    borderRadius: 16,
   },
 });

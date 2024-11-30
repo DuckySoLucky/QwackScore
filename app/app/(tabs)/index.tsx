@@ -47,9 +47,9 @@ export default function TabOneScreen() {
   }
 
   return (
-    <View style={styles.outerContainer}>
+    <View>
       <View style={styles.newsContainer}>
-        <ScrollView horizontal={true} style={styles.topNews}>
+        <ScrollView horizontal={true}>
           {schedulesData.matches.slice(0, 5).map((match: SchedulesMatch) => (
             <NewsResult data={match} key={`${match.id}-${Math.random()}`} />
           ))}
@@ -62,14 +62,8 @@ export default function TabOneScreen() {
 }
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    backgroundColor: '#161e28',
-  },
   newsContainer: {
     backgroundColor: 'transparent',
     marginVertical: 6,
-  },
-  topNews: {
-    paddingHorizontal: 6,
   },
 });

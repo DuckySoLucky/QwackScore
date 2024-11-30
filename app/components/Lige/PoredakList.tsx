@@ -5,6 +5,8 @@ import { StandignsResponse } from '@/API/types/standings';
 import ErrorComponent from '../global/ErrorComponents';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Container, InnerContainer } from '../theme/Container';
+import { getThemeElement } from '@/API/theme';
 
 export default function PoredakList({ standingsData }: { standingsData: StandignsResponse }) {
   const [selectedForm, setSelectedForm] = useState('default');
@@ -14,7 +16,7 @@ export default function PoredakList({ standingsData }: { standingsData: Standign
   }
 
   return (
-    <View style={styles.outerContainer}>
+    <ScrollView>
       <View style={styles.buttonContainer}>
         <Pressable
           style={selectedForm === 'default' ? styles.selectedButtonElement : styles.buttonElement}
@@ -35,7 +37,7 @@ export default function PoredakList({ standingsData }: { standingsData: Standign
         </Pressable>
       </View>
 
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <ScrollView>
           {selectedForm === 'default' ? (
             <DefaultPoredakColumnElement standingsData={standingsData} />
@@ -43,23 +45,14 @@ export default function PoredakList({ standingsData }: { standingsData: Standign
             <FormPoredakColumnElement standingsData={standingsData} />
           )}
         </ScrollView>
-      </View>
-    </View>
+      </Container>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#161e28',
-    paddingBottom: 100,
-  },
   container: {
-    backgroundColor: '#10181E',
-    borderColor: '#000000',
     borderRadius: 5,
-    borderWidth: 1,
     marginHorizontal: 6,
     marginTop: 12,
   },
@@ -69,8 +62,8 @@ const styles = StyleSheet.create({
     marginLeft: 6,
   },
   buttonElement: {
-    backgroundColor: '#161F29',
-    borderColor: '#686868',
+    backgroundColor: getThemeElement('background') as string,
+    borderColor: getThemeElement('mainText') as string,
     borderRadius: 10,
     borderWidth: 1,
     textAlign: 'center',
@@ -79,17 +72,17 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   selectedButtonElement: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: getThemeElement('selectedButton') as string,
+    borderColor: getThemeElement('mainText') as string,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#686868',
     textAlign: 'center',
     paddingVertical: 3,
     paddingHorizontal: 6,
     marginRight: 6,
   },
   buttonText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 12,
     fontWeight: 'bold',
   },

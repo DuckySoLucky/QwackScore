@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { StandignsResponse } from '@/API/types/standings';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 
 export default function FormPoredakColumnElement({ standingsData }: { standingsData: StandignsResponse }) {
   const { t: translate } = useTranslation();
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     paddingBottom: 6,
     borderBottomWidth: 1,
-    borderBottomColor: '#000000',
+    borderBottomColor: getThemeElement('separator') as string,
   },
   leftContainer: {
     flexDirection: 'row',
@@ -78,19 +79,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontWeight: 'bold',
     fontSize: 16,
     marginHorizontal: 8,
   },
   positionText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 16,
     marginHorizontal: 8,
     fontWeight: 'bold',
   },
   clubName: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 16,
     marginLeft: 6,
     position: 'absolute',
@@ -111,12 +112,12 @@ const styles = StyleSheet.create({
     marginRight: 4,
   },
   formText: {
-    color: '#000000',
+    color: getThemeElement('navigationBar') as string,
     fontWeight: 'bold',
     fontSize: 12,
   },
   teamNameText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 12,

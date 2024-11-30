@@ -1,8 +1,9 @@
 import ProgressBarElement from './Statistika/ProgressBarElement';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import ErrorComponent from '../global/ErrorComponents';
 import { Summary, SummaryData } from '@/types/data';
 import React, { useCallback } from 'react';
+import { getThemeElement } from '@/API/theme';
 
 export default function StatistikaList({ summaryData }: { summaryData: SummaryData }) {
   const renderItem = useCallback(
@@ -26,31 +27,24 @@ export default function StatistikaList({ summaryData }: { summaryData: SummaryDa
   }
 
   return (
-    <View style={styles.outerContainer}>
-      <FlatList
-        data={summaryData}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => renderItem(item)}
-        onEndReachedThreshold={0.5}
-        style={styles.container}
-      />
-    </View>
+    <FlatList
+      data={summaryData}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => renderItem(item)}
+      onEndReachedThreshold={0.5}
+      style={styles.container}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#161e28',
-    paddingTop: 6,
-  },
   container: {
-    backgroundColor: '#10181E',
-    borderColor: '#000000',
+    height: '100%',
+    ...(getThemeElement('containerElement') as object),
     borderRadius: 5,
-    borderWidth: 1,
     marginHorizontal: 6,
     marginBottom: 70,
+    height: '100%',
+    marginTop: 10,
   },
 });

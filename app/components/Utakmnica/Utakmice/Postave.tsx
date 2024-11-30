@@ -5,6 +5,8 @@ import SoccerFieldElement from './Postave/SoccerFieldElement';
 import { LineupsDataResponse } from '@/types/data';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
+import { Container } from '@/components/theme/Container';
 
 export default function PostaveList({ lineupsData }: { lineupsData: LineupsDataResponse }) {
   const [selectedForm, setSelectedForm] = useState<'default' | 'all'>('default');
@@ -22,84 +24,76 @@ export default function PostaveList({ lineupsData }: { lineupsData: LineupsDataR
   }
 
   return (
-    <View style={styles.outerContainer}>
-      <ScrollView>
-        <SoccerFieldElement lineupsData={lineupsData} />
+    <ScrollView>
+      <SoccerFieldElement lineupsData={lineupsData} />
 
-        <View style={styles.buttonContainer}>
-          <Pressable
-            style={selectedForm === 'default' ? styles.selectedButtonElement : styles.buttonElement}
-            onPress={() => setSelectedForm('default')}
-          >
-            <Image
-              source={{ uri: 'https://i.imgur.com/nDDfr5c.png' }}
-              style={styles.clubSelectImage}
-              resizeMode="contain"
-            />
-          </Pressable>
+      <View style={styles.buttonContainer}>
+        <Pressable
+          style={selectedForm === 'default' ? styles.selectedButtonElement : styles.buttonElement}
+          onPress={() => setSelectedForm('default')}
+        >
+          <Image
+            source={{ uri: 'https://i.imgur.com/nDDfr5c.png' }}
+            style={styles.clubSelectImage}
+            resizeMode="contain"
+          />
+        </Pressable>
 
-          <Pressable
-            style={selectedForm === 'all' ? styles.selectedButtonElement : styles.buttonElement}
-            onPress={() => setSelectedForm('all')}
-          >
-            <Image
-              source={{ uri: 'https://i.imgur.com/nDDfr5c.png' }}
-              style={styles.clubSelectImage}
-              resizeMode="contain"
-            />
-          </Pressable>
-        </View>
+        <Pressable
+          style={selectedForm === 'all' ? styles.selectedButtonElement : styles.buttonElement}
+          onPress={() => setSelectedForm('all')}
+        >
+          <Image
+            source={{ uri: 'https://i.imgur.com/nDDfr5c.png' }}
+            style={styles.clubSelectImage}
+            resizeMode="contain"
+          />
+        </Pressable>
+      </View>
 
-        <SubstitutionElement
-          name={
-            selectedForm === 'default'
-              ? (lineupsData.away.coach[0]?.name ?? 'Unknown')
-              : (lineupsData.home.coach[0]?.name ?? 'Unknown')
-          }
-          type={null}
-          number={0}
-        />
+      <SubstitutionElement
+        name={
+          selectedForm === 'default'
+            ? (lineupsData.away.coach[0]?.name ?? 'Unknown')
+            : (lineupsData.home.coach[0]?.name ?? 'Unknown')
+        }
+        type={null}
+        number={0}
+      />
 
-        <View style={styles.substitutionContainer}>
-          <Text style={styles.substitutionText}>{translate(`match.lineup.substitutions`)}</Text>
+      <Container style={styles.substitutionContainer}>
+        <Text style={styles.substitutionText}>{translate(`match.lineup.substitutions`)}</Text>
 
-          {(selectedForm === 'default' ? lineupsData.away.substitutions : lineupsData.home.substitutions).map(
-            (player) => {
-              return (
-                <SubstitutionElement
-                  name={player.name}
-                  type={player.type}
-                  number={player.jersey_number}
-                  key={player.id}
-                />
-              );
-            },
-          )}
-        </View>
-      </ScrollView>
-    </View>
+        {(selectedForm === 'default' ? lineupsData.away.substitutions : lineupsData.home.substitutions).map(
+          (player) => {
+            return (
+              <SubstitutionElement
+                name={player.name}
+                type={player.type}
+                number={player.jersey_number}
+                key={player.id}
+              />
+            );
+          },
+        )}
+      </Container>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    backgroundColor: '#161e28',
-    marginBottom: 60,
-  },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#161e28',
+    backgroundColor: 'transparent',
     marginHorizontal: 6,
   },
   buttonElement: {
-    backgroundColor: '#10181E',
+    ...(getThemeElement('containerElement') as object),
     height: 32,
     width: 180,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#000000',
     borderRadius: 8,
   },
   selectedButtonElement: {
@@ -120,23 +114,20 @@ const styles = StyleSheet.create({
   substitutionContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#10181E',
     marginLeft: 6,
     marginRight: 6,
     marginTop: 6,
     marginBottom: 6,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#00000',
     paddingBottom: 6,
   },
   substitutionText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#686868',
     textAlign: 'center',
-    borderBottomColor: '#222A36',
+    borderBottomColor: getThemeElement('separator') as string,
     borderBottomWidth: 1,
     marginHorizontal: 6,
+    color: getThemeElement('mainText') as string,
   },
 });

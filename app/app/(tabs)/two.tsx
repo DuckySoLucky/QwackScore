@@ -1,6 +1,5 @@
 import { StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { View } from '@/components/Themed';
 
 import DropdownMenu from '@/components/misc/DropdownMenu';
 import LoadingComponent from '@/components/global/LoadingComponent';
@@ -9,6 +8,7 @@ import ErrorComponent from '@/components/global/ErrorComponents';
 import { fetchCompetitions } from '@/API/src/routes/competitions';
 import { CompetitionsResponse } from '@/API/types/competitions';
 import { CONFIG } from '@/API/storage';
+import { getThemeElement } from '@/API/theme';
 
 export default function TabTwoScreen() {
   const [data, setData] = useState<null | CompetitionsResponse>(null);
@@ -58,31 +58,26 @@ export default function TabTwoScreen() {
   };
 
   return (
-    <View style={styles.outerContainer}>
-      <FlatList
-        data={dropdownData}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        contentContainerStyle={styles.container}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={renderFooter}
-      />
-    </View>
+    <FlatList
+      data={dropdownData}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => index.toString()}
+      contentContainerStyle={{
+        ...styles.container,
+        backgroundColor: getThemeElement('container') as string,
+      }}
+      onEndReachedThreshold={0.5}
+      ListFooterComponent={renderFooter}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    backgroundColor: '#161e28',
-    flex: 1,
-  },
   container: {
-    backgroundColor: '#10181E',
+    ...(getThemeElement('containerElement') as object),
     marginHorizontal: 6,
-    marginVertical: 3,
-    borderColor: '#000000',
+    marginVertical: 6,
     borderRadius: 10,
-    borderWidth: 1,
     paddingBottom: 6,
   },
 });

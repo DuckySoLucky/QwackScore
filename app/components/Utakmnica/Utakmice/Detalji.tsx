@@ -17,6 +17,8 @@ import YellowCardElement from './DetaljiElements/YellowCardElement';
 import ScoreChangeElement from './DetaljiElements/ScoreChangeElement';
 import RedCardElement from './DetaljiElements/RedCardElement';
 import { useTranslation } from 'react-i18next';
+import { Container, InnerContainer } from '@/components/theme/Container';
+import { getThemeElement } from '@/API/theme';
 
 function titleCase(str: string) {
   return str
@@ -139,16 +141,16 @@ export default function DetaljiList({ timelineData }: { timelineData: TimelineDa
             // ? timeline
           }
           <View style={styles.flexContainer}>
-            <View style={styles.container}>
+            <Container style={styles.container}>
               <FlatList
                 data={timelineData.timeline}
                 keyExtractor={(item) => `${item.type}-${Math.random()}`}
                 renderItem={({ item }) => renderItem({ item, selectedForm })}
               />
-            </View>
+            </Container>
 
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
-              <View style={styles.matchStatsContainer}>
+              <Container style={styles.matchStatsContainer}>
                 <Text style={styles.matchStatsHeader}>{translate('match.details.information.title')}</Text>
                 <View style={styles.matchStatsContainerv2}>
                   {Object.keys(timelineData.information).map((key) => {
@@ -168,7 +170,7 @@ export default function DetaljiList({ timelineData }: { timelineData: TimelineDa
                     );
                   })}
                 </View>
-              </View>
+              </Container>
             </ScrollView>
           </View>
         </>
@@ -181,7 +183,6 @@ const styles = StyleSheet.create({
   outerContainer: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#161e28',
     paddingBottom: 16,
     marginBottom: 16,
   },
@@ -190,14 +191,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    backgroundColor: '#10181E',
     marginLeft: 6,
     marginRight: 6,
     marginTop: 6,
     marginBottom: 6,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#00000',
     flex: 3,
   },
   scrollViewContent: {
@@ -210,8 +208,8 @@ const styles = StyleSheet.create({
     marginLeft: 6,
   },
   buttonElement: {
-    backgroundColor: '#161F29',
-    borderColor: '#686868',
+    backgroundColor: getThemeElement('background') as string,
+    borderColor: getThemeElement('mainText') as string,
     borderRadius: 10,
     borderWidth: 1,
     textAlign: 'center',
@@ -220,36 +218,33 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   selectedButtonElement: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: getThemeElement('selectedButton') as string,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#686868',
+    borderColor: getThemeElement('mainText') as string,
     textAlign: 'center',
     paddingVertical: 3,
     paddingHorizontal: 6,
     marginRight: 6,
   },
   buttonText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 12,
     fontWeight: 'bold',
   },
   selectedButtonText: {
-    color: '#161F29',
+    color: getThemeElement('mainText') as string,
     fontSize: 12,
     fontWeight: 'bold',
   },
   matchStatsContainer: {
-    backgroundColor: '#10181E',
     marginLeft: 6,
     marginRight: 6,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#00000',
     marginTop: 6,
   },
   matchStatsText: {
-    color: '#C0C0C0',
+    color: getThemeElement('text') as string,
     fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 6,
@@ -257,16 +252,16 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   matchStatsHeader: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontWeight: 'bold',
     fontSize: 18,
     textAlign: 'center',
-    borderBottomColor: '#222A36',
+    borderBottomColor: getThemeElement('separator') as string,
     borderBottomWidth: 1,
     marginHorizontal: 6,
   },
   matchStatsValue: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 14,
     marginRight: 6,
     flex: 1,

@@ -3,6 +3,7 @@ import React from 'react';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 
 const images = [
   'https://i.imgur.com/U2qQpQF.png',
@@ -23,7 +24,7 @@ export default function ShotSavedElement({ item }: { item: Timeline }) {
       <View style={styles.outerContainerRight}>
         <Text style={styles.mainTextRight}>{translate('match.details.summary.events.shot_saved')}</Text>
 
-        <View style={styles.seperatorRight} />
+        <View style={styles.separatorRight} />
 
         <View style={styles.column}>
           <Image source={{ uri: getRandomImage() }} style={styles.yellowCard} resizeMode="contain" />
@@ -40,7 +41,7 @@ export default function ShotSavedElement({ item }: { item: Timeline }) {
         <Text style={styles.timeText}>{item.time}</Text>
       </View>
 
-      <View style={styles.seperatorLeft} />
+      <View style={styles.separatorLeft} />
 
       <Text style={styles.mainTextLeft}>{translate('match.details.summary.events.shot_saved')}</Text>
     </View>
@@ -87,28 +88,28 @@ const styles = StyleSheet.create({
     color: '#686868',
     fontSize: 12,
   },
-  seperatorRight: {
+  separatorRight: {
     height: '80%',
     width: 1,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('separator') as string,
     marginRight: 12,
   },
-  seperatorLeft: {
+  separatorLeft: {
     height: '80%',
     width: 1,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('separator') as string,
     marginRight: 12,
     marginLeft: 6,
   },
   mainTextRight: {
     textAlign: 'right',
-    color: '#C0C0C0',
+    color: getThemeElement('text') as string,
     fontWeight: 'bold',
     marginRight: 12,
   },
   mainTextLeft: {
     textAlign: 'left',
-    color: '#C0C0C0',
+    color: getThemeElement('text') as string,
     fontWeight: 'bold',
     marginLeft: 12,
   },

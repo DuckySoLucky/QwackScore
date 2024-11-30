@@ -8,6 +8,8 @@ import LoadingComponent from '@/components/global/LoadingComponent';
 import ErrorComponent from '@/components/global/ErrorComponents';
 import { CONFIG } from '@/API/storage';
 import { useTranslation } from 'react-i18next';
+import { getTheme, getThemeElement } from '@/API/theme';
+import { Container, InnerContainer } from '@/components/theme/Container';
 
 export default function ModalScreen() {
   const { t: translate } = useTranslation();
@@ -31,7 +33,12 @@ export default function ModalScreen() {
 
     navigation.setOptions({
       headerTitle: translate('modal.title'),
-      headerStyle: { display: 'none', height: 0, backgroundColor: '#10181E' },
+      headerStyle: {
+        display: 'none',
+        height: 0,
+        backgroundColor: getThemeElement('background') as string,
+        color: getThemeElement('text') as string,
+      },
     });
 
     loadData();
@@ -55,59 +62,49 @@ export default function ModalScreen() {
   );
 
   return (
-    <View style={styles.outerContainer}>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.searchBar}
-          placeholder={translate('modal.search')}
-          placeholderTextColor={'#ccc'}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-        <FlatList
-          data={filteredLeagues}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <Link
-              href={{ pathname: '/lige', params: { id: item.competition_id, title: item.name } }}
-              style={styles.leagueItem}
-            >
-              <Text style={styles.leagueItem}>{item.name}</Text>
-            </Link>
-          )}
-        />
-      </View>
-    </View>
+    <Container style={styles.container}>
+      <TextInput
+        style={styles.searchBar}
+        placeholder={translate('modal.search')}
+        placeholderTextColor={'#ccc'}
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
+      <FlatList
+        data={filteredLeagues}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <Link
+            href={{ pathname: '/lige', params: { id: item.competition_id, title: item.name } }}
+            style={styles.leagueItem}
+          >
+            <Text style={styles.leagueItem}>{item.name}</Text>
+          </Link>
+        )}
+      />
+    </Container>
   );
 }
 const styles = StyleSheet.create({
-  outerContainer: {
-    flex: 1,
-    padding: 6,
-    backgroundColor: '#161e28',
-  },
   container: {
-    backgroundColor: '#10181E',
-    borderColor: '#000000',
+    margin: 6,
     borderRadius: 5,
-    borderWidth: 1,
+    paddingBottom: 6,
   },
   searchBar: {
-    backgroundColor: '#161F29',
-    borderColor: '#000000',
+    ...(getThemeElement('innerContainerElement') as object),
     borderRadius: 5,
-    borderWidth: 1,
     marginHorizontal: 6,
     marginTop: 6,
     height: 40,
-    color: 'white',
+    color: getThemeElement('mainText') as string,
     paddingLeft: 10,
   },
   leagueItem: {
-    color: '#686868',
+    color: getThemeElement('text') as string,
     fontSize: 16,
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#000000',
+    borderBottomColor: getThemeElement('separator') as string,
   },
 });

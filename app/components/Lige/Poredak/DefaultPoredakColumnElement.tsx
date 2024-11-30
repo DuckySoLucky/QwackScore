@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { StandingsData } from '@/types/data';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 
 export default function DefaultPoredakColumnElement({ standingsData }: { standingsData: StandingsData[] }) {
   const { t: translate } = useTranslation();
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     paddingBottom: 6,
     borderBottomWidth: 1,
-    borderBottomColor: '#000000',
+    borderBottomColor: getThemeElement('separator') as string,
   },
   leftContainer: {
     flexDirection: 'row',
@@ -64,13 +65,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   topText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontWeight: 'bold',
     fontSize: 16,
     marginHorizontal: 8,
   },
   positionText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 16,
     marginHorizontal: 8,
     fontWeight: 'bold',
@@ -82,31 +83,31 @@ const styles = StyleSheet.create({
     left: 40,
   },
   clubName: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 16,
     marginLeft: 6,
     position: 'absolute',
     left: 70,
   },
   scoreText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 16,
     marginHorizontal: 11,
   },
   teamNameText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 12,
   },
   playedText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 16,
     position: 'absolute',
     right: 90,
   },
   goalDiffsText: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 16,
     position: 'absolute',
     right: 55,

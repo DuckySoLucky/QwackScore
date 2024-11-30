@@ -7,6 +7,7 @@ import { StatsResponse, StatsResponseStatsPlayer, StatsResponseStatsTeam } from 
 import React from 'react';
 import ErrorComponent from '../global/ErrorComponents';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 
 function getCombinedData(
   schedulesData: SchedulesResponse,
@@ -128,17 +129,15 @@ const styles = StyleSheet.create({
     paddingBottom: 90,
   },
   container: {
-    backgroundColor: '#10181E',
-    borderColor: '#000000',
+    ...(getThemeElement('containerElement') as object),
     borderRadius: 5,
-    borderWidth: 1,
     marginHorizontal: 6,
     marginBottom: 6,
     paddingBottom: 6,
   },
   roundText: {
     fontSize: 18,
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     marginLeft: 6,
     fontWeight: 'bold',
   },

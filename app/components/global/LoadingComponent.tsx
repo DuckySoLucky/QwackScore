@@ -2,6 +2,7 @@ import { Text, View } from '@/components/Themed';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 
 const LoadingComponent = () => {
   const { t: translate } = useTranslation();
@@ -19,9 +20,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   loadingMessage: {
-    color: 'white',
+    color: getThemeElement('mainText') as string,
     fontSize: 20,
   },
 });

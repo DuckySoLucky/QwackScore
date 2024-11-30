@@ -19,6 +19,7 @@ import LoadingComponent from '@/components/global/LoadingComponent';
 import ErrorComponent from '@/components/global/ErrorComponents';
 import { CONFIG } from '@/API/storage';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 
 export default function TabTwoScreen() {
   const { t: translate } = useTranslation();
@@ -95,8 +96,8 @@ export default function TabTwoScreen() {
 
   const ViewComponent = VIEW_COMPONENTS[selectedView] || VIEW_COMPONENTS.detalji;
   return (
-    <View style={styles.container}>
-      <View style={styles.scrollContainer}>
+    <View>
+      <View>
         <ScrollView horizontal style={styles.scroll}>
           <Pressable onPress={() => setSelectedView('details')}>
             <Text style={selectedView === 'details' ? styles.selectedTitle : styles.title}>
@@ -157,17 +158,15 @@ const VIEW_COMPONENTS = {
 } as Record<string, React.ComponentType<any>>;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#10181E',
-  },
   scroll: {
+    backgroundColor: getThemeElement('innerContainer') as string,
     paddingLeft: 10,
     height: 32,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     marginRight: 40,
     textAlign: 'center',
     alignItems: 'center',
@@ -175,12 +174,9 @@ const styles = StyleSheet.create({
   selectedTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#CA5509',
+    color: getThemeElement('selectedUtakmicaElement') as string,
     marginRight: 40,
     textAlign: 'center',
     alignItems: 'center',
-  },
-  scrollContainer: {
-    backgroundColor: 'transparent',
   },
 });

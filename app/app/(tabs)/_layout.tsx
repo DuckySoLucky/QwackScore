@@ -4,11 +4,10 @@ import { Tabs } from 'expo-router';
 import { Pressable, View } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 import('../../API/translation');
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -17,7 +16,6 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['nam
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme() ?? 'light';
   const { t: translate } = useTranslation();
 
   const router = useRouter();
@@ -29,14 +27,14 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         // Color of the active window at the bottom
-        tabBarActiveTintColor: Colors[colorScheme].taskbarIcons,
+        tabBarActiveTintColor: getThemeElement('text') as string,
         tabBarStyle: {
           paddingBottom: 5,
         },
 
         // navbar background color
         headerStyle: {
-          backgroundColor: Colors[colorScheme].navbarBackground,
+          backgroundColor: getThemeElement('navigationBar') as string,
         },
 
         headerShown: useClientOnlyValue(false, true),
@@ -54,7 +52,7 @@ export default function TabLayout() {
                   <AntDesign
                     name="search1"
                     size={24}
-                    color={Colors[colorScheme].navbarIcons}
+                    color={getThemeElement('text') as string}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -66,7 +64,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="bars"
                     size={25}
-                    color={Colors[colorScheme].navbarIcons}
+                    color={getThemeElement('text') as string}
                     style={{ opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -88,7 +86,7 @@ export default function TabLayout() {
                   <AntDesign
                     name="search1"
                     size={24}
-                    color={Colors[colorScheme].navbarIcons}
+                    color={getThemeElement('text') as string}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -99,7 +97,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="bars"
                     size={25}
-                    color={Colors[colorScheme].navbarIcons}
+                    color={getThemeElement('text') as string}
                     style={{ opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -120,7 +118,7 @@ export default function TabLayout() {
                   <AntDesign
                     name="search1"
                     size={24}
-                    color={Colors[colorScheme].navbarIcons}
+                    color={getThemeElement('text') as string}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -131,7 +129,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="bars"
                     size={25}
-                    color={Colors[colorScheme].navbarIcons}
+                    color={getThemeElement('text') as string}
                     style={{ opacity: pressed ? 0.5 : 1 }}
                   />
                 )}

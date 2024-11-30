@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { StatsResponseStatsTeam } from '@/API/types/stats';
 import React from 'react';
+import { getThemeElement } from '@/API/theme';
 
 export default function TeamStatisticColumnElement({ item }: { item: StatsResponseStatsTeam }) {
   return (
     <View style={styles.gameDetailsContainer}>
       <Text style={styles.positionText}>{item.position}</Text>
-      <View style={styles.seperator} />
+      <View style={styles.separator} />
 
       <View>
         <Image source={{ uri: item.image }} style={styles.clubImage} resizeMode="contain" />
@@ -25,10 +26,8 @@ export default function TeamStatisticColumnElement({ item }: { item: StatsRespon
 
 const styles = StyleSheet.create({
   gameDetailsContainer: {
-    backgroundColor: '#0C1216',
-    borderColor: '#000000',
+    ...(getThemeElement('innerContainerElement') as object),
     borderRadius: 5,
-    borderWidth: 1,
     marginHorizontal: 6,
     marginTop: 6,
     height: 50,
@@ -37,16 +36,16 @@ const styles = StyleSheet.create({
   },
   positionText: {
     marginLeft: 12,
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 18,
     alignItems: 'center',
   },
-  seperator: {
+  separator: {
     height: '80%',
     width: 1,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('separator') as string,
     marginLeft: 10,
   },
   clubImage: {
@@ -56,12 +55,12 @@ const styles = StyleSheet.create({
   },
   clubName: {
     marginLeft: 10,
-    color: '#C0C0C0',
+    color: getThemeElement('mainText') as string,
     fontSize: 15,
     fontWeight: 'bold',
   },
   amountText: {
-    color: '#C0C0C0',
+    color: getThemeElement('mainText') as string,
     fontSize: 18,
     fontWeight: 'bold',
   },

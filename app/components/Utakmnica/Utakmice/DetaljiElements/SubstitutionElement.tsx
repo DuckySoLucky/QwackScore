@@ -3,6 +3,7 @@ import { StyleSheet, Image } from 'react-native';
 import { Timeline } from '@/types/data';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 
 export default function SubstitutionElement({ item }: { item: Timeline }) {
   const { t: translate } = useTranslation();
@@ -19,7 +20,7 @@ export default function SubstitutionElement({ item }: { item: Timeline }) {
           >{`${translate(`match.details.summary.events.substitution_outcome.out`)}: ${item.playerOut}`}</Text>
         </View>
 
-        <View style={styles.seperatorRight} />
+        <View style={styles.separatorRight} />
 
         <View style={styles.columnTime}>
           <Image source={{ uri: 'https://i.imgur.com/vrSMVvh.png' }} style={styles.yellowCard} resizeMode="contain" />
@@ -36,7 +37,7 @@ export default function SubstitutionElement({ item }: { item: Timeline }) {
         <Text style={styles.timeText}>{item.time}</Text>
       </View>
 
-      <View style={styles.seperatorLeft} />
+      <View style={styles.separatorLeft} />
 
       <View style={styles.columnLeft}>
         <Text
@@ -103,26 +104,26 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
   },
-  seperatorRight: {
+  separatorRight: {
     height: '80%',
     width: 1,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('separator') as string,
     marginRight: 12,
   },
-  seperatorLeft: {
+  separatorLeft: {
     height: '80%',
     width: 1,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('separator') as string,
     marginRight: 12,
     marginLeft: 6,
   },
   mainTextRight: {
-    color: '#C0C0C0',
+    color: getThemeElement('text') as string,
     fontWeight: 'bold',
     marginRight: 12,
   },
   mainTextLeft: {
-    color: '#C0C0C0',
+    color: getThemeElement('text') as string,
     fontWeight: 'bold',
     marginLeft: 12,
   },

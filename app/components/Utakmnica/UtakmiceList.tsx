@@ -5,6 +5,8 @@ import ErrorComponent from '../global/ErrorComponents';
 import React, { useCallback } from 'react';
 import { Schedule } from '@/types/data';
 import { useTranslation } from 'react-i18next';
+import { getTheme, getThemeElement, getThemeName } from '@/API/theme';
+import { Container } from '../theme/Container';
 
 export default function UtakmiceList({ schedulesData }: { schedulesData: SchedulesResponse }) {
   const { t: translate } = useTranslation();
@@ -21,7 +23,7 @@ export default function UtakmiceList({ schedulesData }: { schedulesData: Schedul
   };
 
   return (
-    <View style={styles.outerContainer}>
+    <Container style={styles.container}>
       <FlatList
         data={Object.keys(schedulesData.schedules)}
         keyExtractor={(item) => item}
@@ -33,30 +35,19 @@ export default function UtakmiceList({ schedulesData }: { schedulesData: Schedul
         )}
         onEndReachedThreshold={0.5}
         ListFooterComponent={renderFooter}
-        style={styles.container}
       />
-    </View>
+    </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#161e28',
-    paddingTop: 6,
-  },
   roundText: {
     fontSize: 18,
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     marginLeft: 6,
     fontWeight: 'bold',
   },
   container: {
-    backgroundColor: '#10181E',
-    borderColor: '#000000',
-    borderRadius: 5,
-    borderWidth: 1,
     marginHorizontal: 6,
   },
 });

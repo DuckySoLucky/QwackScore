@@ -5,6 +5,7 @@ import { Text, View } from '@/components/Themed';
 import { Schedule } from '@/types/data';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 
 export default function Header({ item, timelineData }: { item: Schedule; timelineData: TimelineResponse }) {
   const { t: translate } = useTranslation();
@@ -65,7 +66,7 @@ export default function Header({ item, timelineData }: { item: Schedule; timelin
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#10181E',
+    backgroundColor: getThemeElement('innerContainer') as string,
     paddingTop: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 4,
     textAlign: 'center',
+    color: getThemeElement('teamName') as string,
   },
   scoreContainer: {
     alignItems: 'center',
@@ -100,14 +102,17 @@ const styles = StyleSheet.create({
   scoreText: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: getThemeElement('teamName') as string,
   },
   stateText: {
+    color: getThemeElement('teamName') as string,
+    fontWeight: 'bold',
     fontSize: 16,
     marginTop: 4,
   },
   playerScoreText: {
     fontSize: 12,
-    color: 'gray',
+    color: getThemeElement('text') as string,
   },
   scoresContainer: {
     flexDirection: 'column',

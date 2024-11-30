@@ -17,6 +17,7 @@ import { fetchLigeDataResponse } from '@/API/types';
 import { fetchLigeData } from '@/API';
 import { CONFIG } from '@/API/storage';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
 
 export default function TabTwoScreen() {
   const { t: translate } = useTranslation();
@@ -26,7 +27,10 @@ export default function TabTwoScreen() {
   const params = route.params as { id: string; title: string };
 
   useEffect(() => {
-    navigation.setOptions({ title: params.title ?? 'Liga', headerStyle: styles.header });
+    navigation.setOptions({
+      title: params.title ?? 'Liga',
+      headerTransparent: true,
+    });
   }, [navigation, params.title]);
 
   const [data, setData] = useState<null | fetchLigeDataResponse>(null);
@@ -71,8 +75,8 @@ export default function TabTwoScreen() {
 
   const ViewComponent = VIEW_COMPONENTS[selectedView] ?? VIEW_COMPONENTS.details;
   return (
-    <View>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={{ backgroundColor: getThemeElement('innerContainer') as string }}>
         <ScrollView horizontal style={styles.scroll}>
           <Pressable onPress={() => setSelectedView('details')}>
             <Text style={selectedView === 'details' ? styles.selectedTitle : styles.title}>
@@ -106,7 +110,7 @@ export default function TabTwoScreen() {
         </ScrollView>
       </View>
 
-      <View style={styles.selectedView}>
+      <View style={{ backgroundColor: getThemeElement('background') as string, paddingTop: 6 }}>
         <ViewComponent
           schedulesData={schedulesData}
           statsData={statsData}
@@ -128,17 +132,17 @@ const VIEW_COMPONENTS = {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 5,
-    backgroundColor: '#10181E',
+    backgroundColor: getThemeElement('innerContainer') as string,
+    paddingTop: 100,
   },
   scroll: {
-    paddingLeft: 10,
-    height: 40,
+    paddingLeft: 12,
+    height: 30,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     marginRight: 40,
     textAlign: 'center',
     alignItems: 'center',
@@ -146,16 +150,9 @@ const styles = StyleSheet.create({
   selectedTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#CA5509',
+    color: getThemeElement('selectedUtakmicaElement') as string,
     marginRight: 40,
     textAlign: 'center',
     alignItems: 'center',
-  },
-  header: {
-    backgroundColor: '#10181E',
-  },
-  selectedView: {
-    backgroundColor: '#161e28',
-    paddingTop: 6,
   },
 });

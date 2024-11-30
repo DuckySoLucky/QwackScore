@@ -2,6 +2,8 @@ import { TouchableOpacity, StyleSheet, Image } from 'react-native';
 import React, { useState } from 'react';
 import { Text, View } from '@/components/Themed';
 import { Link } from 'expo-router';
+import { InnerContainer } from '../theme/Container';
+import { getTheme, getThemeElement } from '@/API/theme';
 
 const DropdownMenu = ({
   title,
@@ -16,7 +18,7 @@ const DropdownMenu = ({
   const toggleDropdown = () => setIsVisible(!isVisible);
 
   return (
-    <View style={styles.outerContainer}>
+    <InnerContainer style={styles.outerContainer}>
       <TouchableOpacity style={styles.dropdownBar} onPress={toggleDropdown}>
         <Image source={{ uri: imageUri }} style={styles.image} />
         <Text style={styles.title}>{title}</Text>
@@ -36,7 +38,7 @@ const DropdownMenu = ({
           ))}
         </View>
       )}
-    </View>
+    </InnerContainer>
   );
 };
 
@@ -44,16 +46,13 @@ const styles = StyleSheet.create({
   outerContainer: {
     marginHorizontal: 6,
     marginTop: 6,
-    backgroundColor: '#0C1216', // #
     flexDirection: 'column',
-    borderWidth: 1,
-    borderColor: '#000000',
     borderRadius: 10,
   },
   dropdownBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'transparent', // #10181E
+    backgroundColor: 'transparent',
     padding: 10,
   },
   image: {
@@ -63,23 +62,19 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    color: '#FFFFFF',
+    color: getThemeElement('mainText') as string,
   },
   arrow: {
-    color: '#FFFFFF',
+    color: getThemeElement('mainText') as string,
     marginRight: 10,
   },
   dropdownMenu: {
-    backgroundColor: 'transparent', // #10181E
+    backgroundColor: 'transparent',
     marginLeft: 10,
     paddingBottom: 10,
   },
   menuItem: {
-    // color: '#686868',
-    paddingVertical: 5,
-    paddingRight: 10,
-    marginLeft: 10,
-    paddingLeft: 10,
+    color: getThemeElement('mainText') as string,
   },
   menuImage: {
     width: 24,

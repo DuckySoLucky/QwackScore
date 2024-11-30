@@ -21,6 +21,7 @@
     "defaultLeague": "Zadana liga",
     "theme": "Tema",
     "themes": {
+      "system": "Sistem",
       "light": "Svijetla",
       "dark": "Tamna"
     },
@@ -144,7 +145,8 @@
         "throw_ins": "Ubacivanja",
         "yellow_cards": "Žuti kartoni",
         "red_cards": "Crveni kartoni",
-        "penalties_missed": "Promašeni penali"
+        "penalties_missed": "Promašeni penali",
+        "yellow_red_cards": "Žuti Crveni kartoni"
       }
     },
     "commentary": {

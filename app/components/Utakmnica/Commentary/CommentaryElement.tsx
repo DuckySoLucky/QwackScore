@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { Text, View } from '@/components/Themed';
 import { Commentary } from '@/types/data';
+import { getThemeElement } from '@/API/theme';
 
 export default function CommentaryElement({ item }: { item: Commentary }) {
   if (item.position === 'right') {
@@ -9,7 +10,7 @@ export default function CommentaryElement({ item }: { item: Commentary }) {
       <View style={styles.outerContainerRight}>
         <Text style={styles.mainTextRight}>{item.message}</Text>
 
-        <View style={styles.seperatorRight} />
+        <View style={styles.separatorRight} />
 
         <View style={styles.column}>
           <Text style={styles.timeText}>{item.time}</Text>
@@ -24,7 +25,7 @@ export default function CommentaryElement({ item }: { item: Commentary }) {
         <Text style={styles.timeText}>{item.time}</Text>
       </View>
 
-      <View style={styles.seperatorLeft} />
+      <View style={styles.separatorLeft} />
 
       <Text style={styles.mainTextLeft}>{item.message}</Text>
     </View>
@@ -58,25 +59,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     marginRight: 12,
   },
-
   timeText: {
-    color: '#686868',
     fontSize: 16,
+    color: getThemeElement('text') as string,
   },
-  seperatorRight: {
+  separatorRight: {
     height: '80%',
     width: 1,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('separator') as string,
     marginRight: 12,
   },
-  seperatorLeft: {
+  separatorLeft: {
     height: '80%',
     width: 1,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('separator') as string,
   },
   mainTextRight: {
     textAlign: 'right',
-    color: '#C0C0C0',
+    color: getThemeElement('text') as string,
     fontWeight: 'bold',
     marginRight: 12,
     fontSize: 12,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   mainTextLeft: {
     textAlign: 'left',
-    color: '#C0C0C0',
+    color: getThemeElement('text') as string,
     fontWeight: 'bold',
     marginLeft: 12,
     fontSize: 12,

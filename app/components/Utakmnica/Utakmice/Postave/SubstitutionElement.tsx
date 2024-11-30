@@ -2,6 +2,8 @@ import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { getThemeElement } from '@/API/theme';
+import { Container, InnerContainer } from '@/components/theme/Container';
 
 export default function SubstitutionElement({
   number,
@@ -15,38 +17,35 @@ export default function SubstitutionElement({
   const { t: translate } = useTranslation();
   if (!type) {
     return (
-      <View style={styles.coachContainer}>
+      <Container style={styles.coachContainer}>
         <Image source={{ uri: 'https://i.imgur.com/74RFZoj.png' }} style={styles.coachIcon} resizeMode="contain" />
 
         <View style={styles.column}>
           <Text style={styles.coachName}>{name}</Text>
           <Text style={styles.coachProfession}>{translate(`match.lineup.titles.coach`)}</Text>
         </View>
-      </View>
+      </Container>
     );
   }
 
   return (
-    <View style={styles.substitutionPlayerContainer}>
+    <InnerContainer style={styles.substitutionPlayerContainer}>
       <Image source={{ uri: 'https://i.imgur.com/74RFZoj.png' }} style={styles.coachIcon} resizeMode="contain" />
 
       <View style={styles.column}>
         <Text style={styles.coachName}>{`${number} ${name}`}</Text>
         <Text style={styles.coachProfession}>{translate(`match.lineup.titles.${type.toLowerCase()}`)}</Text>
       </View>
-    </View>
+    </InnerContainer>
   );
 }
 
 const styles = StyleSheet.create({
   coachContainer: {
-    backgroundColor: '#10181E',
     marginTop: 12,
     marginLeft: 6,
     marginRight: 6,
     borderRadius: 8,
-    borderColor: '#000000',
-    borderWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: 3,
@@ -63,21 +62,18 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   coachName: {
-    color: '#FFFFFF',
+    color: getThemeElement('text') as string,
     fontWeight: 'bold',
     fontSize: 16,
   },
   coachProfession: {
-    color: '#686868',
+    color: getThemeElement('mainText') as string,
     fontSize: 14,
   },
   substitutionPlayerContainer: {
     flexDirection: 'row',
-    backgroundColor: '#0C1216',
     marginLeft: 6,
     marginRight: 6,
-    borderWidth: 1,
-    borderColor: '#00000',
     borderRadius: 8,
     marginTop: 6,
   },

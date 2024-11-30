@@ -3,6 +3,7 @@ import CommentaryElement from './Commentary/CommentaryElement';
 import { View, FlatList, StyleSheet } from 'react-native';
 import ErrorComponent from '../global/ErrorComponents';
 import React, { useCallback, useMemo } from 'react';
+import { getThemeElement } from '@/API/theme';
 
 export default function CommentaryList({ timelineData }: { timelineData: TimelineResponse }) {
   const renderItem = useCallback(
@@ -43,36 +44,27 @@ export default function CommentaryList({ timelineData }: { timelineData: Timelin
   }
 
   return (
-    <View style={styles.outerContainer}>
-      <FlatList
-        data={timelineData.commentary}
-        keyExtractor={(item) => `${item.time}-${item.message}-${Math.random()}`}
-        renderItem={memoizedRenderItem}
-        style={styles.container}
-      />
-    </View>
+    <FlatList
+      data={timelineData.commentary}
+      keyExtractor={(item) => `${item.time}-${item.message}-${Math.random()}`}
+      renderItem={memoizedRenderItem}
+      style={styles.container}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#161e28',
-    paddingTop: 6,
-  },
   container: {
-    backgroundColor: '#10181E',
-    borderColor: '#000000',
+    ...(getThemeElement('innerContainerElement') as object),
+    marginTop: 12,
     borderRadius: 5,
-    borderWidth: 1,
     marginHorizontal: 6,
     marginBottom: 70,
   },
   borderLine: {
     width: '95%',
     height: 1,
-    backgroundColor: '#222A36',
+    backgroundColor: getThemeElement('separator') as string,
     marginVertical: 12,
   },
   center: {
