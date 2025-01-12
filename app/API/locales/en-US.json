@@ -27,6 +27,7 @@
     },
     "developerSettings": "Developer Settings",
     "developerMode": "Developer Mode",
+    "mockupAPIMode": "Mockup API Mode",
     "localAPIMode": "Local API Mode",
     "APIUrl": "API URL",
     "APIKey": "API Key",

@@ -4,14 +4,18 @@ import { fetchJson } from '@/API/src/handler';
 import { config } from '@/API/config';
 import { broadcastMessage } from '@/API/log';
 import { CONFIG } from '@/API/storage';
+import * as MOCKUP from '../mock/index';
 
 export const fetchSchedules = async (
   id: string,
-  options = { useLocalAPI: false },
+  options = { useLocalAPI: false, useMockupAPI: false },
 ): Promise<SchedulesResponse | null> => {
   try {
     broadcastMessage(`fetchSchedules(${id}) called.`, 'api');
     const timeNow = Date.now();
+    if (options.useMockupAPI) {
+      return formatSchedules(MOCKUP.SCHEDULES) as SchedulesResponse;
+    }
 
     if (options.useLocalAPI) {
       const schedulesData = (await fetchJson(`${config.localAPI}/schedules/${id}`)) as SchedulesResponse;

@@ -34,6 +34,7 @@ export default function TabTwoScreen() {
   const [selectedTheme, setSelectedTheme] = useState<string | undefined>(undefined);
   const [isDeveloperMode, setIsDeveloperMode] = useState<boolean>(false);
   const [useLocalAPI, setUseLocalAPI] = useState<boolean>(false);
+  const [useMockupAPI, setUseMockupAPI] = useState<boolean>(false);
   const [isEditingApiKey, setIsEditingApiKey] = useState(false);
   const [localAPI, setLocalAPI] = useState('');
   const [apiKey, setApiKey] = useState('');
@@ -73,6 +74,12 @@ export default function TabTwoScreen() {
     setIsDeveloperMode((prev) => !prev);
     CONFIG.set('developerMode', !isDeveloperMode);
     ToastAndroid.show('Developer mode toggled', ToastAndroid.SHORT);
+  };
+
+  const swithcMockupAPIMode = () => {
+    setUseMockupAPI((prev) => !prev);
+    CONFIG.set('useMockupAPI', !useMockupAPI);
+    ToastAndroid.show('Mockup API mode toggled', ToastAndroid.SHORT);
   };
 
   const switchAPIMode = () => {
@@ -142,7 +149,10 @@ export default function TabTwoScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchSeasons({ useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean });
+        const result = await fetchSeasons({
+          useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean,
+          useMockupAPI: CONFIG.getCached('useMockupAPI') as boolean,
+        });
         setData(result);
 
         if (!result) {
@@ -163,9 +173,9 @@ export default function TabTwoScreen() {
   }
 
   if (error && isEditingApiKey === false) {
-    Alert.alert(translate('three.invalidAPIKeyHeaderMessage'), translate('three.invalidAPIKeyMessage'), [
+    /*Alert.alert(translate('three.invalidAPIKeyHeaderMessage'), translate('three.invalidAPIKeyMessage'), [
       { text: 'OK' },
-    ]);
+    ]);*/
   }
 
   return (
@@ -219,6 +229,16 @@ export default function TabTwoScreen() {
         <Switch
           value={isDeveloperMode}
           onValueChange={toggleDeveloperMode}
+          style={styles.switchStyle}
+          thumbColor={'#C0C0C0'}
+          trackColor={{ true: '#222A36' }}
+        />
+      </Container>
+      <Container style={styles.row}>
+        <MainText style={styles.title}>{translate('three.mockupAPIMode')}:</MainText>
+        <Switch
+          value={useMockupAPI}
+          onValueChange={swithcMockupAPIMode}
           style={styles.switchStyle}
           thumbColor={'#C0C0C0'}
           trackColor={{ true: '#222A36' }}

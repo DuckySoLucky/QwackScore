@@ -27,6 +27,7 @@
     },
     "developerSettings": "Postavke za razvojne programere",
     "developerMode": "Način za razvojne programere",
+    "mockupAPIMode": "Mockup API način",
     "localAPIMode": "Lokalni API način",
     "APIUrl": "API URL",
     "APIKey": "API ključ",

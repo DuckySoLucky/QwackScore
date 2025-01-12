@@ -42,6 +42,7 @@ export default function TabTwoScreen() {
       try {
         const result = await fetchLigeData(params.id, {
           useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean,
+          useMockupAPI: CONFIG.getCached('useMockupAPI') as boolean,
           name: params.title,
         });
         setData(result);

@@ -10,7 +10,8 @@ type cacheKey =
   | 'developerMode'
   | 'localAPI'
   | 'useLocalAPI'
-  | 'sportRadarAPIKey';
+  | 'sportRadarAPIKey'
+  | 'useMockupAPI';
 
 export const cache = new Map<cacheKey, string | boolean>();
 

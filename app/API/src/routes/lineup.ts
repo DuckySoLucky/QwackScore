@@ -4,11 +4,19 @@ import { config } from '@/API/config';
 import { formatLineup } from '../processing/lineup';
 import { broadcastMessage } from '@/API/log';
 import { CONFIG } from '@/API/storage';
+import * as MOCKUP from '../mock/index';
 
-export const fetchLineup = async (id: string, options = { useLocalAPI: false }): Promise<LineupResponse | null> => {
+export const fetchLineup = async (
+  id: string,
+  options = { useLocalAPI: false, useMockupAPI: false },
+): Promise<LineupResponse | null> => {
   try {
     broadcastMessage(`fetchLineup(${id}) called.`, 'api');
     const timeNow = Date.now();
+
+    if (options.useMockupAPI) {
+      return formatLineup(MOCKUP.LINEUP) as LineupResponse;
+    }
 
     if (options.useLocalAPI) {
       const seasonData = (await fetchJson(`${config.localAPI}/lineup/${id}`)) as LineupResponse;

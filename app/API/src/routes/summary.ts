@@ -4,11 +4,19 @@ import { config } from '@/API/config';
 import { formatSummary } from '../processing/summary';
 import { broadcastMessage } from '@/API/log';
 import { CONFIG } from '@/API/storage';
+import * as MOCKUP from '../mock/index';
 
-export const fetchSummary = async (id: string, options = { useLocalAPI: false }): Promise<SummaryResponse | null> => {
+export const fetchSummary = async (
+  id: string,
+  options = { useLocalAPI: false, useMockupAPI: false },
+): Promise<SummaryResponse | null> => {
   try {
     broadcastMessage(`fetchSummary(${id}) called.`, 'api');
     const timeNow = Date.now();
+
+    if (options.useMockupAPI) {
+      return formatSummary(MOCKUP.SUMMARY) as unknown as SummaryResponse;
+    }
 
     if (options.useLocalAPI) {
       const summaryData = (await fetchJson(`${config.localAPI}/summary/${id}`)) as SummaryResponse;

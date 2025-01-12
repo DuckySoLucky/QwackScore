@@ -9,13 +9,18 @@ import { fetchSummary } from './routes/summary';
 
 export const fetchLigeData = async (
   id: string,
-  options = { useLocalAPI: false, name: null } as { useLocalAPI: boolean; name: string | null },
+  options = { useLocalAPI: false, useMockupAPI: false, name: null } as {
+    useLocalAPI: boolean;
+    useMockupAPI: boolean;
+    name: string | null;
+  },
 ): Promise<fetchLigeDataResponse> => {
   const seasonData = await fetchSeason(id, options);
   if (!seasonData?.id) {
     throw new Error(`Couldn't find the selected competition with id: ${id}`);
   }
 
+  console.log(seasonData.id);
   const schedulesData = await fetchSchedules(seasonData.id, options);
   const statsData = await fetchStats(seasonData.id, options);
   const standingsData = await fetchStandings(seasonData.id, options);
@@ -25,7 +30,7 @@ export const fetchLigeData = async (
 
 export const fetchUtakmicaData = async (
   id: string,
-  options = { useLocalAPI: false },
+  options = { useLocalAPI: false, useMockupAPI: false },
 ): Promise<fetchUtakmicaDataResponse> => {
   const timelineData = await fetchTimeline(id, options);
   if (!timelineData) {

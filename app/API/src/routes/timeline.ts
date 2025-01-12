@@ -4,11 +4,19 @@ import { config } from '@/API/config';
 import { formatTimeline } from '../processing/timeline';
 import { broadcastMessage } from '@/API/log';
 import { CONFIG } from '@/API/storage';
+import * as MOCKUP from '../mock/index';
 
-export const fetchTimeline = async (id: string, options = { useLocalAPI: false }): Promise<TimelineResponse | null> => {
+export const fetchTimeline = async (
+  id: string,
+  options = { useLocalAPI: false, useMockupAPI: false },
+): Promise<TimelineResponse | null> => {
   try {
     broadcastMessage(`fetchTimeline(${id}) called.`, 'api');
     const timeNow = Date.now();
+
+    if (options.useMockupAPI) {
+      return formatTimeline(MOCKUP.TIMELINE) as TimelineResponse;
+    }
 
     if (options.useLocalAPI) {
       const timelineData = (await fetchJson(`${config.localAPI}/timeline/${id}`)) as TimelineResponse;

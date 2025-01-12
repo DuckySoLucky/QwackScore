@@ -46,6 +46,7 @@ export default function TabTwoScreen() {
       try {
         const result = await fetchUtakmicaData(utakmicaData.id, {
           useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean,
+          useMockupAPI: CONFIG.getCached('useMockupAPI') as boolean,
         });
         setData(result);
       } catch (err) {

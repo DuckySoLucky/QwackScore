@@ -23,7 +23,7 @@ async function fetchSeasons() {
         const timeNow = Date.now();
 
         const cache = await db.collection("cache").findOne({ key: "seasons" });
-        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+        if (cache) {
             broadcastMessage(`fetchSeasons returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
             return cache.value;
         }
@@ -79,7 +79,7 @@ async function fetchCompetitions() {
         const timeNow = Date.now();
 
         const cache = await db.collection("cache").findOne({ key: "competitions" });
-        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+        if (cache) {
             broadcastMessage(`fetchCompetitions returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
             return cache.value;
         }
@@ -118,7 +118,7 @@ async function getCompetition(id) {
         const timeNow = Date.now();
 
         const cache = await db.collection("cache").findOne({ key: `competition-${id}` });
-        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+        if (cache) {
             broadcastMessage(`getCompetition returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
             return cache.value.data;
         }
@@ -156,7 +156,7 @@ async function getSeasonSchedules(seasonId) {
         const timeNow = Date.now();
 
         const cache = await db.collection("cache").findOne({ key: `seasonSchedules-${seasonId}` });
-        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+        if (cache) {
             broadcastMessage(`getSeasonSchedules returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
             return cache.value.schedules;
         }
@@ -195,7 +195,7 @@ async function getPlayerStats(seasonId) {
         const timeNow = Date.now();
 
         const cache = await db.collection("cache").findOne({ key: `stats-${seasonId}` });
-        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+        if (cache) {
             broadcastMessage(`getStats returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
             return cache.value;
         }
@@ -233,7 +233,7 @@ async function getStandings(seasonId) {
         const timeNow = Date.now();
 
         const cache = await db.collection("cache").findOne({ key: `standings-${seasonId}` });
-        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+        if (cache) {
             broadcastMessage(`getStandings returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
             return cache.value.data;
         }
@@ -271,7 +271,7 @@ async function getFormStandings(seasonId) {
         const timeNow = Date.now();
 
         const cache = await db.collection("cache").findOne({ key: `formStandings-${seasonId}` });
-        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+        if (cache) {
             broadcastMessage(`getFormStandings returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
             return cache.value.data;
         }
@@ -309,7 +309,7 @@ async function getTimeline(sportEvent) {
         const timeNow = Date.now();
 
         const cache = await db.collection("cache").findOne({ key: `timeList-${sportEvent}` });
-        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+        if (cache) {
             broadcastMessage(`getTimeline returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
             return cache.value.data;
         }
@@ -347,7 +347,7 @@ async function getLineup(sportEvent) {
         const timeNow = Date.now();
 
         const cache = await db.collection("cache").findOne({ key: `lineup-${sportEvent}` });
-        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+        if (cache) {
             broadcastMessage(`getLineup returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
             return cache.value.data;
         }
@@ -385,7 +385,7 @@ async function getSummary(sportEvent) {
         const timeNow = Date.now();
 
         const cache = await db.collection("cache").findOne({ key: `summary-${sportEvent}` });
-        if (cache && cache.value.lastUpdated > Date.now() - 5 * 60 * 1000) {
+        if (cache) {
             broadcastMessage(`getSummary returned. [CACHE] (${Date.now() - timeNow}ms)`, "api");
             return cache.value.data;
         }

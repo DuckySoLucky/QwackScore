@@ -4,14 +4,19 @@ import { config } from '@/API/config';
 import { formatStandings } from '../processing/standings';
 import { broadcastMessage } from '@/API/log';
 import { CONFIG } from '@/API/storage';
+import * as MOCKUP from '../mock/index';
 
 export const fetchStandings = async (
   id: string,
-  options = { useLocalAPI: false },
+  options = { useLocalAPI: false, useMockupAPI: false },
 ): Promise<StandignsResponse | null> => {
   try {
     broadcastMessage(`fetchStandings(${id}) called.`, 'api');
     const timeNow = Date.now();
+
+    if (options.useMockupAPI) {
+      return formatStandings(MOCKUP.STANDINGS[0], MOCKUP.FORM_STANDINGS[0]) as StandignsResponse;
+    }
 
     if (options.useLocalAPI) {
       const standingsData = (await fetchJson(`${config.localAPI}/standings/${id}`)) as StandignsResponse;

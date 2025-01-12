@@ -24,7 +24,10 @@ export default function TabOneScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchSchedules(seasonId, { useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean });
+        const result = await fetchSchedules(seasonId, {
+          useLocalAPI: CONFIG.getCached('useLocalAPI') as boolean,
+          useMockupAPI: CONFIG.getCached('useMockupAPI') as boolean,
+        });
         setData(result);
       } catch (err) {
         setError(err as Error);

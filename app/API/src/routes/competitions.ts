@@ -4,11 +4,19 @@ import { config } from '@/API/config';
 import { formatCompetitions } from '../processing/competitions';
 import { broadcastMessage } from '@/API/log';
 import { CONFIG } from '@/API/storage';
+import * as MOCKUP from '../mock/index';
 
-export const fetchCompetitions = async (options = { useLocalAPI: false }): Promise<CompetitionsResponse | null> => {
+export const fetchCompetitions = async (
+  options = { useLocalAPI: false, useMockupAPI: false },
+): Promise<CompetitionsResponse | null> => {
   try {
     broadcastMessage(`fetchCompetitions() called.`, 'api');
     const timeNow = Date.now();
+
+    if (options.useMockupAPI) {
+      return formatCompetitions(MOCKUP.COMPETITIONS) as CompetitionsResponse;
+    }
+
     if (options.useLocalAPI) {
       const competitionsData = (await fetchJson(`${config.localAPI}/competitions`)) as CompetitionsResponse;
       if (!competitionsData) {

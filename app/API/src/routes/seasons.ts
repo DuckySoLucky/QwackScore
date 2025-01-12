@@ -4,11 +4,18 @@ import { config } from '@/API/config';
 import { formatSeasons } from '../processing/seasons';
 import { broadcastMessage } from '@/API/log';
 import { CONFIG } from '@/API/storage';
+import * as MOCKUP from '../mock/index';
 
-export const fetchSeasons = async (options = { useLocalAPI: false }): Promise<SeasonsResponse | null> => {
+export const fetchSeasons = async (
+  options = { useLocalAPI: false, useMockupAPI: false },
+): Promise<SeasonsResponse | null> => {
   try {
     broadcastMessage(`fetchSeasons() called.`, 'api');
     const timeNow = Date.now();
+
+    if (options.useMockupAPI) {
+      return formatSeasons(MOCKUP.SEASONS) as unknown as SeasonsResponse;
+    }
 
     if (options.useLocalAPI) {
       const seasonData = (await fetchJson(`${config.localAPI}/seasons`)) as SeasonsResponse;

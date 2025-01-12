@@ -71,7 +71,6 @@ let selectedTheme = (CONFIG.getCached('theme') || 'dark') as string;
 setTimeout(async () => {
   await bumpCache();
   selectedTheme = (CONFIG.getCached('theme') as string) || 'dark';
-  console.log('Selected theme:', selectedTheme);
 }, 250);
 
 export function getTheme(): { [key: string]: string | { [key: string]: string | number } } {
@@ -81,7 +80,6 @@ export function getTheme(): { [key: string]: string | { [key: string]: string | 
 
 export function getThemeElement(name: string): string | { [key: string]: string | number } {
   selectedTheme = (CONFIG.getCached('theme') as string) || 'dark';
-  console.log('Selected theme:', selectedTheme);
   return THEMES[selectedTheme][name];
 }
 
