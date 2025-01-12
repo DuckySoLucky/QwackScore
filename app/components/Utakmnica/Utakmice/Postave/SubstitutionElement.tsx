@@ -1,4 +1,4 @@
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,34 +9,40 @@ export default function SubstitutionElement({
   number,
   name,
   type,
+  onPress,
 }: {
   number: number;
   name: string;
   type: string | null;
+  onPress: () => void;
 }) {
   const { t: translate } = useTranslation();
   if (!type) {
     return (
-      <Container style={styles.coachContainer}>
-        <Image source={{ uri: 'https://i.imgur.com/74RFZoj.png' }} style={styles.coachIcon} resizeMode="contain" />
+      <TouchableOpacity onPress={onPress} activeOpacity={0.5}>
+        <Container style={styles.coachContainer}>
+          <Image source={{ uri: 'https://i.imgur.com/74RFZoj.png' }} style={styles.coachIcon} resizeMode="contain" />
 
-        <View style={styles.column}>
-          <Text style={styles.coachName}>{name}</Text>
-          <Text style={styles.coachProfession}>{translate(`match.lineup.titles.coach`)}</Text>
-        </View>
-      </Container>
+          <View style={styles.column}>
+            <Text style={styles.coachName}>{name}</Text>
+            <Text style={styles.coachProfession}>{translate(`match.lineup.titles.coach`)}</Text>
+          </View>
+        </Container>
+      </TouchableOpacity>
     );
   }
 
   return (
-    <InnerContainer style={styles.substitutionPlayerContainer}>
-      <Image source={{ uri: 'https://i.imgur.com/74RFZoj.png' }} style={styles.coachIcon} resizeMode="contain" />
+    <TouchableOpacity onPress={onPress} activeOpacity={0.5}>
+      <InnerContainer style={styles.substitutionPlayerContainer}>
+        <Image source={{ uri: 'https://i.imgur.com/74RFZoj.png' }} style={styles.coachIcon} resizeMode="contain" />
 
-      <View style={styles.column}>
-        <Text style={styles.coachName}>{`${number} ${name}`}</Text>
-        <Text style={styles.coachProfession}>{translate(`match.lineup.titles.${type.toLowerCase()}`)}</Text>
-      </View>
-    </InnerContainer>
+        <View style={styles.column}>
+          <Text style={styles.coachName}>{`${number} ${name}`}</Text>
+          <Text style={styles.coachProfession}>{translate(`match.lineup.titles.${type.toLowerCase()}`)}</Text>
+        </View>
+      </InnerContainer>
+    </TouchableOpacity>
   );
 }
 
@@ -76,5 +82,6 @@ const styles = StyleSheet.create({
     marginRight: 6,
     borderRadius: 8,
     marginTop: 6,
+    paddingBottom: 3,
   },
 });

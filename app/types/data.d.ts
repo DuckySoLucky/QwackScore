@@ -93,11 +93,21 @@ export type Lineup = Record<
 >;
 
 export type Substitution = {
-  name: string;
-  type: string;
-  jersey_number: number;
-  position: string;
+  country_code: string;
+  date_of_birth: string;
+  height: number;
   id: string;
+  jersey_number: number;
+  name: string;
+  nationality: string;
+  order: number;
+  place_of_birth: string;
+  played: boolean;
+  position: string;
+  preferred_foot: string;
+  starter: boolean;
+  type: string;
+  weight: number;
 };
 
 export type SummaryData = Summary[];

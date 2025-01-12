@@ -1,4 +1,4 @@
-import { StyleSheet, Image } from 'react-native';
+import { TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
 
 function formatPlayerName(name: string) {
@@ -8,15 +8,25 @@ function formatPlayerName(name: string) {
     .join(' ');
 }
 
-export default function PlayerElement({ name, number }: { name: string; number: number }) {
+export default function PlayerElement({
+  name,
+  number,
+  onPress,
+}: {
+  name: string;
+  number: number;
+  onPress: () => void;
+}) {
   return (
-    <View style={styles.outerContainer}>
-      <Image source={{ uri: 'https://i.imgur.com/LKVoKcy.png' }} style={styles.playerImage} resizeMode="contain" />
+    <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
+      <View style={styles.outerContainer}>
+        <Image source={{ uri: 'https://i.imgur.com/LKVoKcy.png' }} style={styles.playerImage} resizeMode="contain" />
 
-      <Text style={styles.playerNumber}>{number}</Text>
+        <Text style={styles.playerNumber}>{number}</Text>
 
-      <Text style={styles.playerName}>{formatPlayerName(name)}</Text>
-    </View>
+        <Text style={styles.playerName}>{formatPlayerName(name)}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
 

@@ -112,7 +112,17 @@
         "goalkeeper": "Goalkeeper",
         "defender": "Defender",
         "midfielder": "Midfielder",
-        "forward": "Forward"
+        "forward": "Forward",
+        "type": "Position",
+        "date_of_birth": "Date of Birth",
+        "nationality": "Nationality",
+        "height": "Height",
+        "weight": "Weight",
+        "jersey_number": "Jersey Number",
+        "preferred_foot": "Preferred Foot",
+        "place_of_birth": "Place of Birth",
+        "right": "Right",
+        "left": "Left"
       }
     },
     "standings": {

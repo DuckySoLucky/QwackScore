@@ -112,7 +112,17 @@
         "goalkeeper": "Golman",
         "defender": "Branič",
         "midfielder": "Vezni igrač",
-        "forward": "Napadač"
+        "forward": "Napadač",
+        "type": "Pozicija",
+        "date_of_birth": "Datum rođenja",
+        "nationality": "Nacionalnost",
+        "height": "Visina",
+        "weight": "Težina",
+        "jersey_number": "Broj dresa",
+        "preferred_foot": "Dominantna noga",
+        "place_of_birth": "Mjesto rođenja",
+        "right": "Desna",
+        "left": "Lijeva"
       }
     },
     "standings": {
