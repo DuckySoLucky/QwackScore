@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 import { useTranslation } from 'react-i18next';
-import { getThemeElement } from '@/API/theme';
+import { getTheme, getThemeElement, getThemeName } from '@/API/theme';
 
 export default function CornerKickElement({ item }: { item: Timeline }) {
   const { t: translate } = useTranslation();
@@ -16,7 +16,13 @@ export default function CornerKickElement({ item }: { item: Timeline }) {
         <View style={styles.separatorRight} />
 
         <View style={styles.column}>
-          <Image source={{ uri: 'https://i.imgur.com/uaCclHH.png' }} style={styles.yellowCard} resizeMode="contain" />
+          <Image
+            source={{
+              uri: getThemeName() === 'dark' ? 'https://i.imgur.com/uaCclHH.png' : 'https://i.imgur.com/iI70Dlk.png',
+            }}
+            style={styles.yellowCard}
+            resizeMode="contain"
+          />
           <Text style={styles.timeText}>{item.time}</Text>
         </View>
       </View>
@@ -26,7 +32,13 @@ export default function CornerKickElement({ item }: { item: Timeline }) {
   return (
     <View style={styles.outerContainerLeft}>
       <View style={styles.column}>
-        <Image source={{ uri: 'https://i.imgur.com/uaCclHH.png' }} style={styles.yellowCard} resizeMode="contain" />
+        <Image
+          source={{
+            uri: getThemeName() === 'dark' ? 'https://i.imgur.com/uaCclHH.png' : 'https://i.imgur.com/iI70Dlk.png',
+          }}
+          style={styles.yellowCard}
+          resizeMode="contain"
+        />
         <Text style={styles.timeText}>{item.time}</Text>
       </View>
 

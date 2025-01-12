@@ -3,7 +3,7 @@ import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getThemeElement } from '@/API/theme';
+import { getThemeElement, getThemeName } from '@/API/theme';
 
 export default function ThrowInElement({ item }: { item: Timeline }) {
   const { t: translate } = useTranslation();
@@ -16,7 +16,13 @@ export default function ThrowInElement({ item }: { item: Timeline }) {
         <View style={styles.separatorRight} />
 
         <View style={styles.column}>
-          <Image source={{ uri: 'https://i.imgur.com/BPBp3eM.png' }} style={styles.yellowCard} resizeMode="contain" />
+          <Image
+            source={{
+              uri: getThemeName() === 'dark' ? 'https://i.imgur.com/BPBp3eM.png' : 'https://i.imgur.com/sIK2C7M.png',
+            }}
+            style={styles.yellowCard}
+            resizeMode="contain"
+          />
           <Text style={styles.timeText}>{item.time}</Text>
         </View>
       </View>
@@ -26,7 +32,13 @@ export default function ThrowInElement({ item }: { item: Timeline }) {
   return (
     <View style={styles.outerContainerLeft}>
       <View style={styles.column}>
-        <Image source={{ uri: 'https://i.imgur.com/BPBp3eM.png' }} style={styles.yellowCard} resizeMode="contain" />
+        <Image
+          source={{
+            uri: getThemeName() === 'dark' ? 'https://i.imgur.com/BPBp3eM.png' : 'https://i.imgur.com/sIK2C7M.png',
+          }}
+          style={styles.yellowCard}
+          resizeMode="contain"
+        />
         <Text style={styles.timeText}>{item.time}</Text>
       </View>
 

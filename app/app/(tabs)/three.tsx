@@ -49,12 +49,14 @@ export default function TabTwoScreen() {
       const localAPI = await CONFIG.get('localAPI');
       const useLocalAPI = await CONFIG.get('useLocalAPI');
       const apiKey = await CONFIG.get('sportRadarAPIKey');
+      const useMockupAPI = await CONFIG.get('useMockupAPI');
 
       setSelectedLanguage(language);
       setSelectedLeague(league);
       setSelectedTheme(theme);
       setIsDeveloperMode(developerMode);
       setUseLocalAPI(useLocalAPI);
+      setUseMockupAPI(useMockupAPI);
       setLocalAPI(localAPI);
       setApiKey(apiKey);
     };

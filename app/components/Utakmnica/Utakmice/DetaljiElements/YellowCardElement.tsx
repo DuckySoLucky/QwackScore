@@ -3,7 +3,7 @@ import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getThemeElement } from '@/API/theme';
+import { getThemeElement, getThemeName } from '@/API/theme';
 
 export default function YellowCardElement({ item }: { item: Timeline }) {
   const { t: translate } = useTranslation();
@@ -19,7 +19,13 @@ export default function YellowCardElement({ item }: { item: Timeline }) {
         <View style={styles.separatorRight} />
 
         <View style={styles.columnTime}>
-          <Image source={{ uri: 'https://i.imgur.com/R4WzjC1.png' }} style={styles.yellowCard} resizeMode="contain" />
+          <Image
+            source={{
+              uri: getThemeName() === 'dark' ? 'https://i.imgur.com/R4WzjC1.png' : 'https://i.imgur.com/oIwugDQ.png',
+            }}
+            style={styles.yellowCard}
+            resizeMode="contain"
+          />
           <Text style={styles.timeText}>{item.time}</Text>
         </View>
       </View>
@@ -29,7 +35,13 @@ export default function YellowCardElement({ item }: { item: Timeline }) {
   return (
     <View style={styles.outerContainerLeft}>
       <View style={styles.columnTime}>
-        <Image source={{ uri: 'https://i.imgur.com/R4WzjC1.png' }} style={styles.yellowCard} resizeMode="contain" />
+        <Image
+          source={{
+            uri: getThemeName() === 'dark' ? 'https://i.imgur.com/R4WzjC1.png' : 'https://i.imgur.com/oIwugDQ.png',
+          }}
+          style={styles.yellowCard}
+          resizeMode="contain"
+        />
         <Text style={styles.timeText}>{item.time}</Text>
       </View>
 

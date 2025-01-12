@@ -3,18 +3,15 @@ import React from 'react';
 import { Text, View } from '@/components/Themed';
 import { Timeline } from '@/types/data';
 import { useTranslation } from 'react-i18next';
-import { getThemeElement } from '@/API/theme';
+import { getThemeElement, getThemeName } from '@/API/theme';
 
+/*
 const images = [
   'https://i.imgur.com/U2qQpQF.png',
   'https://i.imgur.com/IYEHHqi.png',
   'https://i.imgur.com/adhBakO.png',
 ];
-
-function getRandomImage() {
-  return images[1];
-  // return images[Math.floor(Math.random() * images.length)];
-}
+*/
 
 export default function ShotSavedElement({ item }: { item: Timeline }) {
   const { t: translate } = useTranslation();
@@ -27,7 +24,13 @@ export default function ShotSavedElement({ item }: { item: Timeline }) {
         <View style={styles.separatorRight} />
 
         <View style={styles.column}>
-          <Image source={{ uri: getRandomImage() }} style={styles.yellowCard} resizeMode="contain" />
+          <Image
+            source={{
+              uri: getThemeName() === 'dark' ? 'https://i.imgur.com/gdddVkh.png' : 'https://i.imgur.com/JfhTa6L.png',
+            }}
+            style={styles.yellowCard}
+            resizeMode="contain"
+          />
           <Text style={styles.timeText}>{item.time}</Text>
         </View>
       </View>
@@ -37,7 +40,13 @@ export default function ShotSavedElement({ item }: { item: Timeline }) {
   return (
     <View style={styles.outerContainerLeft}>
       <View style={styles.column}>
-        <Image source={{ uri: getRandomImage() }} style={styles.yellowCard} resizeMode="contain" />
+        <Image
+          source={{
+            uri: getThemeName() === 'dark' ? 'https://i.imgur.com/gdddVkh.png' : 'https://i.imgur.com/JfhTa6L.png',
+          }}
+          style={styles.yellowCard}
+          resizeMode="contain"
+        />
         <Text style={styles.timeText}>{item.time}</Text>
       </View>
 
